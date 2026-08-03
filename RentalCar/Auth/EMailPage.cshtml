@@ -1,0 +1,26 @@
+﻿@page
+
+@functions {
+
+    public String? Link { get; set; }
+
+    public void OnGet(String userID, String code)
+    {
+        Link = Url.Page(
+                    "/ConfirmAccount",
+                    null,
+                    new { area = "Auth", userID = userID, code = code },
+                    Request.Scheme);
+    }
+}
+
+<h1>Test EMail</h1>
+
+<p>
+    NOTE: for testing  in real application this link is sent in an email to the user.
+    He has to click the link for email verification.
+</p>
+
+<h2>Please click to confirm your email</h2>
+
+<a href="@(Link)">Click to Confirm</a>
