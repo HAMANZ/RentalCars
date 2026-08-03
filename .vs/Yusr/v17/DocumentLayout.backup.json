@@ -1,0 +1,483 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\jwtconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\jwtconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\repositorylayer\\migrations\\20260126122215_intial_migration_2026_26_01_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|solutionrelative:repositorylayer\\migrations\\20260126122215_intial_migration_2026_26_01_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\models\\language.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\models\\language.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\implementation\\lookuplogicservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\implementation\\lookuplogicservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\repositorylayer\\migrations\\20260120114038_intial_migratrion_2026_20_1_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|solutionrelative:repositorylayer\\migrations\\20260120114038_intial_migratrion_2026_20_1_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\repositorylayer\\migrations\\20260120113131_intial_migratrion_2026_20_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|solutionrelative:repositorylayer\\migrations\\20260120113131_intial_migratrion_2026_20_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\implementation\\announcementservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\implementation\\announcementservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\repositorylayer\\migrations\\20260120123302_intial_migratrion_2026_20_1_2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|solutionrelative:repositorylayer\\migrations\\20260120123302_intial_migratrion_2026_20_1_2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\models\\announcements.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\models\\announcements.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\interface\\iannouncement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\interface\\iannouncement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\models\\lookupmultilang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\models\\lookupmultilang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\models\\nationality.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\models\\nationality.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\models\\gender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\models\\gender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\lookup.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\lookup.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\private_key.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\private_key.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\implementation\\adminservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\implementation\\adminservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\implementation\\lookupmultilanguageservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\implementation\\lookupmultilanguageservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\repositorylayer\\dbcontextlayer\\yusrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98ADB8E7-CFC9-43AE-961A-D3064586A688}|RepositoryLayer\\RepositoryLayer.csproj|solutionrelative:repositorylayer\\dbcontextlayer\\yusrdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\domainlayer\\models\\lookups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{839FCE11-B51D-406E-87D9-0A8B9244BBE6}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\models\\lookups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\interface\\iadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\interface\\iadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\servicelayer\\interface\\ilookuplogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F87A6DC0-8600-4995-A8B7-B1F22CD63592}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\interface\\ilookuplogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\views\\shared\\components\\headerlayout\\headerlayoutviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\views\\shared\\components\\headerlayout\\headerlayoutviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|c:\\users\\itech\\documents\\github\\yusr\\yusr\\yusr\\swaggerbasicauthmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{93DECDF9-0FB6-4CA7-B6F6-0D8EB5564A37}|Yusr\\Yusr.csproj|solutionrelative:yusr\\swaggerbasicauthmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 301,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260126122215_Intial_migration_2026_26_01_1.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260126122215_Intial_migration_2026_26_01_1.cs",
+              "RelativeDocumentMoniker": "RepositoryLayer\\Migrations\\20260126122215_Intial_migration_2026_26_01_1.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260126122215_Intial_migration_2026_26_01_1.cs",
+              "RelativeToolTip": "RepositoryLayer\\Migrations\\20260126122215_Intial_migration_2026_26_01_1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-26T12:22:21.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JwtConfig.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\JwtConfig.cs",
+              "RelativeDocumentMoniker": "Yusr\\JwtConfig.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\JwtConfig.cs",
+              "RelativeToolTip": "Yusr\\JwtConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T11:04:27.291Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\appsettings.json",
+              "RelativeDocumentMoniker": "Yusr\\appsettings.json",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\appsettings.json",
+              "RelativeToolTip": "Yusr\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-04T15:36:31.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20260120113131_Intial_migratrion_2026_20_1.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260120113131_Intial_migratrion_2026_20_1.cs",
+              "RelativeDocumentMoniker": "RepositoryLayer\\Migrations\\20260120113131_Intial_migratrion_2026_20_1.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260120113131_Intial_migratrion_2026_20_1.cs",
+              "RelativeToolTip": "RepositoryLayer\\Migrations\\20260120113131_Intial_migratrion_2026_20_1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:31:33.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20260120114038_Intial_migratrion_2026_20_1_1.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260120114038_Intial_migratrion_2026_20_1_1.cs",
+              "RelativeDocumentMoniker": "RepositoryLayer\\Migrations\\20260120114038_Intial_migratrion_2026_20_1_1.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260120114038_Intial_migratrion_2026_20_1_1.cs",
+              "RelativeToolTip": "RepositoryLayer\\Migrations\\20260120114038_Intial_migratrion_2026_20_1_1.cs",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAQwP0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:40:39.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LookUpLogicServices.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\LookUpLogicServices.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Implementation\\LookUpLogicServices.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\LookUpLogicServices.cs",
+              "RelativeToolTip": "ServiceLayer\\Implementation\\LookUpLogicServices.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAzwCEAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T15:25:42.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Language.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Language.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Models\\Language.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Language.cs",
+              "RelativeToolTip": "DomainLayer\\Models\\Language.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T11:22:28.49Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AnnouncementServices.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\AnnouncementServices.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Implementation\\AnnouncementServices.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\AnnouncementServices.cs",
+              "RelativeToolTip": "ServiceLayer\\Implementation\\AnnouncementServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T10:08:02.647Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "20260120123302_Intial_migratrion_2026_20_1_2.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260120123302_Intial_migratrion_2026_20_1_2.cs",
+              "RelativeDocumentMoniker": "RepositoryLayer\\Migrations\\20260120123302_Intial_migratrion_2026_20_1_2.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\Migrations\\20260120123302_Intial_migratrion_2026_20_1_2.cs",
+              "RelativeToolTip": "RepositoryLayer\\Migrations\\20260120123302_Intial_migratrion_2026_20_1_2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T12:33:03.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Announcements.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Announcements.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Models\\Announcements.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Announcements.cs",
+              "RelativeToolTip": "DomainLayer\\Models\\Announcements.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T11:14:58.426Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Startup.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\Startup.cs",
+              "RelativeDocumentMoniker": "Yusr\\Startup.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\Startup.cs",
+              "RelativeToolTip": "Yusr\\Startup.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAABSwFoAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T11:44:34.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AnnouncementDTO.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\DTO\\AnnouncementDTO.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\DTO\\AnnouncementDTO.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\DTO\\AnnouncementDTO.cs",
+              "RelativeToolTip": "DomainLayer\\DTO\\AnnouncementDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T10:08:44.541Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IAnnouncement.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Interface\\IAnnouncement.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Interface\\IAnnouncement.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Interface\\IAnnouncement.cs",
+              "RelativeToolTip": "ServiceLayer\\Interface\\IAnnouncement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T10:09:43.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Nationality.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Nationality.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Models\\Nationality.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Nationality.cs",
+              "RelativeToolTip": "DomainLayer\\Models\\Nationality.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:36:48.88Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Gender.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Gender.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Models\\Gender.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\Gender.cs",
+              "RelativeToolTip": "DomainLayer\\Models\\Gender.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T11:36:37.874Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LookUpMultiLang.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\LookUpMultiLang.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Models\\LookUpMultiLang.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\LookUpMultiLang.cs",
+              "RelativeToolTip": "DomainLayer\\Models\\LookUpMultiLang.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAIwBMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T11:22:26.182Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "LookUpMultiLanguageServices.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\LookUpMultiLanguageServices.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Implementation\\LookUpMultiLanguageServices.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\LookUpMultiLanguageServices.cs",
+              "RelativeToolTip": "ServiceLayer\\Implementation\\LookUpMultiLanguageServices.cs",
+              "ViewState": "AgIAAK8AAAAAAAAAAIA0wAABAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T12:20:35.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "LookUp.xml",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\LookUp.xml",
+              "RelativeDocumentMoniker": "Yusr\\LookUp.xml",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\LookUp.xml",
+              "RelativeToolTip": "Yusr\\LookUp.xml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2026-01-19T12:46:42.992Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "private_key.json",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\private_key.json",
+              "RelativeDocumentMoniker": "Yusr\\private_key.json",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\private_key.json",
+              "RelativeToolTip": "Yusr\\private_key.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-19T12:46:44.117Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Yusr\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Yusr\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAABlwGYAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T22:55:46.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AdminServices.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\AdminServices.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Implementation\\AdminServices.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Implementation\\AdminServices.cs",
+              "RelativeToolTip": "ServiceLayer\\Implementation\\AdminServices.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAUwD4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T15:30:20.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "YusrDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\DBContextLayer\\YusrDbContext.cs",
+              "RelativeDocumentMoniker": "RepositoryLayer\\DBContextLayer\\YusrDbContext.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\RepositoryLayer\\DBContextLayer\\YusrDbContext.cs",
+              "RelativeToolTip": "RepositoryLayer\\DBContextLayer\\YusrDbContext.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAABSwHQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T11:16:03.945Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "LookUps.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\LookUps.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Models\\LookUps.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\DomainLayer\\Models\\LookUps.cs",
+              "RelativeToolTip": "DomainLayer\\Models\\LookUps.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T10:02:46.66Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IAdmin.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Interface\\IAdmin.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Interface\\IAdmin.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Interface\\IAdmin.cs",
+              "RelativeToolTip": "ServiceLayer\\Interface\\IAdmin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T15:32:23.433Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ILookUpLogic.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Interface\\ILookUpLogic.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Interface\\ILookUpLogic.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\ServiceLayer\\Interface\\ILookUpLogic.cs",
+              "RelativeToolTip": "ServiceLayer\\Interface\\ILookUpLogic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAADFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T15:28:20.63Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "HeaderLayoutViewComponent.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\Views\\Shared\\Components\\HeaderLayout\\HeaderLayoutViewComponent.cs",
+              "RelativeDocumentMoniker": "Yusr\\Views\\Shared\\Components\\HeaderLayout\\HeaderLayoutViewComponent.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\Views\\Shared\\Components\\HeaderLayout\\HeaderLayoutViewComponent.cs",
+              "RelativeToolTip": "Yusr\\Views\\Shared\\Components\\HeaderLayout\\HeaderLayoutViewComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T15:25:32.051Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SwaggerBasicAuthMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\SwaggerBasicAuthMiddleware.cs",
+              "RelativeDocumentMoniker": "Yusr\\SwaggerBasicAuthMiddleware.cs",
+              "ToolTip": "C:\\Users\\iTECH\\Documents\\GitHub\\Yusr\\Yusr\\Yusr\\SwaggerBasicAuthMiddleware.cs",
+              "RelativeToolTip": "Yusr\\SwaggerBasicAuthMiddleware.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAwwDsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T11:42:47.874Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 84,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
