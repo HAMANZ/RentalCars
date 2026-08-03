@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LookUpMap>
+	<LookUpNodes Name="Menu">
+		<LookUpAttr Name="Title" Code="MENU_TITLE" isLangNull="False" isMedia ="False" isMain ="True" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Action" Code="MENU_ACTION" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="is_subTest" Code="MENU_IS_SUBTEST" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="PositionNumber" Code="MENU_POSITION_NUMBER" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+	</LookUpNodes>
+
+	<LookUpNodes Name="ProductsMenu">
+		<LookUpAttr Name="Title" Code="PRODUCTS_MENU_TITLE" isLangNull="False" isMedia ="False" isMain ="True" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Action" Code="PRODUCTS_MENU_ACTION" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="MenuId" Code="" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+	</LookUpNodes>
+	
+	<LookUpNodes Name="Hero_Banner">
+		<LookUpAttr Name="Title" Code="HERO_BANNER_TITLE" isLangNull="False" isMedia ="False" isMain ="True" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="SubTitle" Code="HERO_BANNER_SUBTITLE" isLangNull="False" isMedia ="False" isMain="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="BackgroundImage" Code="HERO_BANNER_BACKGROUND_IMAGE" isLangNull="False" isMedia ="True" isMain ="False" isList="True" isVideo="False"></LookUpAttr>
+	</LookUpNodes>
+
+	<LookUpNodes Name="Vision">
+		<LookUpAttr Name="Title" Code="VISION_TITLE" isLangNull="False" isMedia ="False" isMain ="True" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Description" Code="VISION_DESCRIPTION" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Icon" Code="VISION_ICON" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+	</LookUpNodes>
+	
+	<LookUpNodes Name="Mission">
+		<LookUpAttr Name="Title" Code="MISSION_TITLE" isLangNull="False" isMedia ="False" isMain ="True" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Description" Code="MISSION_DESCRIPTION" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Icon" Code="MISSION_ICON" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+	</LookUpNodes>
+
+	<LookUpNodes Name="AboutUs">
+		<LookUpAttr Name="Title" Code="ABOUT_US_TITLE" isLangNull="False" isMedia ="False" isMain ="True" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Description" Code="ABOUT_US_DESCRIPTION" isLangNull="False" isMedia ="False" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+		<LookUpAttr Name="Image" Code="ABOUT_US_IMAGE" isLangNull="False" isMedia ="True" isMain ="False" isList="False" isVideo="False"></LookUpAttr>
+	</LookUpNodes>
+	
+</LookUpMap>

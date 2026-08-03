@@ -1,0 +1,97 @@
+﻿
+<!DOCTYPE html>
+<html lang="en-us" id="extr-page">
+	<head>
+		<meta charset="utf-8">
+		<title> ZBoon </title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/assets/css/bootstrap.min.css")">
+		<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/assets/css/font-awesome.min.css")">
+		<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/assets/css/smartadmin-production-plugins.min.css")">
+		<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/assets/css/smartadmin-production.min.css")">
+		<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/assets/css/smartadmin-skins.min.css")">
+		<link rel="stylesheet" type="text/css" media="screen" href="@Url.Content("~/assets/css/smartadmin-rtl.min.css")"> 
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<style>
+			.float-none{
+				float:none !important;
+				margin:0 auto;
+			}
+		</style>
+
+	
+	</head>
+	
+	<body class="animated fadeInDown">
+
+		<header id="header">
+
+			<div id="logo-group">
+				<span id="logo"> RentalCar </span>
+			</div>
+
+
+		</header>
+
+		<div id="main" role="main">
+			    @RenderBody()
+			
+
+		</div>
+
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script> if (!window.jQuery) { document.write('<script src="@Url.Content("~/assets/js/libs/jquery-2.1.1.min.js")"><\/script>');} </script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script> if (!window.jQuery.ui) { document.write('<script src="@Url.Content("~/assets/js/libs/jquery-ui-1.10.3.min.js")"><\/script>');} </script>
+		<script src="@Url.Content("~/assets/js/app.config.js")"></script>	
+		<script src="@Url.Content("~/assets/js/bootstrap/bootstrap.min.js")"></script>
+		<script src="@Url.Content("~/assets/js/plugin/jquery-validate/jquery.validate.min.js")"></script>
+		<script src="@Url.Content("~/assets/js/plugin/masked-input/jquery.maskedinput.min.js")"></script>
+		<script src="@Url.Content("~/assets/js/app.min.js")"></script>
+		    @await RenderSectionAsync("Scripts", required: false)
+
+		<script type="text/javascript">
+			runAllForms();
+
+			$(function() {
+				// Validation
+				$("#login-form").validate({
+					// Rules for form validation
+					rules : {
+						email : {
+							required : true,
+							email : true
+						},
+						password : {
+							required : true,
+							minlength : 3,
+							maxlength : 20
+						}
+					},
+
+					// Messages for form validation
+					messages : {
+						email : {
+							required : 'Please enter your email address',
+							email : 'Please enter a VALID email address'
+						},
+						password : {
+							required : 'Please enter your password'
+						}
+					},
+
+					// Do not change code below
+					errorPlacement : function(error, element) {
+						error.insertAfter(element.parent());
+					}
+				});
+			});
+		</script>
+
+	</body>
+</html>

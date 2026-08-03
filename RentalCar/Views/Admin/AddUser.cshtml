@@ -1,0 +1,357 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Add User";
+}
+
+<style>
+    .section-title {
+        color: var(--secondary-color);
+    }
+
+    img#profilePreview {
+        display: block;
+        margin-top: 10px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .form-label span {
+        color: #c30e0e;
+    }
+
+    .required-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .required-text {
+        color: #c30e0e;
+        text-align: right;
+        margin-bottom: 10px;
+        background: antiquewhite;
+        width: fit-content;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-weight: bold;
+    }
+
+    /* ===== Beautiful Select2 Custom Style ===== */
+
+    /* Main container */
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+        padding: 6px 10px;
+        border: 2px solid #dee2e6 !important;
+        border-radius: 8px;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s ease-in-out;
+        font-size: 16px;
+    }
+
+        /* Rendered text */
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            line-height: normal !important;
+            padding-left: 0 !important;
+            color: #495057;
+        }
+
+        /* Arrow */
+        .select2-container .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            right: 8px;
+        }
+
+    /* Focus & open state */
+    .select2-container--default.select2-container--open
+    .select2-selection--single,
+    .select2-container--default.select2-container--focus
+    .select2-selection--single {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,.15);
+    }
+
+    /* Dropdown */
+    .select2-dropdown {
+        border-radius: 10px;
+        border: 1px solid #ced4da;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    /* Search input */
+    .select2-search--dropdown .select2-search__field {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    /* Options */
+    .select2-results__option {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    /* Hover option */
+    .select2-results__option--highlighted {
+        background-color: #f1f5ff !important;
+        color: #000 !important;
+    }
+
+    /* Selected option */
+    .select2-results__option--selected {
+        background-color: #e7f1ff !important;
+        color: #000 !important;
+    }
+
+    /* Placeholder */
+    .select2-selection__placeholder {
+        color: #adb5bd;
+    }
+
+    /* Clear (x) button */
+    .select2-selection__clear {
+        margin-right: 25px;
+        color: #999;
+    }
+</style>
+
+<div class="container mt-4 mb-5">
+
+    <!-- Alert wrapper -->
+    <div id="alertWrapper" style="position: fixed; top: 20px; right: 20px; z-index: 2000;"></div>
+
+    <div class="required-wrapper mb-3">
+        <h4 class="section-title mb-4"><i class="fas fa-user-plus"></i> Add New User</h4>
+        <p class="required-text">* : All fields are required</p>
+    </div>
+
+
+    <!-- Form -->
+    <form id="addUserForm" enctype="multipart/form-data">
+
+        <div class="row">
+            <!-- First Name English -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">First Name (English) <span>*</span></label>
+                <input type="text" class="form-control" id="firstNameEn" name="FirstName_en" dir="ltr" required />
+            </div>
+
+            <!-- Last Name English -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Last Name (English) <span>*</span></label>
+                <input type="text" class="form-control" id="lastNameEn" name="LastName_en" dir="ltr" required />
+            </div>
+
+            <!-- First Name Arabic -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">First Name (Arabic) <span>*</span></label>
+                <input type="text" class="form-control" id="firstNameAr" name="FirstName_ar" dir="rtl" required />
+            </div>
+
+            <!-- Last Name Arabic -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Last Name (Arabic) <span>*</span></label>
+                <input type="text" class="form-control" id="lastNameAr" name="LastName_ar" dir="rtl" required />
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email <span>*</span></label>
+                <input type="email" class="form-control" id="email" name="Email" required />
+            </div>
+
+
+            <!-- Password -->
+            <div class="col-md-6 mb-3 position-relative">
+                <label class="form-label">Password <span>*</span></label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="Password" required />
+                    <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                        <i class="bi bi-eye"></i>
+                    </span>
+                    <span class="input-group-text" id="passwordInfo" style="cursor: pointer;">
+                        <i class="bi bi-info-circle-fill text-primary"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Phone Number <span>*</span></label>
+                <input type="text" class="form-control" id="phoneNumber" name="PhoneNumber" required />
+            </div>
+
+            <!-- Role -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Role <span>*</span></label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    @foreach (var role in ViewBag.AllRoles)
+                    {
+                        <option value="@role.Name">@role.Name</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Profile Image -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Profile Image <span>*</span></label>
+                <input type="file" class="form-control" id="profileImage" name="Image" accept="image/*" required />
+                <img id="profilePreview" src="/Images/missing-image.jpg" alt="Profile Preview" />
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle"></i> Add User</button>
+            <a href="/Admin/Users" class="btn btn-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<!-- jQuery FIRST -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS AFTER jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#role').select2({
+            placeholder: "Select Role",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+
+    // Preview profile image
+    $('#profileImage').on('change', function () {
+        const input = this;
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('#profilePreview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+
+    // ----------------------
+    // Custom Alerts
+    // ----------------------
+    function showMessage(message, type = 'danger') {
+        const wrapper = document.getElementById('alertWrapper');
+
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                <div>${message}</div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+
+        wrapper.append(div);
+
+        setTimeout(() => {
+            bootstrap.Alert.getOrCreateInstance(div.querySelector('.alert')).close();
+        }, 4000);
+    }
+
+    // ----------------------
+    // Password toggle & info
+    // ----------------------
+    // Toggle Password Visibility
+    $('#togglePassword').on('click', function () {
+        const passwordInput = $('#password');
+        const icon = $(this).find('i');
+
+        if (passwordInput.attr('type') === 'password') {
+            passwordInput.attr('type', 'text');
+            icon.removeClass('bi-eye').addClass('bi-eye-slash');
+        } else {
+            passwordInput.attr('type', 'password');
+            icon.removeClass('bi-eye-slash').addClass('bi-eye');
+        }
+    });
+
+    // Password Info Alert
+    $('#passwordInfo').on('click', function () {
+        showMessage(`
+            <strong>Password Requirements:</strong>
+            <ul style="margin-bottom:0;">
+                <li>Length must be at least 8 characters.</li>
+                <li>Must contain at least one uppercase letter.</li>
+                <li>Must contain at least one lowercase letter.</li>
+                <li>Must contain at least one digit.</li>
+                <li>Must contain at least one special character (e.g., @@, #, $).</li>
+            </ul>
+        `, 'info');
+    });
+
+    // ----------------------
+    // Handle Add User Form
+    // ----------------------
+    $('#addUserForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const firstNameEn = $('#firstNameEn').val().trim();
+        const lastNameEn = $('#lastNameEn').val().trim();
+        const firstNameAr = $('#firstNameAr').val().trim();
+        const lastNameAr = $('#lastNameAr').val().trim();
+        const email = $('#email').val().trim();
+        const password = $('#password').val().trim();
+        const phoneNumber = $('#phoneNumber').val().trim();
+        const role = $('#role').val();
+        const profileImage = $('#profileImage').val();
+
+        // Check all required fields
+        if (!firstNameEn || !lastNameEn || !firstNameAr || !lastNameAr || !email || !password || !phoneNumber || !role || !profileImage) {
+            showMessage('Please fill in all required fields.', 'danger');
+            return;
+        }
+
+        // Password validation
+        let missingRequirements = [];
+
+        /*if (password.length !== 8) missingRequirements.push('Length must be exactly 8 characters.');*/
+        if (password.length < 8) missingRequirements.push('Length must be exactly 8 characters.');
+        if (!/[A-Z]/.test(password)) missingRequirements.push('Must contain at least one uppercase letter.');
+        if (!/[a-z]/.test(password)) missingRequirements.push('Must contain at least one lowercase letter.');
+        if (!/\d/.test(password)) missingRequirements.push('Must contain at least one digit.');
+        if (!/[!@@#$%^&*(),.?":{}|<>]/.test(password)) missingRequirements.push('Must contain at least one special character (e.g., @@, #, $).');
+
+        if (missingRequirements.length > 0) {
+            showMessage(`<strong>Password missing:</strong><ul style="margin-bottom:0;">${missingRequirements.map(r => `<li>${r}</li>`).join('')}</ul>`, 'danger');
+            return;
+        }
+
+        // Submit form
+        const formData = new FormData(this);
+
+        fetch('/Admin/AddUser', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    showMessage(result.message || 'User added successfully!', 'success');
+                    setTimeout(() => window.location.href = '/Admin/Users', 1000);
+                } else {
+                    showMessage(result.message || 'Failed to add user!', 'danger');
+                }
+            })
+            .catch(() => showMessage('An error occurred!', 'danger'));
+    });
+
+
+</script>
+

@@ -1,0 +1,83 @@
+﻿@using RentalCar.DomainLayer.DTO;
+﻿@Model IEnumerable<LanguageDataDTO>
+	;
+
+@{
+		ViewData["Title"] = "Country";
+}
+
+<!-- Start content -->
+<div class="content">
+
+		<div class="container-fluid">
+
+			<div class="row">
+			
+				</div>
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="breadcrumb-holder">
+						<h1 class="main-title float-left">List of Country</h1>
+						<ol class="breadcrumb float-right">
+							<li class="breadcrumb-item">Home</li>
+							<li class="breadcrumb-item active">List of Country</li>
+						</ol>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<!-- end row -->
+
+
+			<div class="col-xl-12">
+				
+			</div>
+
+
+			<div class="row">
+				<div class="col-xl-12">
+	<div class="table-responsive">
+						<div class="text-right m-b-0">
+							<a role="button" href="/Admin/AddCountryForm" class="btn btn-warning"><span class="btn-label"><i class="fa fa-plus"></i></span>New</a>
+
+						</div>
+		<table id="example1" class="table table-bordered table-hover display">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Code</th>
+					<th>Is Active</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				  @if(Model!=null)
+				  @if(Model.Count !=0)
+				@foreach (DefinedDTO item in Model)
+					{
+						<tr>
+							<td> @item.Name </td>
+							<td>  @item.Code </td>
+							<td> @item.Is_deleted </td>
+							<td>
+													<a role="button" href="/Admin/DeleteCountry?Id=@item.Id" class="btn btn-danger"><i class="fa fa-remove"></i></a>
+													<a role="button" href="/Admin/GetCountry?Id=@item.Id" class="btn btn-success"><i class="fa fa-edit"></i></a>
+							</td>
+							
+						</tr>
+	
+	                 }
+			</tbody>
+		</table>
+		</div>
+		</div>
+		</div>
+		</div>
+</div>
+<!-- END content -->
+
+<script>
+	// START CODE FOR BASIC DATA TABLE
+	$(document).ready(function () {
+		$('#example1').DataTable();
+	});</script>

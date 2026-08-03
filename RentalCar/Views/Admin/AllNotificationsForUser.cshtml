@@ -1,0 +1,90 @@
+﻿@using RentalCar.DomainLayer.CommonObjects;
+@using RentalCar.DomainLayer.DTO;
+@model List<DefinedDTO>
+
+    @{
+        ViewData["Title"] = "AllNotifications";
+
+        ViewBag.View = "Notification";
+    }
+
+    <div id="content">
+
+        <div class="container-fluid">
+            @Html.Partial("_PartialPageHeader")
+            @* <input id="txtCustomerName" type="text" />*@
+            <div class="row">
+                <div class="col-sm-4">
+                    <select id="UserId" class="form-control form-control-sm">
+
+                        @if (Model != null)
+                            @if (Model.Count != 0)
+                                @foreach (DefinedDTO item in Model)
+                                {
+
+                                    <option value="@item.Code">@item.Name</option>
+                                }
+                        </select>
+                    </div></div>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-bordered table-hover display">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 90px">Subject</th>
+                                                <th style="width: 120px">Body</th>
+                                                <th style="width: 90px">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                <script type="text/javascript">
+                    $(function () {
+                        GetCustomers();
+                        $("#UserId").change(function () {
+                            $("#example1 tbody").html('');
+                            GetCustomers();
+                        });
+                    });
+                    function GetCustomers() {
+                        var UserId = $.trim($("#UserId").val());
+                    
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/SearchNotificationsUser",
+                            data: {
+                                id: UserId
+                            },
+                            dataType: "json",
+                            success: function (customers) {
+                             //   alert(UserId);
+                                var table = $("#example1");
+                                table.find("tr:not(:first)").remove();
+                                // console.log(notificationSubject);
+                                $.each(customers, function (i, customer) {
+                                    var table = $("#example1 tbody");
+                                    var row = table[0].insertRow(-1);
+                                    $(row).append("<td />");
+                                    //    console.log(customer.notificationSubject);
+                                    $(row).find("td").eq(0).html(customer.notificationSubject);
+                                    $(row).append("<td />");
+                                    $(row).find("td").eq(1).html(customer.notificationContent);
+                                    $(row).append("<td />");
+                                    $(row).find("td").eq(2).html(customer.date);
+                                    $(row).append("<td />");
+                                });
+                            }
+                        });
+                    }
+                </script>

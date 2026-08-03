@@ -1,0 +1,528 @@
+﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using System.Web.Mvc.Ajax;
+@using System.Web.Razor;
+@using System.Web.Helpers;
+@using System.Web.Optimization;
+@using System.Web;
+﻿@using System.Xml;
+
+<!DOCTYPE html>
+<html lang="en-us" id="extr-page">
+<head>
+    <meta charset="utf-8">
+    <title> RentalCar </title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Favicon -->
+    @*<link rel="shortcut icon" href="~/assets/images/favicon.ico">*@
+    <!-- Favicon -->
+    <link rel="icon" href="~/images/Logo/Logo.png" type="image/jpeg">
+    <!-- Bootstrap CSS -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Font Awesome CSS -->
+    <link href="~/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom CSS -->
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="~/assets/js/jquery.min.js"></script>
+    <!-- BEGIN CSS for this page -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+    <!-- END CSS for this page -->
+	<style>
+        .sidebar-inner.leftscroll {
+            border-right: 1px solid #9595951c;
+            background-color: #efefef;
+        }
+	</style>
+</head>
+	
+	<body class="adminbody">
+		<div id="main">
+
+		<!-- top bar navigation -->
+		<div class="headerbar">
+
+			<!-- LOGO -->
+            <div class="headerbar-left">
+                <a href="index.html" class="logo"><img alt="Logo" src="~/images/Logo/SawaLogo.PNG" /> <span>Admin</span></a>
+            </div>
+
+			<nav class="navbar-custom">
+
+				<ul class="list-inline float-right mb-0">
+
+					<li class="list-inline-item dropdown notif">
+						<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+							<i class="fa fa-fw fa-question-circle"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-lg">
+							<!-- item-->
+							<div class="dropdown-item noti-title">
+								<h5><small>Help and Support</small></h5>
+							</div>
+
+							<!-- item-->
+							<a target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item">
+								<p class="notify-details ml-0">
+									<b>Do you want custom development to integrate this theme?</b>
+									<span>Contact Us</span>
+								</p>
+							</a>
+
+							<!-- item-->
+							<a target="_blank" href="https://www.pikeadmin.com/pike-admin-pro" class="dropdown-item notify-item">
+								<p class="notify-details ml-0">
+									<b>Do you want PHP version of the theme that save dozens of hours of work?</b>
+									<span>Try Pike Admin PRO</span>
+								</p>
+							</a>
+
+							<!-- All-->
+							<a title="Clcik to visit Pike Admin Website" target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item notify-all">
+								<i class="fa fa-link"></i> Visit Pike Admin Website
+							</a>
+
+						</div>
+					</li>
+
+					<li class="list-inline-item dropdown notif">
+						<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+							<i class="fa fa-fw fa-envelope-o"></i><span class="notif-bullet"></span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-lg">
+							<!-- item-->
+							<div class="dropdown-item noti-title">
+								<h5><small><span class="label label-danger pull-xs-right">12</span>Contact Messages</small></h5>
+							</div>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<p class="notify-details ml-0">
+									<b>Jokn Doe</b>
+									<span>New message received</span>
+									<small class="text-muted">2 minutes ago</small>
+								</p>
+							</a>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<p class="notify-details ml-0">
+									<b>Michael Jackson</b>
+									<span>New message received</span>
+									<small class="text-muted">15 minutes ago</small>
+								</p>
+							</a>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<p class="notify-details ml-0">
+									<b>Foxy Johnes</b>
+									<span>New message received</span>
+									<small class="text-muted">Yesterday, 13:30</small>
+								</p>
+							</a>
+
+							<!-- All-->
+							<a href="#" class="dropdown-item notify-item notify-all">
+								View All
+							</a>
+
+						</div>
+					</li>
+
+					<li class="list-inline-item dropdown notif">
+						<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+							<i class="fa fa-fw fa-bell-o"></i><span class="notif-bullet"></span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-lg">
+							<!-- item-->
+							<div class="dropdown-item noti-title">
+								<h5><small><span class="label label-danger pull-xs-right">5</span>Allerts</small></h5>
+							</div>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<div class="notify-icon bg-faded">
+									<img src="~/assets/images/avatars/avatar2.png" alt="img" class="rounded-circle img-fluid">
+								</div>
+								<p class="notify-details">
+									<b>John Doe</b>
+									<span>User registration</span>
+									<small class="text-muted">3 minutes ago</small>
+								</p>
+							</a>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<div class="notify-icon bg-faded">
+									<img src="~/assets/images/avatars/avatar3.png" alt="img" class="rounded-circle img-fluid">
+								</div>
+								<p class="notify-details">
+									<b>Michael Cox</b>
+									<span>Task 2 completed</span>
+									<small class="text-muted">12 minutes ago</small>
+								</p>
+							</a>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<div class="notify-icon bg-faded">
+									<img src="~/assets/images/avatars/avatar4.png" alt="img" class="rounded-circle img-fluid">
+								</div>
+								<p class="notify-details">
+									<b>Michelle Dolores</b>
+									<span>New job completed</span>
+									<small class="text-muted">35 minutes ago</small>
+								</p>
+							</a>
+
+							<!-- All-->
+							<a href="#" class="dropdown-item notify-item notify-all">
+								View All Allerts
+							</a>
+
+						</div>
+					</li>
+
+					<li class="list-inline-item dropdown notif">
+						<a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+							<img src="~/assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+						</a>
+						<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+							<!-- item-->
+							<div class="dropdown-item noti-title">
+								<h5 class="text-overflow"><small>Hello, admin</small> </h5>
+							</div>
+
+							<!-- item-->
+							<a href="pro-profile.html" class="dropdown-item notify-item">
+								<i class="fa fa-user"></i> <span>Profile</span>
+							</a>
+
+							<!-- item-->
+							<a href="#" class="dropdown-item notify-item">
+								<i class="fa fa-power-off"></i> <span>Logout</span>
+							</a>
+
+							<!-- item-->
+							<a target="_blank" href="https://www.pikeadmin.com" class="dropdown-item notify-item">
+								<i class="fa fa-external-link"></i> <span>Pike Admin</span>
+							</a>
+						</div>
+					</li>
+
+				</ul>
+
+				<ul class="list-inline menu-left mb-0">
+					<li class="float-left">
+						<button class="button-menu-mobile open-left">
+							<i class="fa fa-fw fa-bars"></i>
+						</button>
+					</li>
+				</ul>
+
+			</nav>
+
+		</div>
+		<!-- End Navigation -->
+		<!-- Left Sidebar -->
+		<div class="left main-sidebar">
+
+			<div class="sidebar-inner leftscroll" >
+
+				<div id="sidebar-menu">
+
+                    <ul>
+
+                        <li class="submenu">
+                            <a @*class="active"*@ href="index.html"><i class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a>
+                        </li>
+
+                        <li class="submenu">
+                          </li>
+                        <li class="submenu">
+                            <a href="/Admin/TutorRegisteration"><i class="fa fa-fw fa-user"></i><span> Tutor Registration </span> </a>
+                        </li>
+                        <li class="submenu">
+                            <a href="/Admin/StudentRegisteration"><i class="fa fa-fw fa-users"></i><span> Student Registration </span> </a>
+                        </li>
+                        <li class="submenu">
+                            <a href="/Admin/TutorSessions"><i class="fa fa-fw fa-users"></i><span> Tutor Sessions </span> </a>
+                        </li>
+                        <li class="submenu">
+                            <a href="/Admin/Packages"><i class="fa fa-fw fa-cube"></i><span> Packages </span> </a>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-fw fa-table"></i> <span> Data </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="/Admin/Languages">Languages</a></li>
+                                <li><a href="/Admin/Countries">Countries</a></li>
+                                <li><a href="/Admin/Cities">Cities</a></li>
+								<li><a href="/Admin/Category">Category</a></li>
+								 
+                                <li><a href="/Admin/Schools">Schools System</a></li>
+                                <li><a href="/Admin/Classes"> Schools Classes</a></li>
+                                <li><a href="/Admin/Universities"> Universities</a></li>
+                                <li><a href="/Admin/Majors">Majors</a></li>
+                                <li><a href="/Admin/Levels">Levels</a></li>
+								<li><a href="/Admin/Topics">Topics</a></li>
+								<li><a href="/Admin/Types">Type</a></li>
+								<li><a href="/Admin/Fluencies">Fluencies</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-fw fa-table"></i> <span> Website </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+								<li><a href="/Admin/TestimonialCards">Testimonials</a></li>
+								<li><a href="/Admin/TrustedCompanies">Trusted Company</a></li>
+								<li><a href="/Admin/OurProcesses">Our Process</a></li>
+								<li><a href="/Admin/OurGoals">Our Goals</a></li>
+								<li><a href="/Admin/OurEducationCaters">Our EducationCater</a></li>
+								<li><a href="/Admin/FAQs">FAQ</a></li>
+								<li><a href="/Admin/WebsiteSessions">Sessions</a></li>
+                                <li><a href="/Admin/Contactus">Contact us</a></li>
+                                <li><a href="/Admin/Aboutus">Aboutus</a></li>
+                                <li><a href="/Admin/Header"> Header</a></li>
+                                <li><a href="/Admin/Footer">Footer</a></li>
+                            </ul>
+                        </li>
+
+						  <li class="submenu">
+                            <a href="#"><i class="fa fa-fw fa-table"></i> <span> Rates & Fees </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+								<li><a href="/Admin/Rates">Rates Fo Tutor</a></li>
+								<li><a href="/Admin/Fees">Fees</a></li>
+                            </ul>
+                        </li>
+
+
+
+						<li class="submenu">
+							<a href="#"><i class="fa fa-fw fa-table"></i> <span> App Setting </span> <span class="menu-arrow"></span></a>
+							<ul class="list-unstyled">
+								<li><a href="/Admin/AppSetting">App Detail</a></li>
+								<li><a href="/Admin/AppAccounts"> Accounts</a></li>
+								<li><a href="/Admin/AppPrivacy"> Privacy</a></li>
+								<li><a href="/Admin/RefundPolicy"> Refund Policy</a></li>
+							</ul>
+						</li>
+
+
+						<li class="submenu">
+                            <a href="#"><i class="fa fa-fw fa-bell"></i> <span> Notification </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+								<li><a href="/Admin/AllNotificationsForUser">User Notifications</a></li>
+								<li><a href="/Admin/MyNotifications">My Notifications</a></li>
+								<li><a href="/Admin/AllNotifications">All Notifications</a></li>
+                            </ul>
+                        </li>
+
+                       
+
+                    </ul>
+
+					<div class="clearfix"></div>
+
+				</div>
+
+				<div class="clearfix"></div>
+
+			</div>
+
+		</div>
+		<!-- End Sidebar -->
+
+
+		<div class="content-page">
+			@RenderBody()
+
+		</div>
+		<!-- END content-page -->
+
+		<footer class="footer">
+            <span class="text-right">
+                <a target="_blank" href="#" style="color:#efefef;font-weight:bold;">RentalCar</a> © @DateTime.Now.Year
+            </span>
+			<span class="float-right">
+				Powered by <a target="_blank" href="https://www.sawa.com" style="color:#efefef;font-weight: bold;"><b>sawa Admin</b></a>
+			</span>
+		</footer>
+
+	</div>
+	
+
+    <script src='~/jquery-3.3.1.js' type="text/javascript"></script>
+    <script src='https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js' type="text/javascript"></script>
+
+    <script src='https://www.gstatic.com/firebasejs/6.4.2/firebase-messaging.js' type="text/javascript"></script>
+
+    <script src="~/assets/js/modernizr.min.js"></script>
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/moment.min.js"></script>
+
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <script src="~/assets/js/detect.js"></script>
+    <script src="~/assets/js/fastclick.js"></script>
+    <script src="~/assets/js/jquery.blockUI.js"></script>
+    <script src="~/assets/js/jquery.nicescroll.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/pikeadmin.js"></script>
+
+    <!-- BEGIN Java Script for this page -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+	//<script src="~/Scripts/cms/libs/jquery-2.1.1.min.js"></script>
+	<script src="~/Scripts/cms/app.config.js"></script>
+	<script src="~/Scripts/bootstrap.min.js"></script>
+	<script src="~/Scripts/cms/Admin/jquery.dataTables.min.js"></script>
+	<script src="~/Scripts/cms/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+	<script src="~/Scripts/cms/notification/SmartNotification.min.js"></script>
+	<script src="~/Scripts/cms/smartwidgets/jarvis.widget.min.js"></script>
+	<script src="~/Scripts/cms/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+	<script src="~/Scripts/cms/plugin/sparkline/jquery.sparkline.min.js"></script>
+	<script src="~/Scripts/jquery.validate.js"></script>
+	<script src="~/Scripts/cms/plugin/masked-input/jquery.maskedinput.min.js"></script>
+	<script src="~/Scripts/cms/plugin/select2/select2.min.js"></script>
+	<script src="~/Scripts/cms/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+	<script src="~/Scripts/cms/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+	<script src="~/Scripts/cms/plugin/fastclick/fastclick.min.js"></script>
+	<script src="~/Scripts/cms/plugin/datatables/dataTables.buttons.min.js"></script>
+	<script src="~/Scripts/cms/plugin/datatables/jszip.min.js"></script>
+	<script src="~/Scripts/cms/plugin/datatables/buttons.html5.min.js"></script>
+	<script src="~/Scripts/cms/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+	<script src="~/Scripts/cms/plugin/superbox/superbox.min.js"></script>
+	<script src="~/Scripts/cms/plugin/ckeditor/ckeditor.js"></script>
+	<script src="~/Scripts/cms/app.min.js"></script>
+	<script src="~/Scripts/cms/libs/jspdf.min.js"></script>
+	<script src="~/Scripts/cms/editor.js"></script>
+	<script src="~/Scripts/cms/CmsJquery.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+
+	@*<script src="~/Scripts/cms/libs/jquery-3.5.1.js"></script>*@
+	<script src="~/Scripts/cms/libs/jquery.dataTables.min.js"></script>
+	<script src="~/Scripts/cms/libs/dataTables.rowReorder.min.js"></script>
+    <!-- Counter-Up-->
+    <script src="~/assets/plugins/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="~/assets/plugins/counterup/jquery.counterup.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			// data-tables
+			$('#example1').DataTable();
+			$('#dt_basic').DataTable();
+
+			// counter-up
+			$('.counter').counterUp({
+				delay: 10,
+				time: 600
+			});
+		});
+	</script>
+
+	<script>
+		
+	</script>
+    <script>
+
+        $(function () {
+
+            var token = null;
+            //var config = {
+            //    apiKey: "AIzaSyBHD0FfT6VBL4kje_dqEX0f2Y3OBzMUybk",
+            //    authDomain: "asp-mvc-with-android.firebaseapp.com",
+            //    databaseURL: "https://asp-mvc-with-android.firebaseio.com",
+            //    projectId: "asp-mvc-with-android",
+            //    storageBucket: "asp-mvc-with-android.appspot.com",
+            //    messagingSenderId: "371396359158",
+            //    appId: "1:371396359158:web:2d741d56fd5bfb7089cdd7"
+            //};
+
+              var config = {
+                apiKey: "AIzaSyDNBz-CKNhtk2Dkkohq6Ccjr7Kiv2MW2qk",
+                authDomain: "RentalCar-380621.firebaseapp.com",
+                projectId: "RentalCar-380621",
+                storageBucket: "RentalCar-380621.appspot.com",
+                messagingSenderId: "728367718832",
+                appId: "1:728367718832:web:557fe5996e5a0ce94a7675",
+                measurementId: "G-JC6C5YNXZ7"
+              };
+            firebase.initializeApp(config);
+
+            const messaging = firebase.messaging();
+
+            messaging.requestPermission()
+                .then(function () {
+                    console.log("granted");
+                    if (isTokenSentToServer()) {
+                        console.log("already granted");
+                        console.log(getRegtoken());
+                    } else {
+                        getRegtoken();
+                    }
+                });
+
+
+            function getRegtoken() {
+                messaging.getToken().then((currentToken) => {
+                    if (currentToken) {
+                        console.log(currentToken);
+                        setTokenSentToServer(true);
+                        saveToken(currentToken)
+                        //   updateUIForPushEnabled(currentToken);
+                    } else {
+                        console.log('No Instance ID token available. Request permission to generate one.');
+                        setTokenSentToServer(false);
+                    }
+                }).catch((err) => {
+                    console.log('An error occurred while retrieving token. ', err);
+                    setTokenSentToServer(false);
+                });
+
+            }
+            function setTokenSentToServer(sent) {
+                window.localStorage.setItem('sentToServer', sent ? 1 : 0);
+            }
+            function isTokenSentToServer() {
+                return window.localStorage.getItem('sentToServer') === '1';
+            }
+            function getTokenStored() {
+                return window.localStorage.getItem('sentToServer');
+            }
+            function saveToken(currentToken) {
+                console.log(currentToken);
+            }
+            messaging.onMessage(function (payload) {
+                console.log('Message received. ', payload);
+
+                notificationTitle = payload.notification.title;
+                notificationOptions = {
+                    body: payload.notification.body,
+                    icon: payload.notification.icon
+                };
+
+                var notification = new Notification(notificationTitle, notificationOptions);
+
+            });
+
+        });
+
+
+    </script>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

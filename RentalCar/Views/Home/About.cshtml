@@ -1,0 +1,284 @@
+﻿@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "About Us";
+}
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
+<!-- jQuery & Owl Carousel JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<style>
+
+    /* TITLE */
+    .heading-title {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+
+    .title-line {
+        width: 60px;
+        height: 5px;
+        background-color: var(--secondary-color);
+        border-radius: 5px;
+    }
+
+    /* =========================
+      ABOUT SECTION
+       ========================= */
+    .about-section {
+        padding-top: 70px;
+        padding-bottom: 70px;
+        border-radius: 0.35rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    /* DECORATIVE CORNER IMAGES */
+    .corner-img {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        opacity: 0.9;
+        pointer-events: none;
+        z-index: 0; /* background layer */
+    }
+    .corner-top-left { top: 0; left: 0; }
+    .corner-bottom-right { bottom: 0; right: 0; }
+
+    /* IMAGE AREA */
+    .image-wrapper {
+        position: relative;
+        max-width: 500px;
+        margin: auto;
+        z-index: 2; /* above decorations */
+    }
+
+    .shape {
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        opacity: 0.35;
+        filter: blur(30px);
+        z-index: 1; /* behind image, above background */
+    }
+
+    .shape-1 {
+        background: var(--primary-color);
+        top: -30px;
+        left: -50px;
+        border-radius: 60% 40% 55% 45%;
+    }
+    .shape-2 {
+        background: var(--secondary-color);
+        bottom: -30px;
+        right: -40px;
+        border-radius: 50% 60% 45% 55%;
+    }
+
+    .about-image {
+        position: relative;
+        width: 100%;
+        border-radius: 20px;
+        border: 4px solid var(--secondary-color);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        transition: 0.4s ease;
+        z-index: 2; /* content layer */
+    }
+    .about-image:hover { transform: scale(1.03); }
+
+    /* LONG TEXT DESIGN */
+    .about-text-wrapper {
+        max-width: 560px;
+        padding: 12px 14px;
+        /*background: rgba(255, 255, 255, 0.55);*/
+        border-left: 2px solid var(--secondary-color);
+        border-radius: 0.25rem;
+        /*box-shadow: 0 8px 22px rgba(0,0,0,0.05);*/
+        position: relative;
+        z-index: 2; /* content layer */
+    }
+
+    .about-text {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.8;
+        color: var(--primary-color);
+        text-align: justify;
+        position: relative;
+        z-index: 2;
+    }
+
+   
+    /* RESPONSIVE */
+    @@media (max-width: 768px) {
+        .about-text-wrapper { padding: 18px; max-width: 100%; }
+        .about-text { font-size: 16px; line-height: 1.75; }
+        /*.about-text::first-letter { font-size: 36px; }*/
+    }
+
+    /* INSTRUCTORS SECTION */
+    .instructors-section { position: relative; z-index: 2; }
+
+    /* Instructor Cards */
+    .instructor-card {
+        background: #fff;
+        border-radius: 1.25rem;
+        text-align: center;
+        padding: 20px 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+    .instructor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+    .instructor-card img {
+        width: 120px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 0.35rem;
+        margin-bottom: 15px;
+    }
+    .instructor-name { color: var(--primary-color); }
+
+    /* OWL CAROUSEL NAVIGATION */
+    /* Owl Carousel Arrows */ .owl-nav button {
+        position: absolute !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        background: var(--gradient-bg) !important;
+        color: var(--primary-color) !important;
+        border-radius: 50% !important;
+        width: 45px !important;
+        height: 45px !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 18px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important; /* transition: transform 0.3s ease, background 0.3s ease !important;*/
+        z-index: 10 !important;
+    }
+    /*.owl-nav button:hover { background: var(--secondary-color) !important; transform: scale(1.1) !important; }*/
+
+    .owl-nav .owl-prev {
+        left: -25px !important;
+    }
+
+    .owl-nav .owl-next {
+        right: -25px !important;
+    }
+    /* Remove default dots */
+
+    .owl-dots {
+        display: none;
+    }
+
+
+</style>
+
+<div class="container mt-5 mb-5">
+    <!-- About Us Section -->
+    <section class="about-section py-5 position-relative">
+        <!-- Decorative Corner Images -->
+        <img src="~/Images/top-corner-left.png" alt="" loading="lazy" class="corner-img corner-top-left">
+        <img src="~/Images/bottom-corner-right.png" alt="" loading="lazy" class="corner-img corner-bottom-right">
+
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Image -->
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="image-wrapper">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <img src="~/Images/@(string.IsNullOrEmpty(ViewBag.AboutUs?.Image)
+                                ? "missing-image.jpg"
+                                : ViewBag.AboutUs.Image)"
+                             alt="About Us"
+                             loading="lazy"
+                             class="about-image"
+                             onerror="this.onerror=null;this.src='/Images/missing-image.jpg';" />
+                    </div>
+                </div>
+
+                <!-- Text -->
+                <div class="col-lg-6">
+                    <h3 class="heading-title">@ViewBag.AboutUs.Title</h3>
+                    <div class="title-line mb-4"></div>
+                    <div class="about-text-wrapper">
+                        <p class="about-text">
+                            @ViewBag.AboutUs.Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors Section -->
+    <div class="instructors-section mt-5">
+        <div class="mb-4">
+            <h3 class="heading-title">Our Instructors</h3>
+            <div class="title-line"></div>
+        </div>
+        <div class="owl-carousel owl-theme">
+            <div class="instructor-card">
+                <img src="/Images/3.jpeg" alt="Instructor">
+                <h6 class="instructor-name">Sheikh Ahmad</h6>
+                <p class="role">Tajwīd Instructor</p>
+            </div>
+            <div class="instructor-card">
+                <img src="/Images/4.jpeg" alt="Instructor">
+                <h6 class="instructor-name">Ustādhah Mariam</h6>
+                <p class="role">Hifz Teacher</p>
+            </div>
+            <div class="instructor-card">
+                <img src="/Images/3.jpeg" alt="Instructor">
+                <h6 class="instructor-name">Sheikh Ali</h6>
+                <p class="role">Tajwīd Instructor</p>
+            </div> 
+            <div class="instructor-card">
+                <img src="/Images/3.jpeg" alt="Instructor">
+                <h6 class="instructor-name">Sheikh Ali</h6>
+                <p class="role">Tajwīd Instructor</p>
+            </div>
+            <div class="instructor-card">
+                <img src="/Images/3.jpeg" alt="Instructor">
+                <h6 class="instructor-name">Sheikh Ali</h6>
+                <p class="role">Tajwīd Instructor</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".owl-carousel").owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            dots: false,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            navText: [
+                '<i class="bi bi-caret-left-fill"></i>',
+                '<i class="bi bi-caret-right-fill"></i>'
+            ],
+            responsive: {
+                0: { items: 1 },
+                600: { items: 2 },
+                1000: { items: 4 }
+            }
+        });
+    });
+</script>

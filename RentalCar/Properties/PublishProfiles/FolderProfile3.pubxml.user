@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\iTECH\Documents\GitHub\ELearning\ELearningProject\ELearning\Elearning\bin\Release\net5.0\publish\NEW</_PublishTargetUrl>
+    <History>True|2024-10-21T16:38:29.7849426Z;True|2024-10-21T13:46:57.7720350+03:00;False|2024-10-21T13:41:43.0805759+03:00;True|2024-10-21T13:30:29.8862700+03:00;True|2024-10-21T13:20:40.0487917+03:00;True|2024-10-19T18:09:32.4828319+03:00;True|2024-09-13T13:09:10.8179573+03:00;True|2024-08-26T15:54:19.4790399+03:00;True|2024-08-21T12:43:03.6994651+03:00;True|2024-08-16T17:54:15.0490337+03:00;True|2024-08-16T17:34:41.1423331+03:00;True|2024-08-16T11:20:07.3390333+03:00;True|2024-08-14T16:25:48.1137504+03:00;False|2024-08-14T16:19:21.3813963+03:00;True|2024-07-19T18:27:23.1664723+03:00;True|2023-12-19T14:35:04.7172545+02:00;True|2023-12-18T14:51:01.2402234+02:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

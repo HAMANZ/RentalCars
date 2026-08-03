@@ -1,0 +1,14 @@
+﻿
+@font-face {
+    font-family: 'Bukra'; /* Arabic font */
+    src: url('29ltbukraregular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'CenturyGothic'; /* English font */
+    src: url('CenturyGothicPaneuropeanRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

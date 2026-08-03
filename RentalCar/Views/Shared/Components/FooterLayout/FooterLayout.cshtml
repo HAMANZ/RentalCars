@@ -1,0 +1,373 @@
+﻿<style>
+    .footer-custom {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+
+    /* ===== Footer Top ===== */
+    .footer-top {
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .footer-brand-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        width: 80px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    .footer-brand-name {
+        font-family: 'Cinzel';
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    /* ===== Social Icons ===== */
+    .footer-socials {
+        display: flex;
+        gap: 14px;
+    }
+
+    .footer-socials a {
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-bg);
+        color: var(--primary-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: 0.3s ease;
+        text-decoration: none;
+    }
+
+    .footer-socials a:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    /* ===== Footer Content ===== */
+    .footer-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #fff;
+        position: relative;
+    }
+
+    .title-line{
+        margin-bottom: 16px;
+    }
+
+    .footer-links {
+        padding-left: 0;
+    } 
+    
+    [dir="rtl"] .footer-links {
+        padding-right: 0;
+    }
+
+    .footer-links li {
+        list-style: none;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .footer-links a {
+        color: #eaeaea;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .footer-links a:hover {
+        color: var(--secondary-color);
+        padding-left: 5px;
+    }
+
+    /* ===== Contact ===== */
+    .contact-label {
+        background: var(--gradient-bg); /* your gradient */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    .contact-value {
+        color: #eaeaea;
+        font-size: 15px;
+    }
+
+    /* ===== Main Website Link ===== */
+        .footer-main-link-container
+        {
+            border-radius: 10px;
+            display: flex;
+            padding: 10px 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 14px;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+    .footer-main-link-container img {
+        width: 150px; /* bigger main website image */
+        height: auto;
+        border-radius: 6px;
+    }
+
+    .footer-main-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--secondary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .footer-main-link:hover {
+        transform: translateX(4px);
+        color: #fff;
+    }
+
+      /* Footer Bottom Links Styling */
+    /* Footer Bottom Styling */
+    .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.2); /* full width border */
+        padding: 14px 0;
+        background-color: var(--primary-color);
+        color: #dcdcdc;
+    }
+
+    .footer-bottom-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .footer-bottom-links a {
+        color: #dcdcdc;
+        text-decoration: none;
+        font-weight: 500;
+        margin: 0 4px;
+    }
+
+        .footer-bottom-links a:hover {
+            color: var(--secondary-color);
+        }
+
+
+    .shimmer-footer {
+        color: var(--secondary-color);
+        position: relative;
+        display: inline-block;
+        font-size: 16px;
+        background: linear-gradient( 90deg, #ebcf6d 0%, #d7d3d3 70%, #d3b964 100% );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: shimmer 5s linear infinite;
+    }
+
+    @@keyframes shimmer {
+        0% {
+            background-position: 200% center;
+        }
+
+        100% {
+            background-position: -200% center;
+        }
+    }
+
+    /* RTL Support */
+    [dir="rtl"] .footer-title::after {
+        left: auto;
+        right: 0;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .footer-brand-name{
+            font-size: 16px;
+        }
+
+        .footer-top .container {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .footer-brand-row {
+            justify-content: center;
+        }
+
+        .footer-socials {
+            justify-content: center;
+        }
+
+        .footer-main-link-container {
+            align-items: center;
+        }
+
+        .footer-bottom-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+        }
+    }
+
+    [dir="rtl"] .footer-brand-name{
+        font-family: "Hafs", serif;
+    }
+</style>
+
+<footer class="footer-custom">
+
+    <!-- ===== Top Row ===== -->
+    <div class="footer-top">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+
+            <!-- Logo + Name -->
+            <div class="footer-brand-row">
+                <img src="~/Images/website-icon.jpeg" class="footer-logo" alt="RentalCar Quran Institute">
+                <span class="footer-brand-name">@ViewBag.WebsiteTitle.Data</span>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/share/14Z8esGfUBv/" target="_blank" aria-label="Facebook">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/RentalCar_quran_institute/" target="_blank" aria-label="Instagram">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="https://youtube.com" target="_blank" aria-label="YouTube">
+                    <i class="bi bi-youtube"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== Main Content ===== -->
+    <div class="container py-5">
+        <div class="row">
+
+            <!-- About -->
+            <div class="col-md-3 mb-4">
+                <h6 class="footer-title"> About Us</h6>
+                <div class="title-line"></div>
+                <p class="small">
+                    Empowering Quranic education through modern tools and authentic Islamic values.
+                </p>
+
+                <!-- Main Website Link Container -->
+                <div class="footer-main-link-container">
+                    <img src="~/Images/main-website-icon.png" alt="Main Website">
+                    <a href="https://www.multiculturalcenter.net"
+                       target="_blank"
+                       rel="noopener"
+                       class="footer-main-link shimmer-footer ">
+                        Visit Main Website
+                        <i class="bi bi-box-arrow-up-right small"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-3 mb-4">
+                <h6 class="footer-title">Quick Links</h6>
+                <div class="title-line"></div>
+                <ul class="footer-links">
+                    @foreach (var menu in ViewBag.Menu)
+                    {
+                        <li><a href="@menu.Action">@menu.Title</a></li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Programs -->
+            <div class="col-md-3 mb-4">
+                <h6 class="footer-title">Courses</h6>
+                <div class="title-line"></div>
+                <ul class="footer-links">
+                    <li><a href="#">Quran Memorization</a></li>
+                    <li><a href="#">Tajweed</a></li>
+                    <li><a href="#">Arabic Language</a></li>
+                    <li><a href="#">Islamic Studies</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-3 mb-4">
+                <h6 class="footer-title">Get in Touch</h6>
+                <div class="title-line"></div>
+
+                <div class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-geo-alt" style="font-size: 1.2rem; color: var(--secondary-color);"></i>
+                    <div>
+                        <span class="contact-label">Address</span>
+                        <div class="contact-value">
+                            <a href="https://maps.app.goo.gl/Rf9SN1g1dMEbbsPZ6"
+                               target="_blank"
+                               style="color: #eaeaea; text-decoration: none;">
+                                951 Tristar Dr, Webster, TX 77598
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-2 d-flex align-items-start gap-2">
+                    <i class="bi bi-telephone" style="font-size: 1.2rem; color: var(--secondary-color);"></i>
+                    <div>
+                        <span class="contact-label">Phone (USA)</span>
+                        <div class="contact-value">
+                            <a href="tel:+12106173008" style="color: #eaeaea; text-decoration: none;">
+                                (210) 617-3008
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-envelope" style="font-size: 1.2rem; color: var(--secondary-color);"></i>
+                    <div>
+                        <span class="contact-label">Email</span>
+                        <div class="contact-value">
+                            <a href="mailto:RentalCarquraninstitute@gmail.com" style="color: #eaeaea; text-decoration: none;">
+                                RentalCarquraninstitute@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== Footer Bottom ===== -->
+    <div class="footer-bottom">
+        <div class="container d-flex justify-content-between flex-wrap align-items-center footer-bottom-container">
+            <span>© @DateTime.Now.Year RentalCar Quran Institute. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="/Home/PrivacyPolicy">@ViewBag.PrivacyPolicyLabel.Data</a> |
+                <a href="/Home/FAQ">@ViewBag.FAQLabel.Data</a>
+            </div>
+        </div>
+    </div>
+
+</footer>

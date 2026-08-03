@@ -1,0 +1,284 @@
+﻿@{ 
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Programs";
+}
+
+<style>
+    /* =====================
+       TITLE
+       ===================== */
+    .heading-title {
+        color: var(--primary-color);
+    }
+
+    .title-line {
+        width: 60px;
+        height: 5px;
+        background: var(--secondary-color);
+        border-radius: 5px;
+        margin-bottom: 2rem;
+    }
+
+    /* =====================
+       GRID
+       ===================== */
+    .programs-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    /* =====================
+       CARD
+       ===================== */
+    .program-card {
+        position: relative;
+        background: #fff;
+        border-radius: 0.35rem;
+        overflow: hidden;
+        border: 1px solid #ededed;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        transition: transform .3s ease, box-shadow .3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .program-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .price-ribbon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 60px;       /* smaller width */
+        height: 60px;      /* smaller height */
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 18px; /* smaller font */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    /* centered cut */
+    .price-ribbon::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 100%;
+        height: 0;
+        width: 0;
+        border-left: 30px solid var(--secondary-color);;
+        border-right: 30px solid var(--secondary-color);;
+        border-bottom: 25px solid transparent;
+    }
+
+    /* =====================
+       IMAGE
+       ===================== */
+   /* .program-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }*/
+
+    /* Card Image */
+    .program-image {
+        border-radius: 0.35rem;
+        padding: 10px 10px 0px 10px; 
+    }
+
+        .program-image img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+
+    /* =====================
+       CONTENT
+       ===================== */
+    .program-content {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .program-title {
+        font-size: 1.3rem !important;
+        font-weight: 700;
+        /*color: var(--primary-color);*/
+        margin-bottom: .5rem;
+    }
+
+    .program-description {
+        font-size: .95rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    /* =====================
+       FEATURES
+       ===================== */
+    .program-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1.25rem;
+    }
+
+        .program-features li {
+            display: flex;
+            align-items: center;
+            font-size: .9rem;
+            margin-bottom: .5rem;
+            color: var(--primary-color);
+        }
+
+    .program-features i {
+        color: var(--secondary-color);
+        margin-right: .5rem;
+    }
+
+    /* =====================
+       BUTTON
+       ===================== */
+    /* Button */
+    .program-button {
+        background: var(--gradient-bg);
+        color: var(--primary-color);
+        padding: 10px 25px;
+        border-radius: 0.35rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px 20px 0;
+        transition: 0.3s ease;
+    }
+
+        .program-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+    .btn-wrapper {
+        text-align: center;
+    }
+
+
+    .shimmer {
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--primary-color); /* base color */
+        position: relative;
+        display: inline-block;
+        background: linear-gradient( 90deg, #ebcf6d 0%, var(--primary-color) 50%, #d3b964 100% );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: shimmer 5s linear infinite;
+    }
+
+    @@keyframes shimmer {
+        0% {
+            background-position: 200% center;
+        }
+
+        100% {
+            background-position: -200% center;
+        }
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+    
+    <div class="mb-4">
+        <h3 class="heading-title">Programs</h3>
+        <div class="title-line"></div>
+    </div>
+
+    <div class="programs-container">
+
+        <!-- CARD 1 -->
+        <div class="program-card">
+            <div class="price-ribbon">$ 299</div>
+            <div class="program-image">
+                <img src="~/Images/3.jpeg" alt="Tajweed Course">
+            </div>
+
+            <div class="program-content">
+                <h4 class="program-title shimmer">Tajweed Quran Course</h4>
+                <p class="program-description">
+                    Learn correct Tajweed rules and improve your Quran recitation step by step.
+                </p>
+
+                <ul class="program-features">
+                    <li><i class="bi bi-clock"></i> Duration: 8 Weeks</li>
+                    <li><i class="bi bi-journal-check"></i> Live Online Classes</li>
+                    <li><i class="bi bi-award"></i> Certificate Included</li>
+                </ul>
+
+                <div class="btn-wrapper">
+                    <a href="#" class="program-button">Register Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="program-card">
+            <div class="price-ribbon">$ 399</div>
+            <div class="program-image">
+                <img src="~/Images/3.jpeg" alt="Tajweed Course">
+            </div>
+
+            <div class="program-content">
+                <h4 class="program-title shimmer">Quran Memorization</h4>
+                <p class="program-description">
+                    Memorize the Quran with structured plans and experienced instructors.
+                </p>
+
+                <ul class="program-features">
+                    <li><i class="bi bi-clock"></i> Duration: 12 Weeks</li>
+                    <li><i class="bi bi-people"></i> One-on-One Support</li>
+                    <li><i class="bi bi-award"></i> Completion Certificate</li>
+                </ul>
+
+                <div class="btn-wrapper">
+                    <a href="#" class="program-button">Register Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="program-card">
+            <div class="price-ribbon">$ 349</div>
+            <div class="program-image">
+                <img src="~/Images/3.jpeg" alt="Tajweed Course">
+            </div>
+
+            <div class="program-content">
+                <h4 class="program-title shimmer">Quranic Arabic</h4>
+                <p class="program-description">
+                    Understand Quranic Arabic and connect deeply with the meaning of verses.
+                </p>
+
+                <ul class="program-features">
+                    <li><i class="bi bi-clock"></i> Duration: 10 Weeks</li>
+                    <li><i class="bi bi-book"></i> Interactive Lessons</li>
+                    <li><i class="bi bi-translate"></i> Translation Practice</li>
+                </ul>
+
+                <div class="btn-wrapper">
+                    <a href="#" class="program-button">Register Now</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

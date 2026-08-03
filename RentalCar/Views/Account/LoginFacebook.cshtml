@@ -1,0 +1,28 @@
+@{
+    ViewBag.Title = "User Login";
+    Layout = null;
+}
+
+
+
+<form action="/api.sawa28.com/Account/ExternalLogin" style="display:none" id="myForm" class="id" enctype="multipart/form-data" method="post">
+    <div class="col-md-6">
+        <div>
+            <input type="hidden" name="returnUrl" value="https://sawa28.com/studenthome" />
+            <input type="hidden" name="provider" value="Facebook" />
+            <button type="submit" class="btn btn-primary" style="width:auto" value="Facebook"
+                    title="Login using your Facebook account">
+                Facebook
+            </button>
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    function submitForm() {
+        // **NOTE** set form values first
+        document.getElementById('myForm').submit();
+    }
+    window.onload = submitForm;
+</script>

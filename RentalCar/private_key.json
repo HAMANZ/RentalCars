@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "RentalCar-380621",
+  "private_key_id": "f41205debdf6226a3c0680d4dc82b4aa028adb4f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxJ72cwgxtEwuF\nw9Foyd6hHsF7FXjtOl4rEKEgDRUIo4+b2nhI4JevQPx0j9/bWYj+y1qu7BH0656r\nDd4rT/gZrROItOCvDN/8E+8+uGYRk/2GED2c1o8YchLQpUs5IbMZrJaMTDLazPOz\nCBGxejeF14BktIWS7MutRQ9nuOBNGMquqPz/wWPJ83DyYCnX1qW4h7WUMAKPysDz\n0desWDXqou6hRE8YEhzLlDH3UvmAEtY9owP0DPRP9QJ5ATVxAC9N/tZD3hNN8geB\nZUEyR7kkAI9U0TaeS0SlQdXgSTAclHrRAfff3bJiM1EWmZcR93P8PbZZBKKTF1+W\nQCpIIB4bAgMBAAECggEAG6bV2GGLmfzmiAcUKTSVTPXlgmZMHU9GgpdSZxPTrCkH\nke6sZseztXXB0hng+baEhSzNp08O0Hl0p0N/YahWU/+pdGWzSm+KiKi9577Vo7nD\nUUk4rMHqzQiFOk8KqkzBzWiciSKdr3xdL507UcX/Y6NLFaz9ynyuoAmPCYQYcsAA\ntBBKgPu9lSBsJc35DijkVBfdY8p9lasSK2wPU/H21OYRYsf6rq6VgdhLTcuAKDZk\nJMFn7klli6nc0FBZ1gTXA/y3kViQqAVpBgDHf+gXJzFW9vwyDvqNjqyOJYGE4epX\nZhiKbQ8DCUiJ12IiUA3FVpBf3hoPKCsg8lVTZaU12QKBgQDm4wWQ0WNNHwj4MqWx\nEoIDZLSpteA5qYjen4AlkW6xR51K6KBdg7uPtZVLfNp9em86VIiXCmO5MysFzGtz\nqVht1L8zMaFwhtnDNfSLT2QSkq0CC5VQ2owqJsEc+NjSufWaXNwot/wi3KbNvexW\niPkM0yMlMpxEikjt7wRUL/F9iQKBgQDEbJQa7a6+nkC3O3ovMSrhCsg8VtaWrnVw\n5pafZfgmtNfCqCB45tQZob50nAKKKzBbYNMim1KSPN/MJR3xXpSl1kz5a7NFGsEA\nTVjfnKcJeXojNOi8dJZpLoFnB/SkBZUFdKmH/io1LyVaq0yyvCtNPPTRR2Sx0Iql\nhReH49aZgwKBgQDUmjlWx6hTrH865JA0BCHZ9BJzr3kAP787l82NSmSOM65/+sMo\nORQt2XvW3enm3yWqpYp84mE/eQFlvn03LLmzsNI61rmcf1/n5DgBS6KPg6Zxmq7s\nm8GzUqpB/lbRe9DPSjCkAf7XLy0diIQmjswd5hGXwAmrB1buWUg4KUmKWQKBgBIK\nMtQCTlE9cY4ijUc2SczfU6KPCyhNn4Wd9+lt0QulAkfjbxALiyFLhJVrGqSb8NYD\nn4CHKV867gbuxcA8QoS0mN8zcASBv4YKlIX8+i5ZlMkU++cLAiFo3wOabHJ//L7C\nhytxQWkfClw4bVPhCk0OsyFhYDMghwtKnO2jFDuHAoGAWDMXlRghn/4FlfhsKObk\nJNrx93uNHFz4eckoYtUtbCXHi8+tPUH+e7v+LRuGElmSefEbmIHMS2Ko5Tx3+JN4\nsOkhDqFQ+Q2GHtJfzUU4KUCcarXTXNtFvDlulqRH0izNM9oi2UapxVXv7K9PKnEW\nAOJkXcLqeXPVMw7T3XNH0/w=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-l506i@RentalCar-380621.iam.gserviceaccount.com",
+  "client_id": "104829416593623796017",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-l506i%40RentalCar-380621.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

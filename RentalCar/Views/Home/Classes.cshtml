@@ -1,0 +1,170 @@
+﻿@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Classes";
+}
+
+<style>
+
+    .heading-title {
+        color: var(--primary-color);
+    }
+
+    .title-line {
+        width: 60px;
+        height: 5px;
+        background-color: var(--secondary-color);
+        border-radius: 5px;
+    }
+
+    /* ============================
+       SERVICES SECTION - SCOPED STYLES
+       ============================ */
+
+    .services-section .service-card {
+        border-radius: 0.35rem;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        padding-bottom: 25px;
+        transition: all 0.3s ease;
+        text-align: left; /* Keep left aligned */
+        border: 1px solid #ededed;
+    }
+
+        .services-section .service-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        /* Card Image */
+        .service-image {
+            border-radius: 0.35rem;
+            padding: 10px; 
+        }
+            .service-image img {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+                border-radius: inherit;
+            }
+
+        /* Title */
+        .services-section .service-card h5 {
+            font-weight: bold;
+            margin: 20px 20px 10px;
+            font-size: 20px;
+        }
+
+        /* Description */
+        .services-section .service-card p {
+            color: var(--primary-color);
+            font-size: 15px;
+            padding: 0 20px;
+        }
+
+    /* Button */
+    .services-section .service-btn {
+        background: var(--gradient-bg);
+        color: var(--primary-color);
+        padding: 10px 25px;
+        border-radius: 0.35rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px 20px 0;
+        transition: 0.3s ease;
+    }
+
+        .services-section .service-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+    .services-section .btn-wrapper {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .shimmer {
+        font-weight: 700;
+        font-size: 24px;
+        color: var(--primary-color); /* base color */
+        position: relative;
+        display: inline-block;
+        background: linear-gradient( 90deg, #ebcf6d 0%, var(--primary-color) 50%, #d3b964 100% );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: shimmer 5s linear infinite;
+    }
+
+    @@keyframes shimmer {
+        0% {
+            background-position: 200% center;
+        }
+
+        100% {
+            background-position: -200% center;
+        }
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+
+    <!-- Services -->
+    <div class="services-section mt-5 mb-3">
+
+        <div class="mb-3">
+            <h3 class="heading-title">Classes</h3>
+            <div class="title-line"></div>
+        </div>
+
+        <div class="row justify-content-center g-4">
+
+            <!-- Card 1 -->
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="~/Images/4.jpeg" alt="Quran Recitation">
+                    </div>
+                    <h5 class="shimmer">Quran Recitation</h5>
+                    <p>Learn proper recitation with Tajweed rules in a simple and effective method.</p>
+                    <div class="btn-wrapper">
+                        <a href="#" class="service-btn">Register Now</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="~/Images/4.jpeg" alt="Quran Recitation">
+                    </div>
+                    <h5 class="shimmer">Quran Memorization</h5>
+                    <p>Step-by-step Hifz classes designed for all ages with structured plans.</p>
+                    <div class="btn-wrapper">
+                        <a href="#" class="service-btn">Register Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="~/Images/4.jpeg" alt="Quran Recitation">
+                    </div>
+                    <h5 class="shimmer">Tafsir Lessons</h5>
+                    <p>Understand the meaning of the Quran with simple and authentic tafsir lessons.</p>
+                    <div class="btn-wrapper">
+                        <a href="#" class="service-btn">Register Now</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

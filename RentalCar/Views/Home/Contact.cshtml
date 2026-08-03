@@ -1,0 +1,192 @@
+﻿@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Contact Us";
+}
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    /* --- TITLE --- */
+    .heading-title {
+        color: var(--primary-color);
+        margin-bottom: 5px;
+    }
+
+    .title-line {
+        width: 60px;
+        height: 5px;
+        background: var(--secondary-color);
+        border-radius: 5px;
+        margin-bottom: 5px !important;
+    }
+
+    /* --- CONTACT INFO --- */
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 25px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--primary-color);
+    }
+
+    .info-item i {
+        color: var(--secondary-color);
+        font-size: 18px;
+    }
+
+    .info-item a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .info-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* --- FORM --- */
+    .radius-input {
+        border: 1px solid #e1e1e1;
+        border-radius: 0.35rem;
+        padding: 12px 15px;
+        font-size: 15px;
+    }
+
+    .radius-input:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 0.15rem rgba(202, 176, 83, 0.25);
+        outline: none;
+    }
+
+    .btn-send {
+        background-image: linear-gradient(135deg, var(--accent-color), #e7ce76);
+        color: var(--primary-color);
+        border-radius: 0.35rem;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        font-weight: bold;
+        transition: 0.3s ease;
+    }
+
+    .btn-send:hover {
+        background-image: linear-gradient(135deg, #e7ce76, var(--accent-color));
+    }
+
+    /* --- MAP --- */
+    .map-box {
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    @@media (max-width: 991px) {
+        .map-box {
+            min-height: 300px;
+            margin-top: 20px;
+        }
+    }
+</style>
+
+<body dir="@ViewBag.Direction">
+
+    <!-- MAIN CONTACT SECTION -->
+    <div class="container mt-5 mb-5">
+
+        <!-- TITLE -->
+        <div class="mb-4">
+            <h3 class="heading-title">Contact Us</h3>
+            <div class="title-line"></div>
+            <p class="text-muted mb-4">We are here for you! How can we help?</p>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+
+            <!-- LEFT COLUMN -->
+            <div class="col-lg-5">
+                <!-- CONTACT INFO -->
+                <div class="contact-info">
+                    <div class="info-item"><i class="bi bi-geo-alt"></i> <a href="https://maps.google.com?q=951+Tristar+Dr+Webster+TX" target="_blank">951 Tristar Dr, Webster, TX</a></div>
+                    <div class="info-item"><i class="bi bi-telephone"></i> <a href="tel:+12106173008">(210) 617-3008</a></div>
+                    <div class="info-item"><i class="bi bi-envelope"></i> <a href="mailto:RentalCarquraninstitute@gmail.com">RentalCarquraninstitute@gmail.com</a></div>
+                </div>
+
+                <!-- FORM -->
+                <form asp-action="SendMessage" asp-controller="Home" method="post" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <input name="FullName" type="text" class="form-control radius-input" placeholder="Full Name" required>
+                        </div>
+                        <div class="col-md-12">
+                            <input name="Email" type="email" class="form-control radius-input" placeholder="Email" required>
+                        </div>
+                        <div class="col-12">
+                            <textarea name="Message" rows="4" class="form-control radius-input" placeholder="Message" required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-send w-100">
+                                Send Message <i class="bi bi-send"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN MAP -->
+            <div class="col-lg-7 d-flex">
+                <div class="map-box w-100">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d111023.52469766761!2d-95.177585!3d29.58958!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86409bd12dae4f2d%3A0x454eb4ab69122b95!2s951%20Tristar%20Dr%2C%20Webster%2C%20TX%2077598%2C%20USA!5e0!3m2!1sen!2slb!4v1765965615860!5m2!1sen!2slb"
+                            loading="lazy" class="w-100 h-100" style="border:0;" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SWEETALERT2 MESSAGES -->
+    @if (TempData["SuccessContactMessage"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Message Sent!',
+                text: '@TempData["SuccessContactMessage"]',
+                confirmButtonColor: '#cab053',
+                iconColor: '#cab053',
+                background: '#fff',
+                timer: 5000,
+                timerProgressBar: true,
+                showConfirmButton: true
+            });
+        </script>
+    }
+
+    @if (TempData["ErrorContactMessage"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: '@TempData["ErrorContactMessage"]',
+                confirmButtonColor: '#c0392b',
+                iconColor: '#c0392b',
+                background: '#fff',
+                timer: 5000,
+                timerProgressBar: true,
+                showConfirmButton: true
+            });
+        </script>
+    }
+
+</body>

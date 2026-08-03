@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Privacy Policy";
+}
+<style>
+
+    /* Header */
+    .privacy-header h3 {
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    .privacy-header p {
+        color: var(--light-color);
+        max-width: 650px;
+        margin: 10px auto 30px;
+    }
+
+    .privacy-pill {
+        display: inline-block;
+        background: var(--gradient-bg);
+        color: #fff;
+        padding: 6px 22px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+
+    /* Cards */
+    .privacy-wrapper {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .privacy-card {
+        background: #fff;
+        border-radius: 0.35rem;
+        padding: 28px 30px;
+        margin-bottom: 24px;
+        box-shadow: 0 20px 50px rgba(10,15,55,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #ededed;
+    }
+
+        .privacy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(10,15,55,0.12);
+        }
+
+        .privacy-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .privacy-card p {
+            color: var(--primary-color);
+            font-weight: 500;
+            line-height: 1.8;
+            font-size: 1rem;
+            background: var(--gradient-bg);
+            padding: 15px;
+            border-radius: 0.35rem;
+        }
+
+    .title-line {
+        width: 60px;
+        height: 5px;
+        background: var(--secondary-color);
+        border-radius: 5px;
+        margin-bottom: 2rem;
+        margin: auto;
+    }
+
+</style>
+<section class="privacy-modern mt-5 mb-3">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="privacy-header text-center">
+            <h3>Privacy Policy</h3>
+            <div class="title-line"></div>
+            <p class="text-muted">We value your privacy. Here's how we handle your information.</p>
+        </div>
+
+        <!-- Policy Sections -->
+        <div class="privacy-wrapper">
+
+            <div class="privacy-card">
+                <h4>1. Information We Collect</h4>
+                <p>
+                    We collect information you provide directly to us, such as your name, email, and account details.
+                    We also collect information automatically through cookies and analytics tools.
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h4>2. How We Use Your Information</h4>
+                <p>
+                    Your information is used to improve our services, provide personalized content,
+                    respond to inquiries, and for security purposes.
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h4>3. Sharing Information</h4>
+                <p>
+                    We do not sell your personal data. We may share information with trusted partners
+                    to provide our services or comply with legal obligations.
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h4>4. Data Security</h4>
+                <p>
+                    We implement industry-standard security measures to protect your information from unauthorized access, disclosure, or alteration.
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h4>5. Your Rights</h4>
+                <p>
+                    You have the right to access, correct, or delete your personal information.
+                    You can manage your preferences through your account settings or contact us directly.
+                </p>
+            </div>
+
+            <div class="privacy-card">
+                <h4>6. Changes to this Policy</h4>
+                <p>
+                    We may update this Privacy Policy from time to time.
+                    We encourage you to review it periodically for the latest information.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>

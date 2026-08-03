@@ -1,0 +1,98 @@
+﻿@using RentalCar.DomainLayer.DTO;
+﻿@Model ContactusDTO;
+
+    @{
+        ViewData["Title"] = "Contact us ";
+    ViewBag.View = "Contact us";
+    }
+
+    <!-- Start content -->
+    <div class="content">
+
+        <div class="container-fluid">
+
+        @Html.Partial("_PartialPageHeader")
+         <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3><i class="fa fa-hand-pointer-o"></i> Contact us</h3>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <form  enctype="multipart/form-data" method="post" data-parsley-validate>
+                            <div class="form-group">
+                                <label form="Name"> Name<span class="text-danger">*</span></label>
+                                <input type="text" name="UserName" value="@Model.FirstName @Model.LastName" disabled data-parsley-trigger="change"  class="form-control" id="Name">
+                            </div>
+                              <div class="form-group">
+                                <label form="Name"> Email<span class="text-danger">*</span></label>
+                                <input type="text" name="Email" value="@Model.Email" data-parsley-trigger="change" disabled class="form-control" id="Name">
+                            </div>
+                              <div class="form-group">
+                                <label form="Name"> Subject<span class="text-danger">*</span></label>
+                                <input type="text" name="Subject" value="@Model.Subject" data-parsley-trigger="change" disabled class="form-control" id="Name">
+                            </div>
+
+                              <div class="form-group">
+                                <label form="Name"> Message<span class="text-danger">*</span></label>
+                                <textarea disabled name="Text" data-parsley-trigger="change"
+                                          required style="height: 147px;" class="form-control" id="Name">@Model.Message</textarea>
+                                </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div><!-- end card-->
+            </div>
+        </div>
+        <!-- end row -->
+	</div>
+	</div>
+	<!-- END content -->
+    <script>
+    $("document").ready(function () {
+
+        $("#imgInp").change(function () {
+        readURL(this);
+    });
+    
+    });
+
+    function readURL(input) {
+        console.log(input.files[0].name);
+        $("#BackGroundImage").val(input.files[0].name);
+        $("#BackgroundImage").val(input.files[0].name);
+        $("#ArticleImage").val(input.files[0].name);
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+                $("#ImageBase").val(e.target.result)
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    }
+
+    //$(document).ready(function () {
+
+    //    $(".ImgClick").on("click", function () {
+    //        var selected = $(this).attr("value");
+    //        console.log(selected);
+    //        //alert(selected);
+    //        $("#oldBackgroundImage_" + selected).val("");
+
+    //        $(".updateImagee_" + selected).css("display", "none");
+    //        $(".updateImage_" + selected).css("display", "none");
+
+    //    });
+
+    //  });
+</script>

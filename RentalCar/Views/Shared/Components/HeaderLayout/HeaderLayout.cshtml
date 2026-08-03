@@ -1,0 +1,687 @@
+﻿@using DomainLayer.LookUpModels
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+<!-- Animate.css for fadeIn -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Owl Carousel JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+<style>
+
+    .top-banner {
+        width: 100%;
+        height: 50px;
+        background-image: url('/Images/Islamic-Background-Top-Banner.png');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .carousel-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    [dir="ltr"] .alert-icon {
+        margin-right: 6px;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    [dir="rtl"] .alert-icon {
+        margin-left: 6px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .alert-icon i {
+            color: var(--secondary-color);
+            font-size: 18px;
+        }
+
+    .announcement-carousel .owl-item {
+        will-change: opacity, transform;
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        transform: translateY(8px);
+        opacity: 0;
+    }
+
+        .announcement-carousel .owl-item.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+    .announcement-carousel u {
+        text-decoration: underline; 
+        text-underline-offset: 4px; 
+        text-decoration-thickness: 2px; 
+        text-decoration-color: var(--secondary-color);
+    }
+
+    /* Keyframes for fade in/out */
+    /* @@keyframes fadeOnly {
+        0% { opacity: 0; }
+        10% { opacity: 1; }
+        40% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 0; }
+    }*/
+
+
+    /* @@keyframes softGlow {
+        0% {
+            opacity: 0.7;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.4));
+        }
+
+        50% {
+            opacity: 1;
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.9));
+        }
+
+        100% {
+            opacity: 0.7;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.4));
+        }
+    }*/
+
+
+
+    body {
+        padding-top: 120px; /* space for banner + navbar */
+    }
+
+    /* Keep your existing navbar CSS below */
+    .navbar {
+        background-color: var(--bg-color);
+        position: fixed;
+        top: 50px; /* push navbar below banner */
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+
+    /* Logo + brand */
+    .navbar-brand {
+        color: var(--primary-color);
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+        .navbar-brand:hover {
+            color: var(--primary-color);
+        }
+
+    [dir="ltr"] .navbar-brand {
+        font-family: "Cinzel", serif;
+    }
+
+/*    [dir="rtl"] .navbar-brand {
+        font-family: "Hafs", serif;
+    }*/
+
+    /* Navbar links */
+    .navbar-nav.d-lg-flex .nav-link {
+        color: var(--primary-color);
+        position: relative;
+        transition: color 0.3s;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+        .navbar-nav.d-lg-flex .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 5px;
+            background-color: transparent;
+            border-radius: 3px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .navbar-nav.d-lg-flex .nav-link.active {
+            color: var(--secondary-color);
+        }
+
+            .navbar-nav.d-lg-flex .nav-link.active::after {
+                width: 50%;
+                background-color: var(--secondary-color);
+            }
+
+        .navbar-nav.d-lg-flex .nav-link:not(.active):hover::after {
+            width: 50%;
+            background-color: var(--primary-color);
+        }
+
+    /* Toggler */
+    .navbar-toggler {
+        border-color: var(--primary-color);
+    }
+
+    /* Dropdown menu */
+    .dropdown-toggle {
+        font-weight: bold;
+    }
+
+    .dropdown-menu {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        min-width: 160px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .dropdown-item {
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        color: var(--primary-color);
+        transition: all 0.25s ease;
+    }
+
+    .dropdown-menu li {
+        margin-bottom: 5px;
+    }
+
+    .dropdown-item:hover {
+        color: var(--secondary-color);
+    }
+
+    .active-language {
+        font-weight: 700 !important;
+        color: var(--primary-color);
+        background-color: #efefef;
+        border-radius: 5px;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+    }
+
+        .active-language:hover {
+            color: var(--secondary-color);
+            background-color: #efefef;
+        }
+
+    /* Donate buttons */
+    .btn-warning {
+        background-image: linear-gradient(135deg, var(--accent-color) 50%, #e7ce76 80%);
+        color: var(--primary-color);
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .btn-warning:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+    .nav-item a.block {
+        position: relative;
+        padding: 12px 30px;
+        color: #1d214ec4;
+        /*background-image: linear-gradient(135deg, var(--accent-color) 50%, #e7ce76 80%);*/
+        background: linear-gradient( 135deg, var(--secondary-color) 0%, var(--accent-color) 40%, #e7c875 70%, #b9933b 100% );
+        text-decoration: none;
+        font-weight: 700;
+        overflow: hidden;
+        display: inline-block;
+        border-radius: 0.35rem;
+    }
+
+    .nav-item a span {
+        position: absolute;
+        display: block;
+        color: var(--secondary-color)
+    }
+
+        .nav-item a span:nth-child(1) {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-color));
+            animation: animate1 2s linear infinite;
+            border-radius: 0.35rem;
+        }
+
+    @@keyframes animate1 {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    .nav-item a span:nth-child(2) {
+        top: 0;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(to bottom, var(--primary-color), var(--primary-color));
+        animation: animate2 2s linear infinite;
+        animation-delay: 1s;
+        border-radius: 0.35rem;
+    }
+
+    @@keyframes animate2 {
+        0% {
+            transform: translateY(-100%);
+        }
+
+        100% {
+            transform: translateY(100%);
+        }
+    }
+
+    .nav-item a span:nth-child(3) {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(to left, var(--primary-color), var(--primary-color));
+        animation: animate3 2s linear infinite;
+        border-radius: 0.35rem;
+    }
+
+    @@keyframes animate3 {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .nav-item a span:nth-child(4) {
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(to top, var(--primary-color), var(--primary-color));
+        animation: animate4 2s linear infinite;
+        animation-delay: 1s;
+        border-radius: 0.35rem;
+    }
+
+    @@keyframes animate4 {
+        0% {
+            transform: translateY(100%);
+        }
+
+        100% {
+            transform: translateY(-100%);
+        }
+    }
+
+
+    /* Responsive adjustments */
+    @@media (max-width: 991.98px) {
+        /*body {
+            padding-top: 0px;
+        }*/
+
+        .top-banner {
+            font-size: 16px !important;
+        }
+
+        .navbar .container-fluid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-size: 18px;
+        }
+
+        .mobile-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        [dir="rtl"] .mobile-actions{
+            margin-right: auto !important;
+            margin-left: unset !important;
+        }
+
+        .navbar-nav.d-lg-flex .nav-link::after {
+            content: none !important;
+        }
+
+        .navbar-nav {
+            justify-content: center !important;
+            text-align: center;
+        }
+
+        .menu-items .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+
+        .small-screen-nav {
+            margin-left: 3rem !important;
+            position: relative;
+        }
+
+        .right-side::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -3rem; /* cancel the margin */
+            width: calc(100% + 3rem); /* full width */
+            height: 1px;
+            background-color: #ccc;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+
+    /* .language-link:after {
+        background-color: var(--bg-color) !important;
+    }*/
+
+    .main-language {
+        color: var(--primary-color);
+        font-weight: 500;
+    }
+
+        .main-language:hover {
+            color: var(--primary-color);
+        }
+
+    .language-link:focus-visible {
+        background-color: var(--primary-color) !important;
+    }
+
+    [dir="rtl"] .language-link {
+        text-align: right;
+    }
+
+    /*Arabic*/
+    [dir="rtl"] .right-side {
+        margin-right: auto !important;
+        margin-left: unset !important;
+    }
+
+    /*@@media (min-width: 992px) and (max-width: 1210px) {*/
+    /* Your styles here */
+    /*.navbar-nav .nav-link {
+            font-size: 16px !important;
+        }
+
+    }*/
+
+    .website-image-top-header {
+        width: 70px; /* fixed width */
+        height: 70px; /* fixed height */
+        border-radius: 50%; /* circle */
+        margin-inline-start: 0; /* space before the image, if needed */
+        margin-inline-end: 10px; /* space after the image (right in LTR, left in RTL) */
+        object-fit: cover; /* ensures image fills the box */
+    }
+
+</style>
+
+<body dir="@ViewBag.Direction">
+
+    @{
+        var announcements = ViewBag.Announcements as List<RentalCar.DomainLayer.DTO.AnnouncementDTO>;
+    }
+
+    @if (announcements != null && announcements.Count > 0)
+    {
+        <div class="top-banner">
+            <div class="announcement-carousel owl-carousel">
+                @foreach (var announcement in announcements)
+                {
+                <div class="carousel-item">
+                    <span class="alert-icon">
+                        <i class="@announcement.Icon banner-icon"></i>
+                    </span>
+                    @Html.Raw(announcement.Content)
+                </div>
+                }
+            </div>
+        </div>
+    }
+
+
+
+    @*<div class="top-banner">
+            { وَلَقَدْ يَسَّرْنَا الْقُرآنَ لِلذِّكْرِ فَهَلْ مِن مُدَّكِرٍ }
+        </div>*@
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+
+                <!-- Logo + title -->
+                <a class="navbar-brand" href="/">
+                    <img src="~/Images/website-icon.jpeg"
+                         alt="RentalCar"
+                         class="d-inline-block align-text-top website-image-top-header">
+                    @ViewBag.WebsiteTitle.Data
+                </a>
+
+                <!-- Mobile Donate + Toggler -->
+                <div class="mobile-actions ms-auto">
+                    @*<a class="btn btn-warning d-lg-none" href="/Donate">Donate</a>*@
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Collapsible Content -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+
+                    <!-- Left main links -->
+                    @{
+                        List<Menu> menuList = ViewBag.Menu as List<Menu>;
+                        List<ProductsMenu> productsList = ViewBag.ProductsMenu as List<ProductsMenu>;
+                        string currentUrl = ViewBag.CurrentUrl;
+                        string alignItem = ViewBag.AlignItem ?? "left";
+                    }
+
+                    <ul class="navbar-nav d-lg-flex ms-5 menu-items">
+
+                        @if (menuList != null && menuList.Any())
+                        {
+                            foreach (var item in menuList)
+                            {
+                                string activeClass = (currentUrl == item.Action) ? "active" : "";
+
+                                /* -------------------------
+                                   MENU ITEM WITH SUB-MENU
+                                   ------------------------- */
+                                if (item.is_subTest == "True")
+                                {
+                                    <li class="nav-item dropdown me-2">
+                                        <a class="nav-link dropdown-toggle @activeClass responsiveMenu linkDark"
+                                           href="@item.Action"
+                                           data-bs-toggle="dropdown">
+                                            @item.Title
+                                        </a>
+
+                                        <ul class="dropdown-menu fade-down m-0">
+                                            @if (productsList != null && productsList.Any())
+                                            {
+                                                foreach (var p in productsList)
+                                                {
+                                                    <li>
+                                                        <a href="@p.Action"
+                                                           class="dropdown-item responsiveMenu linkDark"
+                                                           style="text-align:@alignItem"
+                                                           target="@(p.Id == 316 ? "_blank" : null)">
+                                                            @Html.Raw(p.Title)
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+
+                                /* -------------------------
+                                   NORMAL MENU ITEM
+                                   ------------------------- */
+                                else
+                                {
+                                    <li class="nav-item me-2">
+                                        <a href="@item.Action"
+                                           class="nav-link @activeClass responsiveMenu linkDark">
+                                            @item.Title
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+
+                    <!-- Right side items (language + donate desktop) -->
+                    <ul class="navbar-nav ms-auto align-items-center mt-2 mt-lg-0 right-side small-screen-nav">
+                        <!-- Language dropdown -->
+                        <li class="nav-item dropdown" style="font-weight:bold;font-size:18px;">
+                            <a class="nav-link dropdown-toggle main-language" id="languageDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-globe" style="color:var(--secondary-color);"></i> @(ViewBag.CurrentLanguage.Name ?? "English")
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end font-weight-bold" aria-labelledby="languageDropdown">
+                                @foreach (var lang in ViewBag.languages)
+                                {
+                                    var isActive = ViewBag.CurrentLanguage.LanguageCode.ToString().ToLower() == lang.LanguageCode.ToLower();
+                                    <li>
+                                        <a class="dropdown-item language-link @(isActive ? "active-language" : "")"
+                                           onclick="setLanguage('@lang.LanguageCode')">
+                                            @lang.Name
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+
+                        <!-- Donate button desktop -->
+                        @*<li class="nav-item d-none d-lg-block ms-2">
+                                <a href="#" class="block">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    Donate
+                                </a>
+                            </li>*@
+                        <li class="nav-item d-lg-block ms-2">
+                            <a href="#" class="block">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                @ViewBag.DonateLabel.Data
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <script>
+        function setLanguage(lang) {
+            fetch('/Home/SetLanguage', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `culture=${lang}&returnUrl=${encodeURIComponent(window.location.pathname)}`
+            }).then(() => location.reload());
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdown = document.querySelector("#languageDropdown");
+
+            function handleDesktop() {
+                if (window.innerWidth >= 992) {
+                    dropdown.removeAttribute("data-bs-toggle");
+                    dropdown.addEventListener("click", stopClick);
+                } else {
+                    dropdown.setAttribute("data-bs-toggle", "dropdown");
+                    dropdown.removeEventListener("click", stopClick);
+                }
+            }
+
+            function stopClick(e) {
+                e.preventDefault();
+            }
+
+            handleDesktop();
+            window.addEventListener("resize", handleDesktop);
+        });
+
+        $(document).ready(function () {
+             var isRtl = '@ViewBag.Direction'.toLowerCase() === 'rtl';
+
+            $('.announcement-carousel').owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 0,
+
+                autoplay: true,
+                autoplayTimeout: 5000,
+                smartSpeed: 600,
+
+                autoplayHoverPause: true,
+                dots: false,
+                nav: false,
+
+                animateIn: 'fadeIn',
+                animateOut: false,
+
+                rtl: isRtl   // dynamically set rtl
+            });
+        });
+
+
+
+
+    </script>
+</body>
