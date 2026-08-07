@@ -1,0 +1,93 @@
+@page
+@model FleetErp.Api.Pages.Admin.Roles.CreateModel
+@{
+    ViewData["Title"] = "Create Role";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-plus me-2"></i>Create Role
+    </h1>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.Name" class="form-label">Role Name <span class="text-danger">*</span></label>
+                    <input asp-for="Input.Name" class="form-control" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.Description" class="form-label">Description</label>
+                    <input asp-for="Input.Description" class="form-control" />
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Permissions</label>
+                <div class="row">
+                    @foreach (var group in Model.GroupedPermissions)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-header py-2">
+                                    <strong>@group.Module</strong>
+                                    <button type="button" class="btn btn-sm btn-link float-end select-all-btn" data-module="@group.Module">
+                                        Select All
+                                    </button>
+                                </div>
+                                <div class="card-body py-2">
+                                    @foreach (var perm in group.Permissions)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input perm-@group.Module" type="checkbox"
+                                                   name="Input.PermissionIds" value="@perm.Id" id="perm_@perm.Id" />
+                                            <label class="form-check-label" for="perm_@perm.Id">
+                                                @perm.Description
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Create Role
+                </button>
+                <a asp-page="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('.select-all-btn').click(function () {
+                var module = $(this).data('module');
+                var checkboxes = $('.perm-' + module);
+                var allChecked = checkboxes.filter(':checked').length === checkboxes.length;
+                checkboxes.prop('checked', !allChecked);
+                $(this).text(allChecked ? 'Select All' : 'Deselect All');
+            });
+        });
+    </script>
+}

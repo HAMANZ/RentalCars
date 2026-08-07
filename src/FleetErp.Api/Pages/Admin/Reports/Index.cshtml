@@ -1,0 +1,635 @@
+@page
+@model FleetErp.Api.Pages.Admin.Reports.IndexModel
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-chart-bar me-2"></i>Reports
+    </h1>
+</div>
+
+<!-- Report Filter Form -->
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-filter me-2"></i>Report Filters
+    </div>
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Report Type</label>
+                <select name="reportType" asp-for="ReportType" class="form-select">
+                    <option value="revenue">Revenue Report</option>
+                    <option value="expense">Expense Report</option>
+                    <option value="utilization">Vehicle Utilization</option>
+                    <option value="investor">Investor Summary</option>
+                    <option value="maintenance">Maintenance Report</option>
+                    <option value="insurance">Insurance Report</option>
+                    <option value="audit">Audit Report</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Start Date</label>
+                <input type="date" name="startDate" asp-for="StartDate" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">End Date</label>
+                <input type="date" name="endDate" asp-for="EndDate" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Investor (Optional)</label>
+                <select name="investorId" asp-for="InvestorId" asp-items="Model.InvestorOptions" class="form-select">
+                    <option value="">All Investors</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search me-2"></i>Generate
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Revenue Report -->
+@if (Model.RevenueReport != null)
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Revenue</h5>
+                    <h2>@Model.RevenueReport.TotalRentalRevenue.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Payments Received</h5>
+                    <h2>@Model.RevenueReport.TotalPaymentsReceived.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Outstanding</h5>
+                    <h2>@Model.RevenueReport.OutstandingBalance.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Rentals</h5>
+                    <h2>@Model.RevenueReport.TotalRentals</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">Revenue by Vehicle</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th class="text-end">Rentals</th>
+                                <th class="text-end">Revenue</th>
+                                <th class="text-end">Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vehicle in Model.RevenueReport.RevenueByVehicle.Take(10))
+                            {
+                                <tr>
+                                    <td>@vehicle.PlateNumber - @vehicle.VehicleName</td>
+                                    <td class="text-end">@vehicle.RentalCount</td>
+                                    <td class="text-end">@vehicle.TotalRevenue.ToString("C")</td>
+                                    <td class="text-end">@vehicle.PaidAmount.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">Revenue by Month</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th class="text-end">Rentals</th>
+                                <th class="text-end">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var month in Model.RevenueReport.RevenueByMonth)
+                            {
+                                <tr>
+                                    <td>@month.MonthName @month.Year</td>
+                                    <td class="text-end">@month.RentalCount</td>
+                                    <td class="text-end">@month.Revenue.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Expense Report -->
+@if (Model.ExpenseReport != null)
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Expenses</h5>
+                    <h2>@Model.ExpenseReport.TotalExpenses.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Maintenance</h5>
+                    <h2>@Model.ExpenseReport.TotalMaintenanceCost.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Insurance</h5>
+                    <h2>@Model.ExpenseReport.TotalInsuranceCost.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-secondary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Records</h5>
+                    <h2>@(Model.ExpenseReport.MaintenanceCount + Model.ExpenseReport.InsuranceRecordCount)</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">Expenses by Category</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th class="text-end">Count</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in Model.ExpenseReport.ExpensesByCategory)
+                            {
+                                <tr>
+                                    <td>@category.Category</td>
+                                    <td class="text-end">@category.Count</td>
+                                    <td class="text-end">@category.Amount.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">Expenses by Vehicle</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th class="text-end">Maintenance</th>
+                                <th class="text-end">Insurance</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vehicle in Model.ExpenseReport.ExpensesByVehicle.Take(10))
+                            {
+                                <tr>
+                                    <td>@vehicle.PlateNumber - @vehicle.VehicleName</td>
+                                    <td class="text-end">@vehicle.MaintenanceCost.ToString("C")</td>
+                                    <td class="text-end">@vehicle.InsuranceCost.ToString("C")</td>
+                                    <td class="text-end fw-bold">@vehicle.TotalCost.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Utilization Report -->
+@if (Model.UtilizationReport != null)
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Vehicles</h5>
+                    <h2>@Model.UtilizationReport.TotalVehicles</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Vehicles with Rentals</h5>
+                    <h2>@Model.UtilizationReport.VehiclesWithRentals</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Avg Utilization</h5>
+                    <h2>@Model.UtilizationReport.AverageUtilizationRate%</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Vehicle Utilization Details</div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Vehicle</th>
+                        <th>Investor</th>
+                        <th class="text-end">Days Rented</th>
+                        <th class="text-end">Total Days</th>
+                        <th class="text-end">Utilization</th>
+                        <th class="text-end">Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vehicle in Model.UtilizationReport.Vehicles)
+                    {
+                        <tr>
+                            <td>@vehicle.PlateNumber - @vehicle.VehicleName</td>
+                            <td>@vehicle.InvestorName</td>
+                            <td class="text-end">@vehicle.DaysRented</td>
+                            <td class="text-end">@vehicle.TotalDays</td>
+                            <td class="text-end">
+                                <span class="badge @(vehicle.UtilizationRate >= 70 ? "bg-success" : vehicle.UtilizationRate >= 40 ? "bg-warning" : "bg-danger")">
+                                    @vehicle.UtilizationRate%
+                                </span>
+                            </td>
+                            <td class="text-end">@vehicle.Revenue.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!-- Investor Report -->
+@if (Model.InvestorReport != null)
+{
+    <div class="card">
+        <div class="card-header">Investor Summary</div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Investor</th>
+                        <th class="text-end">Vehicles</th>
+                        <th class="text-end">Active Rentals</th>
+                        <th class="text-end">Revenue</th>
+                        <th class="text-end">Expenses</th>
+                        <th class="text-end">Net Income</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var investor in Model.InvestorReport.Investors)
+                    {
+                        <tr>
+                            <td>@investor.InvestorName</td>
+                            <td class="text-end">@investor.VehicleCount</td>
+                            <td class="text-end">@investor.ActiveRentals</td>
+                            <td class="text-end text-success">@investor.TotalRevenue.ToString("C")</td>
+                            <td class="text-end text-danger">@investor.TotalExpenses.ToString("C")</td>
+                            <td class="text-end fw-bold @(investor.NetIncome >= 0 ? "text-success" : "text-danger")">
+                                @investor.NetIncome.ToString("C")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!-- Maintenance Report -->
+@if (Model.MaintenanceReport != null)
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Records</h5>
+                    <h2>@Model.MaintenanceReport.TotalRecords</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Completed</h5>
+                    <h2>@Model.MaintenanceReport.CompletedRecords</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Pending</h5>
+                    <h2>@Model.MaintenanceReport.PendingRecords</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Cost</h5>
+                    <h2>@Model.MaintenanceReport.TotalCost.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">By Type</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th class="text-end">Count</th>
+                                <th class="text-end">Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var type in Model.MaintenanceReport.ByType)
+                            {
+                                <tr>
+                                    <td>@type.MaintenanceType</td>
+                                    <td class="text-end">@type.Count</td>
+                                    <td class="text-end">@type.TotalCost.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">By Vehicle</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th class="text-end">Count</th>
+                                <th class="text-end">Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vehicle in Model.MaintenanceReport.ByVehicle.Take(10))
+                            {
+                                <tr>
+                                    <td>@vehicle.PlateNumber - @vehicle.VehicleName</td>
+                                    <td class="text-end">@vehicle.MaintenanceCount</td>
+                                    <td class="text-end">@vehicle.TotalCost.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Insurance Report -->
+@if (Model.InsuranceReport != null)
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Policies</h5>
+                    <h2>@Model.InsuranceReport.TotalPolicies</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Active</h5>
+                    <h2>@Model.InsuranceReport.ActivePolicies</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Expiring Soon</h5>
+                    <h2>@Model.InsuranceReport.ExpiringSoon</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Premiums</h5>
+                    <h2>@Model.InsuranceReport.TotalPremiums.ToString("C")</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">By Company</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th class="text-end">Policies</th>
+                                <th class="text-end">Premiums</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var company in Model.InsuranceReport.ByCompany)
+                            {
+                                <tr>
+                                    <td>@company.CompanyName</td>
+                                    <td class="text-end">@company.PolicyCount</td>
+                                    <td class="text-end">@company.TotalPremiums.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @if (Model.InsuranceReport.ExpiringPolicies.Count > 0)
+        {
+            <div class="col-lg-6">
+                <div class="card border-warning">
+                    <div class="card-header bg-warning">Expiring Policies (Next 30 Days)</div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Vehicle</th>
+                                    <th>Policy #</th>
+                                    <th>Company</th>
+                                    <th class="text-end">Days Left</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var policy in Model.InsuranceReport.ExpiringPolicies)
+                                {
+                                    <tr>
+                                        <td>@policy.PlateNumber</td>
+                                        <td>@policy.PolicyNumber</td>
+                                        <td>@policy.CompanyName</td>
+                                        <td class="text-end">
+                                            <span class="badge @(policy.DaysUntilExpiry <= 7 ? "bg-danger" : "bg-warning")">
+                                                @policy.DaysUntilExpiry days
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- Audit Report -->
+@if (Model.AuditReport != null)
+{
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Actions</h5>
+                    <h2>@Model.AuditReport.TotalActions</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">By Action</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th class="text-end">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var action in Model.AuditReport.ByAction.Take(10))
+                            {
+                                <tr>
+                                    <td>@action.Action</td>
+                                    <td class="text-end">@action.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">By Entity</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Entity</th>
+                                <th class="text-end">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var entity in Model.AuditReport.ByEntity)
+                            {
+                                <tr>
+                                    <td>@entity.EntityType</td>
+                                    <td class="text-end">@entity.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">By User</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model.AuditReport.ByUser.Take(10))
+                            {
+                                <tr>
+                                    <td>@(user.UserName ?? "System")</td>
+                                    <td class="text-end">@user.ActionCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

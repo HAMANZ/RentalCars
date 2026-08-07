@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FleetErp.Api/FleetErp.Api.csproj" />
+    <Project Path="src/FleetErp.Application/FleetErp.Application.csproj" />
+    <Project Path="src/FleetErp.Domain/FleetErp.Domain.csproj" />
+    <Project Path="src/FleetErp.Infrastructure/FleetErp.Infrastructure.csproj" />
+    <Project Path="src/FleetErp.Shared/FleetErp.Shared.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,240 @@
+@page
+@model FleetErp.Api.Pages.Admin.Lookups.IndexModel
+@{
+    ViewData["Title"] = "Lookups";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-list me-2"></i>Lookups
+    </h1>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-folder me-2"></i>Lookup Types
+            </div>
+            <div class="list-group list-group-flush">
+                @foreach (var type in Model.AvailableLookupTypes)
+                {
+                    <a asp-page="Index" asp-route-type="@type"
+                       class="list-group-item list-group-item-action @(Model.SelectedType == type ? "active" : "")">
+                        @type
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="fas fa-tags me-2"></i>
+                    @(Model.SelectedType ?? "Select a Lookup Type")
+                </span>
+                @if (!string.IsNullOrEmpty(Model.SelectedType))
+                {
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addLookupModal">
+                        <i class="fas fa-plus me-1"></i>Add
+                    </button>
+                }
+            </div>
+            <div class="card-body">
+                @if (string.IsNullOrEmpty(Model.SelectedType))
+                {
+                    <p class="text-muted mb-0">Select a lookup type from the left panel to view and manage items.</p>
+                }
+                else if (Model.LookupItems.Count == 0)
+                {
+                    <p class="text-muted mb-0">No items found for this lookup type.</p>
+                }
+                else
+                {
+                    <table id="lookupsTable" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Order</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LookupItems)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td><code>@item.Code</code></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.SortOrder</td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge badge-active">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-inactive">Inactive</span>
+                                        }
+                                        @if (item.IsSystem)
+                                        {
+                                            <span class="badge bg-info">System</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!item.IsSystem)
+                                        {
+                                            <div class="btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-outline-primary edit-btn"
+                                                        data-id="@item.Id"
+                                                        data-code="@item.Code"
+                                                        data-name="@item.Name"
+                                                        data-order="@item.SortOrder"
+                                                        data-active="@item.IsActive.ToString().ToLower()"
+                                                        title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Lookup Modal -->
+<div class="modal fade" id="addLookupModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Add">
+                <input type="hidden" name="LookupType" value="@Model.SelectedType" />
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Lookup Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Code <span class="text-danger">*</span></label>
+                        <input type="text" name="Code" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" name="Name" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sort Order</label>
+                        <input type="number" name="SortOrder" class="form-control" value="0" />
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" name="IsActive" class="form-check-input" value="true" checked />
+                        <label class="form-check-label">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Lookup Modal -->
+<div class="modal fade" id="editLookupModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Edit">
+                <input type="hidden" name="Id" id="editId" />
+                <input type="hidden" name="LookupType" value="@Model.SelectedType" />
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Lookup Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Code</label>
+                        <input type="text" id="editCode" class="form-control" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" name="Name" id="editName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sort Order</label>
+                        <input type="number" name="SortOrder" id="editOrder" class="form-control" />
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" name="IsActive" id="editActive" class="form-check-input" value="true" />
+                        <label class="form-check-label">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            @if (Model.LookupItems.Count > 0)
+            {
+                <text>
+                $('#lookupsTable').DataTable({
+                    pageLength: 20,
+                    order: [[3, 'asc']],
+                    language: {
+                        search: "Search:",
+                        lengthMenu: "Show _MENU_ entries"
+                    }
+                });
+                </text>
+            }
+
+            $('.edit-btn').click(function () {
+                var id = $(this).data('id');
+                var code = $(this).data('code');
+                var name = $(this).data('name');
+                var order = $(this).data('order');
+                var active = $(this).data('active') === 'true';
+
+                $('#editId').val(id);
+                $('#editCode').val(code);
+                $('#editName').val(name);
+                $('#editOrder').val(order);
+                $('#editActive').prop('checked', active);
+
+                $('#editLookupModal').modal('show');
+            });
+        });
+    </script>
+}
