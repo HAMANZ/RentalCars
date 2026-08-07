@@ -1,9 +1,17 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Yusr\\Views",
-    "\\Yusr\\Views\\Admin",
-    "\\Yusr\\Views\\Admin\\Website"
+    "\\.claude",
+    "\\.claude\\skills\\fleet-erp-dotnet",
+    "\\.claude\\skills\\fleet-erp-dotnet\\references",
+    "\\DomainLayer",
+    "\\DomainLayer\\Models",
+    "\\src\\FleetErp.Api",
+    "\\src\\FleetErp.Api\\Pages",
+    "\\src\\FleetErp.Api\\Pages\\Admin",
+    "\\src\\FleetErp.Domain\\Entities",
+    "\\src\\FleetErp.Domain\\Entities\\Insurance"
   ],
+  "SelectedNode": "\\DomainLayer\\Models\\Inspection.cs",
   "PreviewInSolutionExplorer": false
 }

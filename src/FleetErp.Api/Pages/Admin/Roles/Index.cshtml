@@ -1,0 +1,101 @@
+@page
+@model FleetErp.Api.Pages.Admin.Roles.IndexModel
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-user-shield me-2"></i>Roles
+    </h1>
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Add Role
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+        <table id="rolesTable" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>System</th>
+                    <th>Permissions</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model.Roles)
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>
+                            <strong>@role.Name</strong>
+                        </td>
+                        <td>@(role.Description ?? "-")</td>
+                        <td>
+                            @if (role.IsSystem)
+                            {
+                                <span class="badge bg-info">System</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Custom</span>
+                            }
+                        </td>
+                        <td>@role.PermissionCount</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a asp-page="Edit" asp-route-id="@role.Id" class="btn btn-outline-primary" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                @if (!role.IsSystem)
+                                {
+                                    <form method="post" asp-page-handler="Delete" asp-route-id="@role.Id" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-danger" title="Delete" onclick="return confirm('Delete this role?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#rolesTable').DataTable({
+                pageLength: 20,
+                order: [[0, 'asc']],
+                language: {
+                    search: "Search:",
+                    lengthMenu: "Show _MENU_ entries",
+                    info: "Showing _START_ to _END_ of _TOTAL_ roles"
+                }
+            });
+        });
+    </script>
+}

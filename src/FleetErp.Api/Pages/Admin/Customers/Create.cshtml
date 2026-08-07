@@ -1,0 +1,104 @@
+@page
+@model FleetErp.Api.Pages.Admin.Customers.CreateModel
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-plus me-2"></i>Create Customer
+    </h1>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <h5 class="mb-3">Personal Information</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.FullName" class="form-label">Full Name <span class="text-danger">*</span></label>
+                    <input asp-for="Input.FullName" class="form-control" />
+                    <span asp-validation-for="Input.FullName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.StatusId" class="form-label">Status <span class="text-danger">*</span></label>
+                    <select asp-for="Input.StatusId" asp-items="Model.StatusOptions" class="form-select">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                    <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.Phone" class="form-label">Phone</label>
+                    <input asp-for="Input.Phone" class="form-control" />
+                    <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <input asp-for="Input.Email" class="form-control" type="email" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">Identification</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.NationalId" class="form-label">National ID / Passport</label>
+                    <input asp-for="Input.NationalId" class="form-control" />
+                    <span asp-validation-for="Input.NationalId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.DrivingLicenseNumber" class="form-label">Driving License Number</label>
+                    <input asp-for="Input.DrivingLicenseNumber" class="form-control" />
+                    <span asp-validation-for="Input.DrivingLicenseNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.DrivingLicenseExpiry" class="form-label">License Expiry Date</label>
+                    <input asp-for="Input.DrivingLicenseExpiry" class="form-control" type="date" />
+                    <span asp-validation-for="Input.DrivingLicenseExpiry" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">Additional Information</h5>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.Address" class="form-label">Address</label>
+                    <textarea asp-for="Input.Address" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Input.Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Input.Notes" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Create Customer
+                </button>
+                <a asp-page="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,16 @@
+:root {
+    --main-color: #0A0F37;
+    --with-main-color: white;
+    --secondary-color: #cab053;
+    --third-color: #4CAF50;
+    --background-color: #f5f5f5;
+    --text-color: #333333;
+    --card-color: #ffffff;
+    --pulse-glow-color: rgba(16, 29, 100, 0.3);
+}
+
+html.dark-theme {
+    --main-color: white;
+    --with-main-color: #101d64;
+    --pulse-glow-color: rgba(255, 255, 255, 0.6);
+}

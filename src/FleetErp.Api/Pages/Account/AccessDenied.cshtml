@@ -1,0 +1,21 @@
+@page
+@model FleetErp.Api.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "_LoginLayout";
+}
+
+<div class="login-header">
+    <i class="fas fa-ban login-icon text-danger"></i>
+    <h1>Access Denied</h1>
+    <p>You do not have permission to access this resource.</p>
+</div>
+
+<div class="text-center">
+    <a asp-page="/Admin/Index" class="btn btn-login w-100 mb-2">
+        <i class="fas fa-home me-2"></i>Go to Dashboard
+    </a>
+    <a asp-page="/Account/Logout" class="btn btn-outline-secondary w-100">
+        <i class="fas fa-sign-out-alt me-2"></i>Sign Out
+    </a>
+</div>
