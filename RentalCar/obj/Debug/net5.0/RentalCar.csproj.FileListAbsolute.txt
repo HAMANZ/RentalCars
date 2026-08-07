@@ -1,0 +1,10 @@
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.csproj.AssemblyReference.cache
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.GeneratedMSBuildEditorConfig.editorconfig
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.AssemblyInfoInputs.cache
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.AssemblyInfo.cs
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.csproj.CoreCompileInputs.cache
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.MvcApplicationPartsAssemblyInfo.cs
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.MvcApplicationPartsAssemblyInfo.cache
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.RazorAssemblyInfo.cache
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.RazorAssemblyInfo.cs
+G:\projects\RentalCars\RentalCar\obj\Debug\net5.0\RentalCar.sourcelink.json

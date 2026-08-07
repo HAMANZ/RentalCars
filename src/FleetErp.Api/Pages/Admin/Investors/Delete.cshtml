@@ -1,0 +1,71 @@
+@page "{id:int}"
+@model FleetErp.Api.Pages.Admin.Investors.DeleteModel
+@{
+    ViewData["Title"] = "Delete Investor";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0 text-danger">
+        <i class="fas fa-trash me-2"></i>Delete Investor
+    </h1>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+@if (Model.Investor != null)
+{
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            <i class="fas fa-exclamation-triangle me-2"></i>Confirm Deletion
+        </div>
+        <div class="card-body">
+            <p class="lead">Are you sure you want to delete this investor?</p>
+
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th style="width: 30%;">ID</th>
+                        <td>@Model.Investor.Id</td>
+                    </tr>
+                    <tr>
+                        <th>Full Name</th>
+                        <td><strong>@Model.Investor.FullName</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>@(Model.Investor.Phone ?? "-")</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@(Model.Investor.Email ?? "-")</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>@Model.Investor.StatusName</td>
+                    </tr>
+                    <tr>
+                        <th>Documents</th>
+                        <td>@Model.Investor.DocumentCount</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-warning">
+                <i class="fas fa-info-circle me-2"></i>
+                This action will soft-delete the investor. The record will be marked as deleted but not permanently removed from the database.
+            </div>
+
+            <form method="post">
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>Yes, Delete
+                    </button>
+                    <a asp-page="Index" class="btn btn-secondary">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+}

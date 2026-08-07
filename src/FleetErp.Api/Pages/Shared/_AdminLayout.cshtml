@@ -1,0 +1,175 @@
+@using System.Security.Claims
+@{
+    var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+    var userName = User.Identity?.Name ?? User.FindFirst(ClaimTypes.Email)?.Value ?? "User";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | FleetERP</title>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="~/css/colors.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <!-- Header -->
+    <header class="p-3">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- Left Section -->
+            <div class="d-flex align-items-center gap-4">
+                <button class="btn text-white d-md-none" id="sidebarToggle" style="border: 1px solid; padding: 2px 7px;">
+                    <i class="fas fa-bars"></i> <span class="text-white-50" style="font-size:12px;">Menu</span>
+                </button>
+                <h4 class="mb-0 fw-bold" style="letter-spacing: 1px;">
+                    <i class="fas fa-car-side me-2"></i>FleetERP
+                </h4>
+            </div>
+
+            <!-- Right Section -->
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-none d-md-block">
+                    <span class="text-white-50 user-style" style="font-size: 0.95rem;">
+                        <i class="fas fa-user me-1"></i>
+                        <strong class="text-white">@userName</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="container-fluid flex-grow-1 d-flex">
+        <div class="row flex-grow-1 w-100">
+            <!-- Sidebar -->
+            <nav id="sidebarContainer" class="col-md-3 col-lg-2 sidebar d-flex flex-column ps-0 pe-3 pt-3 pb-3">
+                <div class="flex-grow-1">
+                    <ul class="nav flex-column">
+                        <!-- Main Links -->
+                        <li class="nav-item mt-2 mb-1 text-muted small ps-2">MAIN</li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(currentPage.Contains("/Admin/Index") || currentPage == "/Admin" ? "active" : "")"
+                               asp-page="/Admin/Index">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+
+                        <!-- Fleet Management -->
+                        <li class="nav-item mt-3 mb-1 text-muted small ps-2">FLEET MANAGEMENT</li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(currentPage.Contains("/Admin/Investors") ? "active" : "")"
+                               asp-page="/Admin/Investors/Index">
+                                <i class="fas fa-user-tie"></i> Investors
+                            </a>
+                        </li>
+
+                        <!-- Settings -->
+                        <li class="nav-item mt-3 mb-1 text-muted small ps-2">SETTINGS</li>
+
+                        <li class="nav-item">
+                            <a class="nav-link d-flex justify-content-between align-items-center"
+                               data-bs-toggle="collapse" href="#settingsSubmenu" role="button"
+                               aria-expanded="false" aria-controls="settingsSubmenu">
+                                <span><i class="fas fa-cog"></i> Settings</span>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </a>
+                            <div class="collapse ps-4 @(currentPage.Contains("/Admin/Users") || currentPage.Contains("/Admin/Roles") || currentPage.Contains("/Admin/Lookups") ? "show" : "")" id="settingsSubmenu">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link @(currentPage.Contains("/Admin/Users") ? "active" : "")"
+                                           asp-page="/Admin/Users/Index">
+                                            <i class="fas fa-users"></i> Users
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @(currentPage.Contains("/Admin/Roles") ? "active" : "")"
+                                           asp-page="/Admin/Roles/Index">
+                                            <i class="fas fa-user-shield"></i> Roles
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @(currentPage.Contains("/Admin/Lookups") ? "active" : "")"
+                                           asp-page="/Admin/Lookups/Index">
+                                            <i class="fas fa-list"></i> Lookups
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Logout button at bottom -->
+                <div class="mt-auto">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link logout" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="p-3 mt-auto">
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year FleetERP. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a asp-page="/Account/Logout" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

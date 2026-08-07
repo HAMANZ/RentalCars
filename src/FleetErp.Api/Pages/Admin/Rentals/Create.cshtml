@@ -1,0 +1,144 @@
+@page
+@model FleetErp.Api.Pages.Admin.Rentals.CreateModel
+@{
+    ViewData["Title"] = "Create Rental";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-plus me-2"></i>New Rental
+    </h1>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <h5 class="mb-3">Rental Details</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.VehicleId" class="form-label">Vehicle <span class="text-danger">*</span></label>
+                    <select asp-for="Input.VehicleId" asp-items="Model.VehicleOptions" class="form-select">
+                        <option value="">-- Select Vehicle --</option>
+                    </select>
+                    <span asp-validation-for="Input.VehicleId" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.CustomerId" class="form-label">Customer <span class="text-danger">*</span></label>
+                    <select asp-for="Input.CustomerId" asp-items="Model.CustomerOptions" class="form-select">
+                        <option value="">-- Select Customer --</option>
+                    </select>
+                    <span asp-validation-for="Input.CustomerId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Input.StartDate" class="form-label">Start Date <span class="text-danger">*</span></label>
+                    <input asp-for="Input.StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="Input.StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Input.EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
+                    <input asp-for="Input.EndDate" class="form-control" type="date" />
+                    <span asp-validation-for="Input.EndDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Input.StatusId" class="form-label">Status <span class="text-danger">*</span></label>
+                    <select asp-for="Input.StatusId" asp-items="Model.StatusOptions" class="form-select">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                    <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Input.OdometerStart" class="form-label">Odometer Start <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input asp-for="Input.OdometerStart" class="form-control" type="number" min="0" />
+                        <span class="input-group-text">km</span>
+                    </div>
+                    <span asp-validation-for="Input.OdometerStart" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">Pricing</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.DailyRate" class="form-label">Daily Rate <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Input.DailyRate" class="form-control" type="number" step="0.01" min="0" id="dailyRate" />
+                    </div>
+                    <span asp-validation-for="Input.DailyRate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.Discount" class="form-label">Discount</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Input.Discount" class="form-control" type="number" step="0.01" min="0" id="discount" />
+                    </div>
+                    <span asp-validation-for="Input.Discount" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Estimated Total</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" id="estimatedTotal" readonly />
+                    </div>
+                    <small class="text-muted">Calculated when dates are selected</small>
+                </div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">Additional Information</h5>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Input.Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Input.Notes" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Create Rental
+                </button>
+                <a asp-page="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            function calculateTotal() {
+                var startDate = new Date($('#Input_StartDate').val());
+                var endDate = new Date($('#Input_EndDate').val());
+                var dailyRate = parseFloat($('#dailyRate').val()) || 0;
+                var discount = parseFloat($('#discount').val()) || 0;
+
+                if (startDate && endDate && !isNaN(startDate) && !isNaN(endDate) && startDate <= endDate) {
+                    var days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+                    var subTotal = dailyRate * days;
+                    var total = subTotal - discount;
+                    $('#estimatedTotal').val(total.toFixed(2) + ' (' + days + ' days)');
+                } else {
+                    $('#estimatedTotal').val('');
+                }
+            }
+
+            $('#Input_StartDate, #Input_EndDate, #dailyRate, #discount').on('change input', calculateTotal);
+            calculateTotal();
+        });
+    </script>
+}

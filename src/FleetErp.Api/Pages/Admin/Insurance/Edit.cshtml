@@ -1,0 +1,133 @@
+@page "{id:int}"
+@model FleetErp.Api.Pages.Admin.Insurance.EditModel
+@{
+    ViewData["Title"] = $"Edit Insurance Policy - #{Model.RecordId}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-edit me-2"></i>Edit Insurance Policy: <code>@Model.PolicyNumber</code>
+    </h1>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <h5 class="mb-3">Policy Details</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Vehicle</label>
+                    <input type="text" class="form-control" value="@Model.VehicleDisplay" disabled />
+                    <small class="text-muted">Vehicle cannot be changed</small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.InsuranceCompanyId" class="form-label">Insurance Company <span class="text-danger">*</span></label>
+                    <select asp-for="Input.InsuranceCompanyId" asp-items="Model.CompanyOptions" class="form-select">
+                        <option value="">-- Select Company --</option>
+                    </select>
+                    <span asp-validation-for="Input.InsuranceCompanyId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.InsuranceTypeId" class="form-label">Insurance Type <span class="text-danger">*</span></label>
+                    <select asp-for="Input.InsuranceTypeId" asp-items="Model.TypeOptions" class="form-select">
+                        <option value="">-- Select Type --</option>
+                    </select>
+                    <span asp-validation-for="Input.InsuranceTypeId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.StatusId" class="form-label">Status <span class="text-danger">*</span></label>
+                    <select asp-for="Input.StatusId" asp-items="Model.StatusOptions" class="form-select">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                    <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.PolicyNumber" class="form-label">Policy Number <span class="text-danger">*</span></label>
+                    <input asp-for="Input.PolicyNumber" class="form-control" />
+                    <span asp-validation-for="Input.PolicyNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.StartDate" class="form-label">Start Date <span class="text-danger">*</span></label>
+                    <input asp-for="Input.StartDate" class="form-control" type="date" />
+                    <span asp-validation-for="Input.StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
+                    <input asp-for="Input.EndDate" class="form-control" type="date" />
+                    <span asp-validation-for="Input.EndDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.Premium" class="form-label">Premium <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Input.Premium" class="form-control" type="number" step="0.01" min="0" />
+                    </div>
+                    <span asp-validation-for="Input.Premium" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">Coverage Details</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.CoverageAmount" class="form-label">Coverage Amount</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Input.CoverageAmount" class="form-control" type="number" step="0.01" min="0" />
+                    </div>
+                    <span asp-validation-for="Input.CoverageAmount" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.Deductible" class="form-label">Deductible</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Input.Deductible" class="form-control" type="number" step="0.01" min="0" />
+                    </div>
+                    <span asp-validation-for="Input.Deductible" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.CoverageDetails" class="form-label">Coverage Details</label>
+                    <textarea asp-for="Input.CoverageDetails" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Input.CoverageDetails" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Input.Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Input.Notes" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Save Changes
+                </button>
+                <a asp-page="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,206 @@
+@page "{id:int}"
+@model FleetErp.Api.Pages.Admin.Customers.DetailsModel
+@{
+    ViewData["Title"] = $"Customer Details - {Model.Customer.FullName}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-user me-2"></i>Customer: @Model.Customer.FullName
+    </h1>
+    <div>
+        <a asp-page="Edit" asp-route-id="@Model.Customer.Id" class="btn btn-primary">
+            <i class="fas fa-edit me-2"></i>Edit
+        </a>
+        <a asp-page="Index" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Personal Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Full Name</label>
+                        <div class="fw-bold fs-5">@Model.Customer.FullName</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Status</label>
+                        @{
+                            var badgeClass = Model.Customer.StatusName?.ToUpper() switch
+                            {
+                                "ACTIVE" => "badge-active",
+                                "SUSPENDED" => "bg-warning text-dark",
+                                "BLACKLISTED" => "bg-danger",
+                                _ => "bg-secondary"
+                            };
+                        }
+                        <div><span class="badge @badgeClass fs-6">@Model.Customer.StatusName</span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Phone</label>
+                        <div class="fw-bold">@(Model.Customer.Phone ?? "N/A")</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted">Email</label>
+                        <div class="fw-bold">@(Model.Customer.Email ?? "N/A")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-id-card me-2"></i>Identification</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">National ID / Passport</label>
+                        <div class="fw-bold"><code>@(Model.Customer.NationalId ?? "N/A")</code></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Driving License</label>
+                        <div class="fw-bold"><code>@(Model.Customer.DrivingLicenseNumber ?? "N/A")</code></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">License Expiry</label>
+                        @if (Model.Customer.DrivingLicenseExpiry.HasValue)
+                        {
+                            var isExpired = Model.Customer.DrivingLicenseExpiry.Value < DateTime.Now;
+                            <div class="fw-bold @(isExpired ? "text-danger" : "")">
+                                @Model.Customer.DrivingLicenseExpiry.Value.ToString("MMM dd, yyyy")
+                                @if (isExpired)
+                                {
+                                    <span class="badge bg-danger ms-1">Expired</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="fw-bold">N/A</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Address & Notes</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <label class="form-label text-muted">Address</label>
+                        <div class="fw-bold">@(Model.Customer.Address ?? "N/A")</div>
+                    </div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Customer.Notes))
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label text-muted">Notes</label>
+                            <div class="border rounded p-3 bg-light">@Model.Customer.Notes</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i>Documents</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Documents.Count == 0)
+                {
+                    <p class="text-muted mb-0">No documents uploaded.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var doc in Model.Documents)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-file me-2"></i>
+                                    <span>@doc.DocumentTypeName</span>
+                                    @if (doc.ExpiresAt.HasValue)
+                                    {
+                                        <br />
+                                        <small class="@(doc.IsExpired ? "text-danger" : "text-muted")">
+                                            @(doc.IsExpired ? "Expired: " : "Expires: ")@doc.ExpiresAt.Value.ToString("MMM dd, yyyy")
+                                        </small>
+                                    }
+                                </div>
+                                <form method="post" asp-page-handler="DeleteDocument" asp-route-id="@Model.Customer.Id" asp-route-documentId="@doc.Id" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this document?');">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-car me-2"></i>Rental Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">Total Rentals:</span>
+                    <span class="fw-bold">@Model.Customer.RentalCount</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Audit Info</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <label class="form-label text-muted mb-0">Created</label>
+                    <div class="small">@Model.Customer.CreatedAt.ToString("MMM dd, yyyy HH:mm")</div>
+                </div>
+                @if (Model.Customer.UpdatedAt.HasValue)
+                {
+                    <div class="mb-2">
+                        <label class="form-label text-muted mb-0">Last Updated</label>
+                        <div class="small">@Model.Customer.UpdatedAt.Value.ToString("MMM dd, yyyy HH:mm")</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

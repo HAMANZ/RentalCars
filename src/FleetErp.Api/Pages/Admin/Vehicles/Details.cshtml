@@ -1,0 +1,223 @@
+@page "{id:int}"
+@model FleetErp.Api.Pages.Admin.Vehicles.DetailsModel
+@{
+    ViewData["Title"] = $"Vehicle Details - {Model.Vehicle.PlateNumber}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-car me-2"></i>Vehicle: <code>@Model.Vehicle.PlateNumber</code>
+    </h1>
+    <div>
+        <a asp-page="Edit" asp-route-id="@Model.Vehicle.Id" class="btn btn-primary">
+            <i class="fas fa-edit me-2"></i>Edit
+        </a>
+        <a asp-page="Index" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Plate Number</label>
+                        <div class="fw-bold"><code class="fs-5">@Model.Vehicle.PlateNumber</code></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Make</label>
+                        <div class="fw-bold">@Model.Vehicle.Make</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Model</label>
+                        <div class="fw-bold">@Model.Vehicle.Model</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label text-muted">Year</label>
+                        <div class="fw-bold">@Model.Vehicle.Year</div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label text-muted">Color</label>
+                        <div class="fw-bold">@(Model.Vehicle.Color ?? "N/A")</div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label text-muted">Vehicle Type</label>
+                        <div class="fw-bold">@Model.Vehicle.VehicleTypeName</div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label text-muted">Status</label>
+                        @{
+                            var badgeClass = Model.Vehicle.StatusName?.ToUpper() switch
+                            {
+                                "AVAILABLE" => "badge-active",
+                                "RENTED" => "bg-primary",
+                                "IN MAINTENANCE" => "bg-warning text-dark",
+                                "RESERVED" => "bg-info",
+                                "SOLD" => "badge-inactive",
+                                "INACTIVE" => "badge-inactive",
+                                _ => "bg-secondary"
+                            };
+                        }
+                        <div><span class="badge @badgeClass fs-6">@Model.Vehicle.StatusName</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-cogs me-2"></i>Technical Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">VIN</label>
+                        <div class="fw-bold"><code>@(Model.Vehicle.Vin ?? "N/A")</code></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Engine Number</label>
+                        <div class="fw-bold">@(Model.Vehicle.EngineNumber ?? "N/A")</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Chassis Number</label>
+                        <div class="fw-bold">@(Model.Vehicle.ChassisNumber ?? "N/A")</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Fuel Type</label>
+                        <div class="fw-bold">@Model.Vehicle.FuelTypeName</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Transmission</label>
+                        <div class="fw-bold">@Model.Vehicle.TransmissionTypeName</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Odometer</label>
+                        <div class="fw-bold">@Model.Vehicle.Odometer.ToString("N0") km</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Ownership & Pricing</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Owner (Investor)</label>
+                        <div class="fw-bold">@Model.Vehicle.InvestorName</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Daily Rate</label>
+                        <div class="fw-bold text-success fs-5">@Model.Vehicle.DailyRate.ToString("C")</div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Purchase Price</label>
+                        <div class="fw-bold">@(Model.Vehicle.PurchasePrice?.ToString("C") ?? "N/A")</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-muted">Purchase Date</label>
+                        <div class="fw-bold">@(Model.Vehicle.PurchaseDate?.ToString("MMM dd, yyyy") ?? "N/A")</div>
+                    </div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Vehicle.Notes))
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label text-muted">Notes</label>
+                            <div class="border rounded p-3 bg-light">@Model.Vehicle.Notes</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i>Documents</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Documents.Count == 0)
+                {
+                    <p class="text-muted mb-0">No documents uploaded.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var doc in Model.Documents)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-file me-2"></i>
+                                    <span>@doc.DocumentTypeName</span>
+                                    @if (doc.ExpiresAt.HasValue)
+                                    {
+                                        <br />
+                                        <small class="@(doc.IsExpired ? "text-danger" : "text-muted")">
+                                            @(doc.IsExpired ? "Expired: " : "Expires: ")@doc.ExpiresAt.Value.ToString("MMM dd, yyyy")
+                                        </small>
+                                    }
+                                </div>
+                                <form method="post" asp-page-handler="DeleteDocument" asp-route-id="@Model.Vehicle.Id" asp-route-documentId="@doc.Id" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this document?');">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Audit Info</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <label class="form-label text-muted mb-0">Created</label>
+                    <div class="small">@Model.Vehicle.CreatedAt.ToString("MMM dd, yyyy HH:mm")</div>
+                </div>
+                @if (Model.Vehicle.UpdatedAt.HasValue)
+                {
+                    <div class="mb-2">
+                        <label class="form-label text-muted mb-0">Last Updated</label>
+                        <div class="small">@Model.Vehicle.UpdatedAt.Value.ToString("MMM dd, yyyy HH:mm")</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

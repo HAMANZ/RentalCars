@@ -1,0 +1,18 @@
+@page
+@model FleetErp.Api.Pages.Account.LogoutModel
+@{
+    ViewData["Title"] = "Logged out";
+    Layout = "_LoginLayout";
+}
+
+<div class="login-header">
+    <i class="fas fa-check-circle login-icon text-success"></i>
+    <h1>Logged Out</h1>
+    <p>You have been successfully logged out.</p>
+</div>
+
+<div class="text-center">
+    <a asp-page="/Account/Login" class="btn btn-login w-100">
+        <i class="fas fa-sign-in-alt me-2"></i>Sign In Again
+    </a>
+</div>

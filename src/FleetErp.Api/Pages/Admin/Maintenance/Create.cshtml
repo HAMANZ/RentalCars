@@ -1,0 +1,111 @@
+@page
+@model FleetErp.Api.Pages.Admin.Maintenance.CreateModel
+@{
+    ViewData["Title"] = "Create Maintenance Record";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+        <i class="fas fa-plus me-2"></i>New Maintenance Record
+    </h1>
+    <a asp-page="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <h5 class="mb-3">Maintenance Details</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.VehicleId" class="form-label">Vehicle <span class="text-danger">*</span></label>
+                    <select asp-for="Input.VehicleId" asp-items="Model.VehicleOptions" class="form-select">
+                        <option value="">-- Select Vehicle --</option>
+                    </select>
+                    <span asp-validation-for="Input.VehicleId" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Input.MaintenanceTypeId" class="form-label">Type <span class="text-danger">*</span></label>
+                    <select asp-for="Input.MaintenanceTypeId" asp-items="Model.MaintenanceTypeOptions" class="form-select">
+                        <option value="">-- Select Type --</option>
+                    </select>
+                    <span asp-validation-for="Input.MaintenanceTypeId" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label asp-for="Input.StatusId" class="form-label">Status <span class="text-danger">*</span></label>
+                    <select asp-for="Input.StatusId" asp-items="Model.StatusOptions" class="form-select">
+                        <option value="">-- Select Status --</option>
+                    </select>
+                    <span asp-validation-for="Input.StatusId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.ScheduledDate" class="form-label">Scheduled Date <span class="text-danger">*</span></label>
+                    <input asp-for="Input.ScheduledDate" class="form-control" type="date" />
+                    <span asp-validation-for="Input.ScheduledDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.Cost" class="form-label">Estimated Cost <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input asp-for="Input.Cost" class="form-control" type="number" step="0.01" min="0" />
+                    </div>
+                    <span asp-validation-for="Input.Cost" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Input.OdometerAtService" class="form-label">Odometer</label>
+                    <div class="input-group">
+                        <input asp-for="Input.OdometerAtService" class="form-control" type="number" min="0" />
+                        <span class="input-group-text">km</span>
+                    </div>
+                    <span asp-validation-for="Input.OdometerAtService" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Input.ServiceProvider" class="form-label">Service Provider</label>
+                    <input asp-for="Input.ServiceProvider" class="form-control" />
+                    <span asp-validation-for="Input.ServiceProvider" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+            <h5 class="mb-3">Description & Notes</h5>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.Description" class="form-label">Description</label>
+                    <textarea asp-for="Input.Description" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label asp-for="Input.Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Input.Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Input.Notes" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Create Record
+                </button>
+                <a asp-page="Index" class="btn btn-secondary">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
