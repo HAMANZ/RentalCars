@@ -62,7 +62,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                City Model = _dbContext.City.Where(e => e.Id == Id).FirstOrDefault();
+                City Model = _dbContext.Cities.Where(e => e.Id == Id).FirstOrDefault();
                 response.Data = FromModeltoDTO(Model);
                 response.HttpStatusCode = HttpStatusCode.OK;
 
@@ -88,7 +88,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                List<City> listModel = _dbContext.City.Where(e => e.Is_deleted == false).ToList();
+                List<City> listModel = _dbContext.Cities.Where(e => e.Is_deleted == false).ToList();
                 List<CityDTO> listDTO = new List<CityDTO>();
                 if (listModel.Count != 0)
                 {
@@ -189,7 +189,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                City Model = _dbContext.City.Where(e => e.Id == Id).FirstOrDefault();
+                City Model = _dbContext.Cities.Where(e => e.Id == Id).FirstOrDefault();
                 if (Model != null)
                 {
                     _repository.Remove(Model);

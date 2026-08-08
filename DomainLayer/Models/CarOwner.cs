@@ -43,17 +43,20 @@ namespace RentalCar.DomainLayer.Models
 
         public string Notes { get; set; }
 
-        [ForeignKey("NationalId ")]
 
+
+        [ForeignKey("UserId")]
+        public EUser User { get; set; }
+        [ForeignKey("NationalId ")]
         public Nationality Nationality { get; set; }
 
         [ForeignKey("CountryId ")]
-
         public Country Country { get; set; }
 
         [ForeignKey("CityId ")]
-
         public City City { get; set; }
+
+
         public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
     }
 }

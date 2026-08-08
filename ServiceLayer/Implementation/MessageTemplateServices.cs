@@ -65,7 +65,7 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             try
             {
-                List<MessageTemplate> listModel = _dbContext.MessageTemplate.Where(e => e.Is_deleted == false).ToList();
+                List<MessageTemplate> listModel = _dbContext.MessageTemplates.Where(e => e.Is_deleted == false).ToList();
                 List<MessageTemplateDTO> listDTO = new List<MessageTemplateDTO>();
                 if(listModel!=null && listModel.Count != 0) {
                     foreach (var item in listModel)
@@ -88,7 +88,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 msg.Created_at = DateTime.Now;
-                _dbContext.MessageTemplate.Add(FromDTOtoModel(msg));
+                _dbContext.MessageTemplates.Add(FromDTOtoModel(msg));
                 _dbContext.SaveChanges();
                 return "true";
             }
@@ -101,7 +101,7 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             try
             {
-                MessageTemplate Model = _dbContext.MessageTemplate.Where(e => e.Id == msg.Id).FirstOrDefault();
+                MessageTemplate Model = _dbContext.MessageTemplates.Where(e => e.Id == msg.Id).FirstOrDefault();
                 Model = FromDTOtoModel(msg);
                 _dbContext.SaveChanges();
                 return "true";
@@ -116,7 +116,7 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             try
             {
-                MessageTemplate msgs = _dbContext.MessageTemplate.Where(e => e.Id == Id).FirstOrDefault();
+                MessageTemplate msgs = _dbContext.MessageTemplates.Where(e => e.Id == Id).FirstOrDefault();
                 if (msgs != null)
                     msgs.Is_deleted = true;
                 _dbContext.SaveChanges();
@@ -133,7 +133,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 MessageTemplateDTO media = new MessageTemplateDTO();
-                MessageTemplate med = _dbContext.MessageTemplate.Where(e => e.Id == Id).FirstOrDefault();
+                MessageTemplate med = _dbContext.MessageTemplates.Where(e => e.Id == Id).FirstOrDefault();
                 if (med != null)
                     media = FromModeltoDTO(med);
                 return media;

@@ -14,8 +14,6 @@ namespace RentalCar.DomainLayer.Models
         [Key]
         public int Id { get; set; }
 
-        public string Name { get; set; }
-
 
         public string Phone { get; set; }
 
@@ -35,5 +33,7 @@ namespace RentalCar.DomainLayer.Models
         public Nationality Nationality { get; set; }
 
         public ICollection<RentalContract> Contracts { get; set; }
+        public EUser User { get; set; }
+
     }
 }

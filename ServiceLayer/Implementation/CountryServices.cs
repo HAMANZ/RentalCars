@@ -60,7 +60,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                Country Model = _dbContext.Country.Where(e => e.Id == Id).FirstOrDefault();
+                Country Model = _dbContext.Countries.Where(e => e.Id == Id).FirstOrDefault();
                 response.Data = FromModeltoDTO(Model);
                 response.HttpStatusCode = HttpStatusCode.OK;
 
@@ -86,7 +86,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
         //    try
         //    {
-        //        List<Country> listModel = _dbContext.Country.Where(e => e.LanguagId == LangId).ToList();
+        //        List<Country> listModel = _dbContext.Countries.Where(e => e.LanguagId == LangId).ToList();
         //        List<DefinedDTO> listDTO = new List<DefinedDTO>();
         //        if (listModel.Count != 0)
         //        {
@@ -121,7 +121,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                List<Country> listModel = _dbContext.Country.Where(e => e.Is_deleted == false).ToList();
+                List<Country> listModel = _dbContext.Countries.Where(e => e.Is_deleted == false).ToList();
                 List<DefinedDTO> listDTO = new List<DefinedDTO>();
                 if (listModel.Count != 0)
                 {
@@ -222,7 +222,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                Country Model = _dbContext.Country.Where(e => e.Id == Id).FirstOrDefault();
+                Country Model = _dbContext.Countries.Where(e => e.Id == Id).FirstOrDefault();
                 if (Model != null)
                 {
                     _repository.Remove(Model);

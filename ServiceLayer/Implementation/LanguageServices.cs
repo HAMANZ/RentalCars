@@ -55,7 +55,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
               
-                List<Language> listModel = _dbContext.Language.Where(e => e.Is_deleted == false).ToList();
+                List<Language> listModel = _dbContext.Languages.Where(e => e.Is_deleted == false).ToList();
                 List<LanguageDTO> listDTO = new List<LanguageDTO>();
                 if (listModel.Count != 0)
                 {
@@ -77,7 +77,7 @@ namespace RentalCar.ServiceLayer.Implementation
            
             try
             {
-                Language Model = _dbContext.Language.Where(e => e.LanguageCode == code).FirstOrDefault();
+                Language Model = _dbContext.Languages.Where(e => e.LanguageCode == code).FirstOrDefault();
               
                 
                 return Model;
@@ -94,7 +94,7 @@ namespace RentalCar.ServiceLayer.Implementation
            
             try
             {
-                Language Model = _dbContext.Language.Where(e => e.Id == Id).FirstOrDefault();
+                Language Model = _dbContext.Languages.Where(e => e.Id == Id).FirstOrDefault();
               
                 
                 return Model;
@@ -111,7 +111,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                List<Language> listModel = _dbContext.Language.Where(e => e.Is_deleted == false).ToList();
+                List<Language> listModel = _dbContext.Languages.Where(e => e.Is_deleted == false).ToList();
                 List<LanguageDTO> listDTO = new List<LanguageDTO>();
                 if (listModel.Count != 0)
                 {

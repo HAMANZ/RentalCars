@@ -10,8 +10,8 @@ using RentalCar.DomainLayer.Models;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(RentalCarDbContext))]
-    [Migration("20260803202837_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260808081359_intial_create_8_8_2026")]
+    partial class intial_create_8_8_2026
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -147,29 +147,29 @@ namespace RepositoryLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c2462983-7a27-4b10-bb93-51446f2485aa",
-                            ConcurrencyStamp = "43214d49-86a2-47a9-b56d-fc0d87d64cc1",
+                            Id = "2fc26134-21d9-486c-bfb6-50b117a5bee7",
+                            ConcurrencyStamp = "6799ea36-b469-4b67-b100-925198e3ea60",
                             Name = "EUser",
                             NormalizedName = "EUSER"
                         },
                         new
                         {
-                            Id = "b4bd84c9-8aeb-4493-9517-34425416ad85",
-                            ConcurrencyStamp = "9368cbd1-882f-424e-8c8e-aaf015972f4d",
+                            Id = "123ce71e-cda9-43fd-a237-58c8e53c9d9c",
+                            ConcurrencyStamp = "bc376be8-d1a1-4264-a150-42c1d3f9a8b7",
                             Name = "Adminstrator",
                             NormalizedName = "ADMINSTRATOR"
                         },
                         new
                         {
-                            Id = "7401a50e-f530-42af-b7d4-a6123c86d3ad",
-                            ConcurrencyStamp = "40f23dbe-5571-4c27-a99d-d7405e5a2d95",
+                            Id = "bb7fdb4a-7c78-4ebf-8a81-001bd7e94985",
+                            ConcurrencyStamp = "8a157312-23fd-4b65-aa04-57cf0aa07de2",
                             Name = "Tutor",
                             NormalizedName = "TUTOR"
                         },
                         new
                         {
-                            Id = "fd4e661c-af07-4d20-b769-5b474f002c76",
-                            ConcurrencyStamp = "90c81468-bea8-490c-bc17-47f553fd731c",
+                            Id = "a5acd0c0-d607-40bd-be03-86ba7dce909d",
+                            ConcurrencyStamp = "3b891801-1002-4381-9229-b4379ea2c61f",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -473,7 +473,7 @@ namespace RepositoryLayer.Migrations
                             Id = 1L,
                             ApplicationName = "RentalCar",
                             ContactWebsite = "",
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 218, DateTimeKind.Local).AddTicks(4883),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(3472),
                             Created_by = 1L,
                             Description = "",
                             Email = "oonlinetutoring@gmail.com",
@@ -484,7 +484,7 @@ namespace RepositoryLayer.Migrations
                             Password = "P@ssw0rdsse",
                             Phone = "09999999",
                             Twitter = "",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 218, DateTimeKind.Local).AddTicks(4908),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(3502),
                             Updated_by = 1L
                         });
                 });
@@ -496,8 +496,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
@@ -630,7 +630,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppLabel");
+                    b.ToTable("AppLabels");
 
                     b
                         .HasComment("App Label table for adding the label of the website in different languages");
@@ -646,8 +646,8 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
@@ -769,7 +769,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brand");
+                    b.ToTable("Brands");
 
                     b
                         .HasComment("Brand Table is for predefined data used in the app");
@@ -777,9 +777,9 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Car", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
 
                     b.Property<int?>("BranchId")
@@ -790,6 +790,9 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<long?>("CarOwnerId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("ChassisNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
@@ -811,6 +814,15 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("EngineNo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("FuelTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("InvestorId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Is_deleted")
                         .HasColumnType("bit")
                         .HasComment("Is Deleted Record");
@@ -821,8 +833,8 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("PurchasePrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2")
@@ -846,9 +858,65 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CarOwnerId");
 
+                    b.HasIndex("FuelTypeId");
+
+                    b.HasIndex("InvestorId");
+
                     b.HasIndex("LicensePlateId");
 
                     b.ToTable("Cars");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.CarDocuments", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("isActive");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.ToTable("CarDocuments");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.CarOwner", b =>
@@ -929,6 +997,9 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .HasComment("User Id that Updated_by");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -936,6 +1007,8 @@ namespace RepositoryLayer.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("NationalId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CarOwners");
                 });
@@ -977,7 +1050,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
 
                     b
                         .HasComment("City Table is for predefined cities used in the app");
@@ -987,33 +1060,33 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 1L,
                             CountryId = 1L,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(2052),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6647),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "AL-Kouds",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(2071),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6676),
                             Updated_by = 1L
                         },
                         new
                         {
                             Id = 2L,
                             CountryId = 2L,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(2079),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6690),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Beirut",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(2083),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6697),
                             Updated_by = 1L
                         },
                         new
                         {
                             Id = 3L,
                             CountryId = 3L,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(2088),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6709),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Istanbul",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(2091),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6716),
                             Updated_by = 1L
                         });
                 });
@@ -1109,7 +1182,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
 
                     b
                         .HasComment("Country Table is for predefined countries used in the app");
@@ -1118,31 +1191,31 @@ namespace RepositoryLayer.Migrations
                         new
                         {
                             Id = 1L,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(3481),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9193),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Palestinne",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(3496),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9221),
                             Updated_by = 1L
                         },
                         new
                         {
                             Id = 2L,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(3502),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9234),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Lebanon",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(3505),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9242),
                             Updated_by = 1L
                         },
                         new
                         {
                             Id = 3L,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(3509),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9251),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Turkey",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(3512),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9256),
                             Updated_by = 1L
                         });
                 });
@@ -1178,9 +1251,6 @@ namespace RepositoryLayer.Migrations
                     b.Property<DateTime>("LicenseExpiryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long?>("NationalId")
                         .HasColumnType("bigint");
 
@@ -1200,6 +1270,137 @@ namespace RepositoryLayer.Migrations
                     b.HasIndex("NationalId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.DocumentType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DocumentTypes");
+
+                    b
+                        .HasComment("DocumentType Table is for predefined data used in the app");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.Documents", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("isActive");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.FuelType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FuelTypes");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Gender", b =>
@@ -1247,22 +1448,22 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 1L,
                             Code = "M",
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(195),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3220),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Male",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(214),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3247),
                             Updated_by = 1L
                         },
                         new
                         {
                             Id = 2L,
                             Code = "F",
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(225),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3267),
                             Created_by = 1L,
                             Is_deleted = false,
                             Name = "Female",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 219, DateTimeKind.Local).AddTicks(228),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3278),
                             Updated_by = 1L
                         });
                 });
@@ -1274,8 +1475,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2")
@@ -1307,7 +1508,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CarId");
 
-                    b.ToTable("Inspection");
+                    b.ToTable("Inspections");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Insurance", b =>
@@ -1317,10 +1518,13 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("Company")
+                    b.Property<double?>("CoverageAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CoverageDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")
@@ -1331,18 +1535,39 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .HasComment("User Id that Created_by");
 
+                    b.Property<double?>("Deductible")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("InsuranceCompanyId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("InsuranceTypeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Is_deleted")
                         .HasColumnType("bit")
                         .HasComment("Is Deleted Record");
 
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PolicyNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Premium")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("RenewalReminderSent")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<long?>("StatusId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2")
@@ -1357,6 +1582,10 @@ namespace RepositoryLayer.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("InsuranceCompanyId");
+
+                    b.HasIndex("InsuranceTypeId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Insurances");
                 });
@@ -1411,6 +1640,155 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("InsuranceCompanies");
                 });
 
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.InsuranceDocument", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<long?>("DocumentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InsuranceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("isActive");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentTypeId");
+
+                    b.HasIndex("InsuranceId");
+
+                    b.ToTable("InsuranceDocuments");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.InsuranceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InsuranceTypes");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.Investor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<string>("DrivingLicense")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<DateTime>("LicenseExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("NationalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("StatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NationalId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Investors");
+                });
+
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -1457,7 +1835,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Language");
+                    b.ToTable("Languages");
 
                     b
                         .HasComment("Language Table is for predefined data used in the app");
@@ -1466,25 +1844,25 @@ namespace RepositoryLayer.Migrations
                         new
                         {
                             Id = 1,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 218, DateTimeKind.Local).AddTicks(8273),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9807),
                             Created_by = 1L,
                             Is_deleted = false,
                             Is_ltr = false,
                             LanguageCode = "ar",
                             Name = "Arabic",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 218, DateTimeKind.Local).AddTicks(8295),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9837),
                             Updated_by = 1L
                         },
                         new
                         {
                             Id = 2,
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 218, DateTimeKind.Local).AddTicks(8306),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9854),
                             Created_by = 1L,
                             Is_deleted = false,
                             Is_ltr = false,
                             LanguageCode = "en",
                             Name = "English",
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 218, DateTimeKind.Local).AddTicks(8309),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9859),
                             Updated_by = 1L
                         });
                 });
@@ -1527,7 +1905,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LicensePlate");
+                    b.ToTable("LicensePlates");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.LicensePlateOwnership", b =>
@@ -1584,7 +1962,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("PlateOwnerId1");
 
-                    b.ToTable("LicensePlateOwnership");
+                    b.ToTable("LicensePlateOwnerships");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.LoggerAction", b =>
@@ -1628,7 +2006,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoggerAction");
+                    b.ToTable("LoggerActions");
 
                     b
                         .HasComment("Logger Action  Table  for adding the Logs for the action");
@@ -1679,7 +2057,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoggerError");
+                    b.ToTable("LoggerErrors");
 
                     b
                         .HasComment("Logger Error   Table  for adding the Logs for the each error occured in app");
@@ -1775,7 +2153,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LookUpTable");
+                    b.ToTable("LookUpTables");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.LookUps", b =>
@@ -1916,7 +2294,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MessageTemplate");
+                    b.ToTable("MessageTemplates");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Nationality", b =>
@@ -1951,7 +2329,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationality");
+                    b.ToTable("Nationalities");
 
                     b
                         .HasComment("Nationality Table is for predefined data used in the app");
@@ -2015,8 +2393,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ChangeIntervalKM")
                         .HasColumnType("int");
@@ -2063,15 +2441,15 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("OilChangeSchedules");
                 });
 
-            modelBuilder.Entity("RentalCar.DomainLayer.Models.Payment", b =>
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.PaymentMethod", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2")
@@ -2081,18 +2459,12 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("bigint")
                         .HasComment("User Id that Created_by");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("Is_deleted")
                         .HasColumnType("bit")
                         .HasComment("Is Deleted Record");
 
-                    b.Property<string>("PaymentMethod")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RentalContractId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2")
@@ -2104,9 +2476,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RentalContractId");
-
-                    b.ToTable("Payment");
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.PlateOwner", b =>
@@ -2153,7 +2523,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlateOwner");
+                    b.ToTable("PlateOwners");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.RefreshToken", b =>
@@ -2216,13 +2586,16 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.RentalContract", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("ActualReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2")
@@ -2235,30 +2608,39 @@ namespace RepositoryLayer.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("DailyRate")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("DailyRate")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("InvestorId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Is_deleted")
                         .HasColumnType("bit")
                         .HasComment("Is Deleted Record");
 
-                    b.Property<decimal>("PaidAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("OdometerEnd")
+                        .HasColumnType("int");
 
-                    b.Property<decimal>("Remaining")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("OdometerStart")
+                        .HasColumnType("int");
+
+                    b.Property<double>("PaidAmount")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("StatusId")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("TotalAmount")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("datetime2")
@@ -2274,7 +2656,65 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("InvestorId");
+
+                    b.HasIndex("StatusId");
+
                     b.ToTable("RentalContracts");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.RentalPayment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("PaymentMethodId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("RentalContractId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TransactionReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("RentalContractId");
+
+                    b.ToTable("RentalPayments");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Repair", b =>
@@ -2360,6 +2800,214 @@ namespace RepositoryLayer.Migrations
                         .HasComment("ResetPassword Table is for storing otp code");
                 });
 
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.SAccount", b =>
+                {
+                    b.Property<long>("AccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("AccountTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("AccountTypeId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("AccountId");
+
+                    b.HasIndex("AccountTypeId1");
+
+                    b.ToTable("SAccounts");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.SAccountType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SAccountTypes");
+
+                    b
+                        .HasComment("AccountType Table is for predefined data used in the app");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.STransaction", b =>
+                {
+                    b.Property<long>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<long>("CreditAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DebitAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReferenceType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("TransactionTypeId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("CreditAccountId");
+
+                    b.HasIndex("DebitAccountId");
+
+                    b.HasIndex("TransactionTypeId1");
+
+                    b.ToTable("STransactions");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.STransactionType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Created_at");
+
+                    b.Property<long>("Created_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Created_by");
+
+                    b.Property<bool>("Is_deleted")
+                        .HasColumnType("bit")
+                        .HasComment("Is Deleted Record");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2")
+                        .HasComment("DateTime that Updated_at");
+
+                    b.Property<long>("Updated_by")
+                        .HasColumnType("bigint")
+                        .HasComment("User Id that Updated_by");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("STransactionType");
+                });
+
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Status", b =>
                 {
                     b.Property<long>("Id")
@@ -2411,8 +3059,8 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
@@ -2469,8 +3117,8 @@ namespace RepositoryLayer.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2")
@@ -2512,8 +3160,8 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("CarId")
-                        .HasColumnType("int");
+                    b.Property<long?>("CarId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2")
@@ -2616,6 +3264,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<long>("Created_by")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<long>("EUserId")
                         .HasColumnType("bigint");
 
@@ -2634,6 +3285,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<bool>("Is_deleted")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName_ar")
                         .HasColumnType("nvarchar(max)");
 
@@ -2649,6 +3303,10 @@ namespace RepositoryLayer.Migrations
                     b.Property<long>("Updated_by")
                         .HasColumnType("bigint");
 
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
+
                     b.HasIndex("GenderId");
 
                     b.ToTable("EUser");
@@ -2656,23 +3314,23 @@ namespace RepositoryLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d78ed66e-fa44-453f-b5f1-b4b0ee8ac2ce",
+                            Id = "842baa14-3c17-49a6-bfef-6c6f2d505ffc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bc2f8758-7b49-4dfa-8946-bd6cfc307a89",
+                            ConcurrencyStamp = "db8b76d3-51e1-4c41-aabe-757526b35809",
                             Email = "hudaabumayha.ham@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f7e71d6a-b20b-4547-bcd4-159febadeae6",
+                            SecurityStamp = "b1a1a042-5c49-4319-954c-f213575e3002",
                             TwoFactorEnabled = false,
                             UserName = "admin",
-                            Created_at = new DateTime(2026, 8, 3, 23, 28, 36, 196, DateTimeKind.Local).AddTicks(9215),
+                            Created_at = new DateTime(2026, 8, 8, 11, 13, 58, 140, DateTimeKind.Local).AddTicks(8571),
                             Created_by = 1L,
                             EUserId = 0L,
                             GenderId = 1L,
                             Is_deleted = false,
-                            Updated_at = new DateTime(2026, 8, 3, 23, 28, 36, 217, DateTimeKind.Local).AddTicks(9218),
+                            Updated_at = new DateTime(2026, 8, 8, 11, 13, 58, 146, DateTimeKind.Local).AddTicks(4041),
                             Updated_by = 1L
                         });
                 });
@@ -2778,6 +3436,14 @@ namespace RepositoryLayer.Migrations
                         .WithMany("Cars")
                         .HasForeignKey("CarOwnerId");
 
+                    b.HasOne("RentalCar.DomainLayer.Models.FuelType", "FuelType")
+                        .WithMany()
+                        .HasForeignKey("FuelTypeId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.Investor", "Investor")
+                        .WithMany()
+                        .HasForeignKey("InvestorId");
+
                     b.HasOne("RentalCar.DomainLayer.Models.LicensePlate", "LicensePlate")
                         .WithMany("Cars")
                         .HasForeignKey("LicensePlateId");
@@ -2788,7 +3454,26 @@ namespace RepositoryLayer.Migrations
 
                     b.Navigation("CarOwner");
 
+                    b.Navigation("FuelType");
+
+                    b.Navigation("Investor");
+
                     b.Navigation("LicensePlate");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.CarDocuments", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.Car", "Car")
+                        .WithMany("Documents")
+                        .HasForeignKey("CarId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.DocumentType", "DocumentType")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.Navigation("Car");
+
+                    b.Navigation("DocumentType");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.CarOwner", b =>
@@ -2805,11 +3490,17 @@ namespace RepositoryLayer.Migrations
                         .WithMany()
                         .HasForeignKey("NationalId");
 
+                    b.HasOne("RentalCar.DomainLayer.Models.EUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("City");
 
                     b.Navigation("Country");
 
                     b.Navigation("Nationality");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.City", b =>
@@ -2832,6 +3523,21 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("Nationality");
                 });
 
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.Documents", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.DocumentType", "DocumentType")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.EUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("DocumentType");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Inspection", b =>
                 {
                     b.HasOne("RentalCar.DomainLayer.Models.Car", "Car")
@@ -2851,9 +3557,57 @@ namespace RepositoryLayer.Migrations
                         .WithMany()
                         .HasForeignKey("InsuranceCompanyId");
 
+                    b.HasOne("RentalCar.DomainLayer.Models.InsuranceType", "InsuranceType")
+                        .WithMany()
+                        .HasForeignKey("InsuranceTypeId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
                     b.Navigation("Car");
 
                     b.Navigation("InsuranceCompany");
+
+                    b.Navigation("InsuranceType");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.InsuranceDocument", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.DocumentType", "DocumentType")
+                        .WithMany()
+                        .HasForeignKey("DocumentTypeId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.Insurance", "Insurance")
+                        .WithMany("Documents")
+                        .HasForeignKey("InsuranceId");
+
+                    b.Navigation("DocumentType");
+
+                    b.Navigation("Insurance");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.Investor", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.EUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Nationality");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.LicensePlateOwnership", b =>
@@ -2915,15 +3669,6 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("RentalCar.DomainLayer.Models.Payment", b =>
-                {
-                    b.HasOne("RentalCar.DomainLayer.Models.RentalContract", "RentalContract")
-                        .WithMany("Payments")
-                        .HasForeignKey("RentalContractId");
-
-                    b.Navigation("RentalContract");
-                });
-
             modelBuilder.Entity("RentalCar.DomainLayer.Models.RefreshToken", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -2943,9 +3688,34 @@ namespace RepositoryLayer.Migrations
                         .WithMany("Contracts")
                         .HasForeignKey("CustomerId");
 
+                    b.HasOne("RentalCar.DomainLayer.Models.Investor", null)
+                        .WithMany("Contracts")
+                        .HasForeignKey("InvestorId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.RentalPayment", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId");
+
+                    b.HasOne("RentalCar.DomainLayer.Models.RentalContract", "RentalContract")
+                        .WithMany("Payments")
+                        .HasForeignKey("RentalContractId");
+
+                    b.Navigation("PaymentMethod");
+
+                    b.Navigation("RentalContract");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.ResetPassword", b =>
@@ -2955,6 +3725,40 @@ namespace RepositoryLayer.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.SAccount", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.SAccountType", "AccountType")
+                        .WithMany()
+                        .HasForeignKey("AccountTypeId1");
+
+                    b.Navigation("AccountType");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.STransaction", b =>
+                {
+                    b.HasOne("RentalCar.DomainLayer.Models.SAccount", "CreditAccount")
+                        .WithMany("CreditTransactions")
+                        .HasForeignKey("CreditAccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RentalCar.DomainLayer.Models.SAccount", "DebitAccount")
+                        .WithMany("DebitTransactions")
+                        .HasForeignKey("DebitAccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RentalCar.DomainLayer.Models.STransactionType", "TransactionType")
+                        .WithMany()
+                        .HasForeignKey("TransactionTypeId1");
+
+                    b.Navigation("CreditAccount");
+
+                    b.Navigation("DebitAccount");
+
+                    b.Navigation("TransactionType");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.TireSchedule", b =>
@@ -3013,6 +3817,10 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.EUser", b =>
                 {
+                    b.HasOne("RentalCar.DomainLayer.Models.Customer", "Customer")
+                        .WithOne("User")
+                        .HasForeignKey("RentalCar.DomainLayer.Models.EUser", "CustomerId");
+
                     b.HasOne("RentalCar.DomainLayer.Models.Gender", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId")
@@ -3024,6 +3832,8 @@ namespace RepositoryLayer.Migrations
                         .HasForeignKey("RentalCar.DomainLayer.Models.EUser", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
 
                     b.Navigation("Gender");
                 });
@@ -3044,6 +3854,8 @@ namespace RepositoryLayer.Migrations
 
                     b.Navigation("Contracts");
 
+                    b.Navigation("Documents");
+
                     b.Navigation("Insurances");
 
                     b.Navigation("OilSchedules");
@@ -3059,6 +3871,18 @@ namespace RepositoryLayer.Migrations
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Customer", b =>
+                {
+                    b.Navigation("Contracts");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.Insurance", b =>
+                {
+                    b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.Investor", b =>
                 {
                     b.Navigation("Contracts");
                 });
@@ -3100,6 +3924,13 @@ namespace RepositoryLayer.Migrations
             modelBuilder.Entity("RentalCar.DomainLayer.Models.Repair", b =>
                 {
                     b.Navigation("WorkOrderDetails");
+                });
+
+            modelBuilder.Entity("RentalCar.DomainLayer.Models.SAccount", b =>
+                {
+                    b.Navigation("CreditTransactions");
+
+                    b.Navigation("DebitTransactions");
                 });
 
             modelBuilder.Entity("RentalCar.DomainLayer.Models.WorkOrder", b =>

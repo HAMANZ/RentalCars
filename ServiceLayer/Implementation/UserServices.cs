@@ -130,7 +130,7 @@ namespace RentalCar.ServiceLayer.Implementation
                     //}
 
                     //check if EUser exist  by email
-                    var existingEUser =  _dbContext.EUser.Where(e=>e.Email==toAdd.Email).FirstOrDefault();
+                    var existingEUser =  _dbContext.EUsers.Where(e=>e.Email==toAdd.Email).FirstOrDefault();
                     if (existingEUser != null)
                     {
                         error = "df_email_exist";

@@ -105,6 +105,56 @@ namespace RentalCar
             services.AddScoped<IContactus, ContactServices>();
             services.AddScoped<IMessageTemplate, MessageTemplateServices>();
 
+            // Rental domain services
+            services.AddScoped<ICar, CarServices>();
+            services.AddScoped<ICarOwner, CarOwnerServices>();
+            services.AddScoped<ICustomer, CustomerServices>();
+            services.AddScoped<IInvestor, InvestorServices>();
+            services.AddScoped<IRentalContract, RentalContractServices>();
+            services.AddScoped<IRentalPayment, RentalPaymentServices>();
+            services.AddScoped<IInsurance, InsuranceServices>();
+            services.AddScoped<IInsuranceCompany, InsuranceCompanyServices>();
+            services.AddScoped<IFuelType, FuelTypeServices>();
+            services.AddScoped<IStatus, StatusServices>();
+            services.AddScoped<IPaymentMethod, PaymentMethodServices>();
+
+            // Maintenance domain services
+            services.AddScoped<IBrand, BrandServices>();
+            services.AddScoped<IBranch, BranchServices>();
+            services.AddScoped<ISupplier, SupplierServices>();
+            services.AddScoped<IRepair, RepairServices>();
+            services.AddScoped<ISparePart, SparePartServices>();
+            services.AddScoped<IWorkOrder, WorkOrderServices>();
+            services.AddScoped<IWorkOrderDetail, WorkOrderDetailServices>();
+            services.AddScoped<IOilChangeSchedule, OilChangeScheduleServices>();
+            services.AddScoped<ITireSchedule, TireScheduleServices>();
+            services.AddScoped<IBatterySchedule, BatteryScheduleServices>();
+
+            // Accounting services
+            services.AddScoped<ISAccount, SAccountServices>();
+            services.AddScoped<ISAccountType, SAccountTypeServices>();
+            services.AddScoped<ISTransaction, STransactionServices>();
+            services.AddScoped<ISTransactionType, STransactionTypeServices>();
+
+            // Insurance / inspection services
+            services.AddScoped<IInsuranceType, InsuranceTypeServices>();
+            services.AddScoped<IInsuranceDocument, InsuranceDocumentServices>();
+            services.AddScoped<IInspection, InspectionServices>();
+
+            // Accidents / violations services
+            services.AddScoped<IAccident, AccidentServices>();
+            services.AddScoped<IViolation, ViolationServices>();
+
+            // Documents services
+            services.AddScoped<IDocuments, DocumentsServices>();
+            services.AddScoped<IDocumentType, DocumentTypeServices>();
+            services.AddScoped<ICarDocuments, CarDocumentsServices>();
+
+            // License plates services
+            services.AddScoped<ILicensePlate, LicensePlateServices>();
+            services.AddScoped<ILicensePlateOwnership, LicensePlateOwnershipServices>();
+            services.AddScoped<IPlateOwner, PlateOwnerServices>();
+
             // HttpClient (Scoped)
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44354") });
 

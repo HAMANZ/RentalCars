@@ -31,7 +31,6 @@ using EsnadTakaful.ServiceLayer.Interface;
 using DomainLayer.LookUpModels;
 using DomainLayer.DTO_EXT;
 using Microsoft.EntityFrameworkCore;
-using WebAppLayer.Views.Sessions;
 using System.Text.RegularExpressions;
 using DomainLayer.DTO;
 using Microsoft.AspNetCore.Hosting;
@@ -96,8 +95,8 @@ namespace RentalCar.Controllers
 					return View();
 				}
 
-				var existingEUser = await _context.EUser
-					.Where(e => e.Email == user.Email && !e.Is_deleted)
+				var existingEUser = await _context.EUsers
+                    .Where(e => e.Email == user.Email && !e.Is_deleted)
 					.FirstOrDefaultAsync();
 
 				if (existingEUser != null)

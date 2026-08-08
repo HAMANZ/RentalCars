@@ -66,7 +66,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                AppLabel Model = _dbContext.AppLabel.Where(e => e.Id == Id).FirstOrDefault();
+                AppLabel Model = _dbContext.AppLabels.Where(e => e.Id == Id).FirstOrDefault();
                 response.Data = FromModeltoDTO(Model);
                 response.HttpStatusCode = HttpStatusCode.OK;
 
@@ -92,7 +92,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                List<AppLabel> listModel = _dbContext.AppLabel.Where(e => e.LanguagId == LangId).ToList();
+                List<AppLabel> listModel = _dbContext.AppLabels.Where(e => e.LanguagId == LangId).ToList();
                 List<AppLabelDTO> listDTO = new List<AppLabelDTO>();
                 if (listModel.Count != 0)
                 {
@@ -125,7 +125,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                var listModel = await _dbContext.AppLabel
+                var listModel = await _dbContext.AppLabels
                     .Where(e => !e.Is_deleted && e.LanguagId == languageId)
                     .ToListAsync();
 
@@ -189,7 +189,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                AppLabel Model = _dbContext.AppLabel.Where(e => e.Id == ToUpdate.Id).FirstOrDefault();
+                AppLabel Model = _dbContext.AppLabels.Where(e => e.Id == ToUpdate.Id).FirstOrDefault();
                 if (Model != null)
                 {
                     _repository.Update(FromDTOtoModel(ToUpdate));
@@ -221,7 +221,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                var model = await _dbContext.AppLabel.FindAsync(ToUpdate.Id);
+                var model = await _dbContext.AppLabels.FindAsync(ToUpdate.Id);
                 if (model != null)
                 {
                     _repository.Update(FromDTOtoModel(ToUpdate)); 
@@ -255,8 +255,8 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                var modelEn = await _dbContext.AppLabel.FindAsync(en.Id);
-                var modelAr = await _dbContext.AppLabel.FindAsync(ar.Id);
+                var modelEn = await _dbContext.AppLabels.FindAsync(en.Id);
+                var modelAr = await _dbContext.AppLabels.FindAsync(ar.Id);
 
                 if (modelEn == null || modelAr == null)
                 {
@@ -308,7 +308,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                AppLabel Model = _dbContext.AppLabel.Where(e => e.Id == Id).FirstOrDefault();
+                AppLabel Model = _dbContext.AppLabels.Where(e => e.Id == Id).FirstOrDefault();
                 if (Model != null)
                 {
                     //_repository.Remove(Model);
@@ -342,7 +342,7 @@ namespace RentalCar.ServiceLayer.Implementation
 
             try
             {
-                AppLabel model = await _dbContext.AppLabel
+                AppLabel model = await _dbContext.AppLabels
                     .Where(e => e.LabelName == LabelName && e.LanguagId == LangId)
                     .FirstOrDefaultAsync();
 

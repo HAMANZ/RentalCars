@@ -20,11 +20,15 @@ namespace  RentalCar.DomainLayer.Models
         //public long RoleId { get; set; }
         //[ForeignKey("RoleId")]
         //public Role Role { get; set; }
+        public DateTime? LastLoginAt { get; set; }
+
         public long GenderId { get; set; }
         [ForeignKey("GenderId")]
         public Gender Gender { get; set; }
         public string FToken { get; set; }
+        public int? CustomerId { get; set; }
 
+        public Customer Customer { get; set; }
         public bool Is_deleted { get; set; }
         public long Created_by { get; set; }
         public long Updated_by { get; set; }
