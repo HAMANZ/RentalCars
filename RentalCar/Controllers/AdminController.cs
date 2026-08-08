@@ -51,6 +51,7 @@ namespace RentalCar.Controllers
 		private readonly IEUser _IEUserServices;
 		private readonly IWebHostEnvironment _env;
 		private readonly IAppSettings _IAppSettingsServices;
+		private readonly SignInManager<EUser> _signInManager;
 		public AdminController(
 			RentalCarDbContext context,
 			IAdmin adminServices,
@@ -60,7 +61,8 @@ namespace RentalCar.Controllers
 			EUserManager euserManager,
 			IEUser eUserServices,
 			IWebHostEnvironment env,
-			IAppSettings appSettingsServices
+			IAppSettings appSettingsServices,
+			SignInManager<EUser> signInManager
 		)
 		{
 			_context = context;
@@ -72,6 +74,7 @@ namespace RentalCar.Controllers
 			_IEUserServices = eUserServices;
 			_env = env;
 			_IAppSettingsServices = appSettingsServices;
+			_signInManager = signInManager;
 		}
 
 		#region Login
@@ -108,6 +111,9 @@ namespace RentalCar.Controllers
 					if (isCorrect)
 					{
 						var role = await _EUserManager.GetRolesAsync(existingEUser);
+
+						// Issue the Identity application cookie so [Authorize] pages recognize the user.
+						await _signInManager.SignInAsync(existingEUser, isPersistent: false);
 
 						HttpContext.Session.SetString("RentalCarId", existingEUser.Id);
 						HttpContext.Session.SetString("RentalCarUserName", existingEUser.FirstName_en);
