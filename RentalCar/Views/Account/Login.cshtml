@@ -1,28 +1,271 @@
+@model RentalCar.ViewModels.LoginViewModel
 @{
-    ViewBag.Title = "User Login";
+    ViewData["Title"] = "Login";
     Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | RentalCar</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/Images/website-icon.jpeg" />
 
+    <!-- Font Awesome (for eye icon) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<form action="/api.sawa28.com/Account/ExternalLogin" style="display:none" id="myForm" class="id" enctype="multipart/form-data" method="post">
-    <div class="col-md-6">
-        <div>
-            <input type="hidden" name="returnUrl" value="https://sawa28.com/studenthome" />
-            <input type="hidden" name="provider" value="Google" />
-            <button type="submit" class="btn btn-primary" style="width:auto" value="Google"
-                    title="Login using your Google account">
-                Google
-            </button>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1d1f46; /* Main Dark Navy */
+            --secondary-color: #cab053; /* Gold/Beige */
+            --accent-color: #b29545; /* Dark Beige */
+            --bg-color: #f9f9f9; /* Light white */
+            --gradient-bg: linear-gradient( 135deg, var(--secondary-color) 0%, var(--accent-color) 40%, #e7c875 70%, #b9933b 100% );
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .login-container {
+            width: 900px;
+            height: 520px;
+            background: #fff;
+            display: flex;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        /* LEFT IMAGE */
+        .login-image {
+            width: 50%;
+            background: url("/Images/website-icon.jpeg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        /* RIGHT FORM */
+        .login-form {
+            width: 50%;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .login-form h2 {
+                color: var(--primary-color);
+                margin-bottom: 2px;
+                font-size: 28px;
+            }
+
+            .login-form p {
+                color: #666;
+                margin-bottom: 30px;
+            }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+            .form-group label,
+            .form-group-password label {
+                display: block;
+                margin-bottom: 6px;
+                font-size: 14px;
+                color: #444;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 40px 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--secondary-color);
+            }
+
+        /* PASSWORD FIELD */
+        .password-wrapper {
+            position: relative;
+        }
+
+            .password-wrapper i {
+                position: absolute;
+                top: 38%;
+                right: 14px;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #888;
+            }
+
+        .field-validation-error,
+        .text-danger {
+            color: #c0392b;
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+            .remember-row label {
+                font-size: 13px;
+                color: #444;
+                margin: 0;
+            }
+
+        .forgot-password a {
+            font-size: 13px;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+            .forgot-password a:hover {
+                text-decoration: underline;
+            }
+
+        /* LOGIN BUTTON */
+        .login-btn {
+            width: 100%;
+            background: var(--gradient-bg);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .login-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+
+        .alert-error {
+            background: #fdecea;
+            color: #c0392b;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        /* RESPONSIVE */
+        @@media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                width: 90%;
+                height: auto;
+            }
+
+            .login-image {
+                height: 250px;
+                width: 100%;
+            }
+
+            .login-form {
+                width: 100%;
+                padding: 10px 50px 50px 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- LEFT IMAGE -->
+        <div class="login-image"></div>
+
+        <!-- RIGHT FORM -->
+        <div class="login-form">
+            <div style="margin-bottom: 30px;">
+                <h2>Welcome Back</h2>
+                <span class="text-muted" style="font-size:13px; color:#666;">Please login to your account</span>
+            </div>
+
+            <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="alert-error" style="@(ViewData.ModelState.IsValid ? "display:none;" : "")"></div>
+
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email" autocomplete="username" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group-password">
+                    <label asp-for="Password">Password</label>
+                    <div class="password-wrapper">
+                        <input asp-for="Password" id="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" />
+                        <i class="fa-solid fa-eye" id="togglePassword"></i>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="remember-row">
+                    <label>
+                        <input asp-for="RememberMe" type="checkbox" /> Remember me
+                    </label>
+                    <span class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </span>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
         </div>
-        </div>
-        </form>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-<script type="text/javascript">
-    function submitForm() {
-        // **NOTE** set form values first
-        document.getElementById('myForm').submit();
-    }
-    window.onload = submitForm;
-</script>
+    <script>
+        const togglePassword = document.getElementById("togglePassword");
+        const password = document.getElementById("password");
+
+        togglePassword.addEventListener("click", function () {
+            const type = password.type === "password" ? "text" : "password";
+            password.type = type;
+            this.classList.toggle("fa-eye-slash");
+        });
+    </script>
+
+</body>
+</html>

@@ -39,6 +39,7 @@ using Ganss.Xss;
 namespace RentalCar.Controllers
 {
 
+	[Authorize]
 	public class AdminController : Controller
 	{
 		private readonly RentalCarDbContext _context;
@@ -137,6 +138,7 @@ namespace RentalCar.Controllers
 		#endregion
 
 		#region Error
+		[AllowAnonymous]
 		[HttpGet]
 		public IActionResult Error()
 		{

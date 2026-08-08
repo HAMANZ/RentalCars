@@ -188,9 +188,13 @@ namespace RentalCar
 
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                // Browser (MVC/Razor) flows use the Identity application cookie by default,
+                // so [Authorize] on a protected page challenges by redirecting to the login page.
+                // APIs can still opt into JWT via [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)].
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
             .AddJwtBearer(jwt =>
             {
@@ -206,6 +210,20 @@ namespace RentalCar
             {
                 fb.AppId = "399212072894098";
                 fb.AppSecret = "77be9974013f61b8ca9cc34194536870";
+            });
+
+            // Where the Identity application cookie redirects unauthenticated / unauthorized users.
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.ReturnUrlParameter = "returnUrl";
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.SlidingExpiration = true;
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
 
             // Swagger
