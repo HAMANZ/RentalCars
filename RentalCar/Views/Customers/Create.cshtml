@@ -1,0 +1,131 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model CustomerDTO
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Add Customer";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+    var documentTypes = ViewBag.DocumentTypes as List<DocumentType> ?? new List<DocumentType>();
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6"><h1 class="m-0"><i class="fas fa-users mr-2"></i>Add Customer</h1></div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Customers">Customers</a></li>
+                    <li class="breadcrumb-item active">Add</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+        <form asp-action="Create" asp-controller="Customers" method="post" enctype="multipart/form-data">
+            <div class="card card-primary card-outline">
+                <div class="card-header"><h3 class="card-title mt-1"><i class="fas fa-plus mr-1"></i> Customer Details</h3></div>
+                <div class="card-body">
+                    <partial name="_CustomerForm" model="Model" />
+                </div>
+            </div>
+
+            <div class="card card-info card-outline">
+                <div class="card-header">
+                    <h3 class="card-title mt-1"><i class="fas fa-folder-open mr-1"></i> Additional Documents</h3>
+                    <div class="card-tools">
+                        <button type="button" id="addDocumentRow" class="btn btn-sm btn-info">
+                            <i class="fas fa-plus mr-1"></i> Add Document
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-bordered" id="documentsTable">
+                        <thead>
+                            <tr>
+                                <th style="width:22%">Document Type</th>
+                                <th style="width:25%">Description</th>
+                                <th style="width:28%">File</th>
+                                <th style="width:20%">Expiry Date</th>
+                                <th style="width:5%"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="documentsBody">
+                            <tr class="text-muted"><td colspan="5" class="text-center">No documents added.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mt-3 mb-4">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+                <a href="/Customers" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+
+        @* Template for a single document row (parallel arrays bound by row order). *@
+        <template id="documentRowTemplate">
+            <tr class="document-row">
+                <td>
+                    <select name="DocumentTypeIds" class="form-control form-control-sm">
+                        <option value="">-- Select Type --</option>
+                        @foreach (var t in documentTypes)
+                        {
+                            <option value="@t.Id">@t.Name</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input type="text" name="DocumentDescriptions" class="form-control form-control-sm" />
+                </td>
+                <td>
+                    <input type="file" name="DocumentFiles" class="form-control-file" accept=".jpg,.jpeg,.png,.webp,.pdf" />
+                </td>
+                <td>
+                    <input type="date" name="DocumentExpiries" class="form-control form-control-sm" />
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-danger remove-document-row"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        </template>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            var body = document.getElementById('documentsBody');
+            var template = document.getElementById('documentRowTemplate');
+            var placeholderHtml = '<tr class="text-muted"><td colspan="5" class="text-center">No documents added.</td></tr>';
+
+            function hasRows() {
+                return body.querySelectorAll('tr.document-row').length > 0;
+            }
+
+            function refreshPlaceholder() {
+                if (!hasRows()) {
+                    body.innerHTML = placeholderHtml;
+                }
+            }
+
+            document.getElementById('addDocumentRow').addEventListener('click', function () {
+                if (!hasRows()) {
+                    body.innerHTML = '';
+                }
+                body.appendChild(template.content.cloneNode(true));
+            });
+
+            body.addEventListener('click', function (e) {
+                var btn = e.target.closest('.remove-document-row');
+                if (!btn) return;
+                btn.closest('tr.document-row').remove();
+                refreshPlaceholder();
+            });
+        })();
+    </script>
+}

@@ -1,0 +1,56 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model SAccountDTO
+@{
+    var accountTypes = ViewBag.AccountTypes as List<SAccountType> ?? new List<SAccountType>();
+}
+
+<input type="hidden" name="AccountId" value="@Model.AccountId" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Account Type</label>
+        <select name="AccountTypeId" class="form-control" required>
+            <option value="">-- Select Account Type --</option>
+            @foreach (var t in accountTypes)
+            {
+                <option value="@t.Id" selected="@(Model.AccountTypeId == t.Id)">@t.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Code</label>
+        <input type="text" name="Code" class="form-control" value="@Model.Code" required />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Currency</label>
+        <input type="text" name="Currency" class="form-control" value="@Model.Currency" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Owner Type</label>
+        <input type="text" name="OwnerType" class="form-control" value="@Model.OwnerType" placeholder="e.g. Investor, Customer, Company" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Owner Id</label>
+        <input type="number" name="OwnerId" class="form-control" value="@(Model.OwnerId?.ToString())" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Balance</label>
+        <input type="text" class="form-control" value="@Model.Balance.ToString("N2")" readonly />
+        <small class="text-muted">Balance is derived from transactions and cannot be edited here.</small>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-check mt-4">
+            <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" value="true" @(Model.IsActive ? "checked" : "") />
+            <input type="hidden" name="IsActive" value="false" />
+            <label class="form-check-label" for="IsActive">Active</label>
+        </div>
+    </div>
+</div>

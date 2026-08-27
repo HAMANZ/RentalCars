@@ -1,0 +1,39 @@
+@using RentalCar.DomainLayer.DTO
+@model RepairTypeDTO
+@{
+    var categories = ViewBag.Categories as List<RepairCategoryDTO> ?? new List<RepairCategoryDTO>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name (Arabic)</label>
+        <input type="text" name="Name_ar" class="form-control" dir="rtl" value="@Model.Name_ar" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Code</label>
+        <input type="text" name="Code" class="form-control" value="@Model.Code" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Category</label>
+        <select name="RepairCategoryId" class="form-control" required>
+            <option value="">-- Select Category --</option>
+            @foreach (var category in categories)
+            {
+                <option value="@category.Id" selected="@(Model.RepairCategoryId == category.Id)">@category.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3 form-check ml-1 mt-4">
+        <input type="checkbox" name="IsActive" class="form-check-input" value="true" checked="@Model.IsActive" id="isActiveCheck" />
+        <input type="hidden" name="IsActive" value="false" />
+        <label class="form-check-label" for="isActiveCheck">Active</label>
+    </div>
+</div>

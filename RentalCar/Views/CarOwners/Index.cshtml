@@ -1,0 +1,83 @@
+@using RentalCar.DomainLayer.Models
+@model List<CarOwner>
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Car Owners";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <style>#coTable th, #coTable td { text-align:center !important; vertical-align:middle; } .badge{font-weight:500;padding:6px 10px;font-size:.85rem;}</style>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6"><h1 class="m-0"><i class="fas fa-user-tie mr-2"></i>Car Owners</h1></div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Car Owners</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @if (ViewBag.ErrorMessage != null) { <div class="alert alert-danger">@ViewBag.ErrorMessage</div> }
+        @if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+        @if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title mt-1"><i class="fas fa-list mr-1"></i> All Car Owners</h3>
+                <a class="btn btn-success btn-sm" href="/CarOwners/Create"><i class="fas fa-plus-circle mr-1"></i> Add Owner</a>
+            </div>
+            <div class="card-body">
+                <table id="coTable" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead><tr><th>#</th><th>Full Name</th><th>Company</th><th>Phone</th><th>Email</th><th>Nationality</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody>
+                        @{ var count = 1; }
+                        @foreach (var o in Model)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@(string.IsNullOrEmpty(o.FullName) ? "-" : o.FullName)</td>
+                                <td>@(o.IsCompany ? (string.IsNullOrEmpty(o.CompanyName) ? "Company" : o.CompanyName) : "-")</td>
+                                <td>@(string.IsNullOrEmpty(o.Phone1) ? "-" : o.Phone1)</td>
+                                <td>@(string.IsNullOrEmpty(o.Email) ? "-" : o.Email)</td>
+                                <td>@(o.Nationality?.Name ?? "-")</td>
+                                <td>
+                                    @if (o.IsActive) { <span class="badge bg-success">Active</span> }
+                                    else { <span class="badge bg-secondary">Inactive</span> }
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-warning" href="/CarOwners/Edit/@o.Id"><i class="fas fa-edit"></i></a>
+                                    <form method="post" asp-action="Delete" asp-controller="CarOwners" class="d-inline"
+                                          onsubmit="return confirm('Delete this car owner?');">
+                                        <input type="hidden" name="id" value="@o.Id" />
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            count++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            $('#coTable').DataTable({ responsive: true, pageLength: 10, lengthMenu: [5,10,25,50],
+                language: { emptyTable: "No car owners found" }, columnDefs: [{ orderable:false, targets:[7] }] });
+        });
+    </script>
+}

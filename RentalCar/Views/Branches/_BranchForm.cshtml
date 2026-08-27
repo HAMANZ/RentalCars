@@ -1,0 +1,34 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model BranchDTO
+@{
+    var cities = ViewBag.Cities as List<City> ?? new List<City>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name (Arabic)</label>
+        <input type="text" name="Name_ar" class="form-control" dir="rtl" value="@Model.Name_ar" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Phone</label>
+        <input type="text" name="Phone" class="form-control" value="@Model.Phone" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">City</label>
+        <select name="CityId" class="form-control">
+            <option value="">-- Select City --</option>
+            @foreach (var c in cities)
+            {
+                <option value="@c.Id" selected="@(Model.CityId == c.Id)">@c.Name</option>
+            }
+        </select>
+    </div>
+</div>

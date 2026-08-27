@@ -1,0 +1,156 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model CarDTO
+@{
+    var brands = ViewBag.Brands as List<Brand> ?? new List<Brand>();
+    var fuelTypes = ViewBag.FuelTypes as List<FuelType> ?? new List<FuelType>();
+    var plates = ViewBag.LicensePlates as List<LicensePlate> ?? new List<LicensePlate>();
+    var owners = ViewBag.CarOwners as List<CarOwner> ?? new List<CarOwner>();
+    var branches = ViewBag.Branches as List<Branch> ?? new List<Branch>();
+    var statuses = ViewBag.CarStatuses as List<CarStatus> ?? new List<CarStatus>();
+    var investors = ViewBag.Investors as List<Investor> ?? new List<Investor>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+<input type="hidden" name="Image" value="@Model.Image" />
+
+<div class="row">
+    <!-- Brand -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Brand</label>
+        <select name="BrandId" class="form-control">
+            <option value="">-- Select Brand --</option>
+            @foreach (var b in brands)
+            {
+                <option value="@b.Id" selected="@(Model.BrandId == b.Id)">@b.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Model -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Model</label>
+        <input type="text" name="Model" class="form-control" value="@Model.Model" />
+    </div>
+
+    <!-- Year -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Year</label>
+        <input type="number" name="Year" class="form-control" min="1900" max="2100"
+               value="@(Model.Year == 0 ? DateTime.Now.Year : Model.Year)" />
+    </div>
+
+    <!-- Color -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Color</label>
+        <input type="text" name="Color" class="form-control" value="@Model.Color" />
+    </div>
+
+    <!-- VIN -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">VIN</label>
+        <input type="text" name="VIN" class="form-control" value="@Model.VIN" />
+    </div>
+
+    <!-- Engine No -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Engine No</label>
+        <input type="text" name="EngineNo" class="form-control" value="@Model.EngineNo" />
+    </div>
+
+    <!-- Chassis Number -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Chassis Number</label>
+        <input type="text" name="ChassisNumber" class="form-control" value="@Model.ChassisNumber" />
+    </div>
+
+    <!-- License Plate -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">License Plate</label>
+        <select name="LicensePlateId" class="form-control">
+            <option value="">-- Select Plate --</option>
+            @foreach (var p in plates)
+            {
+                <option value="@p.Id" selected="@(Model.LicensePlateId == p.Id)">@p.PlateNumber</option>
+            }
+        </select>
+    </div>
+
+    <!-- Fuel Type -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Fuel Type</label>
+        <select name="FuelTypeId" class="form-control">
+            <option value="">-- Select Fuel Type --</option>
+            @foreach (var f in fuelTypes)
+            {
+                <option value="@f.Id" selected="@(Model.FuelTypeId == f.Id)">@f.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Car Status -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Status</label>
+        <select name="CarStatusId" class="form-control">
+            <option value="">-- Select Status --</option>
+            @foreach (var s in statuses)
+            {
+                <option value="@s.Id" selected="@(Model.CarStatusId == s.Id)">@s.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Branch -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Branch</label>
+        <select name="BranchId" class="form-control">
+            <option value="">-- Select Branch --</option>
+            @foreach (var br in branches)
+            {
+                <option value="@br.Id" selected="@(Model.BranchId == br.Id)">@br.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Car Owner -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Car Owner</label>
+        <select name="CarOwnerId" class="form-control">
+            <option value="">-- Select Owner --</option>
+            @foreach (var o in owners)
+            {
+                <option value="@o.Id" selected="@(Model.CarOwnerId == o.Id)">@o.FullName</option>
+            }
+        </select>
+    </div>
+
+    <!-- Investor -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Investor</label>
+        <select name="InvestorId" class="form-control">
+            <option value="">-- Select Investor --</option>
+            @foreach (var inv in investors)
+            {
+                <option value="@inv.Id" selected="@(Model.InvestorId == inv.Id)">@(inv.FullName ?? inv.Email ?? ("Investor #" + inv.Id))</option>
+            }
+        </select>
+    </div>
+
+    <!-- Purchase Price -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Purchase Price</label>
+        <input type="number" step="0.01" min="0" name="PurchasePrice" class="form-control" value="@Model.PurchasePrice" />
+    </div>
+
+    <!-- Current KM -->
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Current KM</label>
+        <input type="number" min="0" name="CurrentKM" class="form-control" value="@Model.CurrentKM" />
+    </div>
+
+    <!-- Description -->
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="Description" class="form-control" rows="3">@Model.Description</textarea>
+    </div>
+</div>

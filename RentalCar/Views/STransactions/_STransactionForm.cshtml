@@ -1,0 +1,78 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model STransactionDTO
+@{
+    var transactionTypes = ViewBag.TransactionTypes as List<STransactionType> ?? new List<STransactionType>();
+    var accounts = ViewBag.Accounts as List<SAccount> ?? new List<SAccount>();
+    var branches = ViewBag.Branches as List<Branch> ?? new List<Branch>();
+}
+
+<input type="hidden" name="TransactionId" value="@Model.TransactionId" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Transaction Type</label>
+        <select name="TransactionTypeId" class="form-control" required>
+            <option value="">-- Select Transaction Type --</option>
+            @foreach (var t in transactionTypes)
+            {
+                <option value="@t.Id" selected="@(Model.TransactionTypeId == t.Id)">@t.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Amount</label>
+        <input type="number" step="0.01" name="Amount" class="form-control" value="@Model.Amount" required />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Branch</label>
+        <select name="BranchIdId" class="form-control">
+            <option value="0">-- Select Branch --</option>
+            @foreach (var b in branches)
+            {
+                <option value="@b.Id" selected="@(Model.BranchIdId == b.Id)">@b.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" name="Description" class="form-control" value="@Model.Description" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Debit Account</label>
+        <select name="DebitAccountId" class="form-control" required>
+            <option value="">-- Select Debit Account --</option>
+            @foreach (var a in accounts)
+            {
+                <option value="@a.AccountId" selected="@(Model.DebitAccountId == a.AccountId)">@a.Code - @a.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Credit Account</label>
+        <select name="CreditAccountId" class="form-control" required>
+            <option value="">-- Select Credit Account --</option>
+            @foreach (var a in accounts)
+            {
+                <option value="@a.AccountId" selected="@(Model.CreditAccountId == a.AccountId)">@a.Code - @a.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Occurred At</label>
+        <input type="datetime-local" name="OccurredAt" class="form-control"
+               value="@(Model.OccurredAt == default(DateTime) ? DateTime.Now.ToString("yyyy-MM-ddTHH:mm") : Model.OccurredAt.ToString("yyyy-MM-ddTHH:mm"))" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Reference Id</label>
+        <input type="number" name="ReferenceId" class="form-control" value="@(Model.ReferenceId?.ToString())" />
+    </div>
+
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Notes</label>
+        <textarea name="Notes" class="form-control" rows="2">@Model.Notes</textarea>
+    </div>
+</div>

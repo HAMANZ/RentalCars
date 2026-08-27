@@ -1,0 +1,82 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model CustomerDTO
+@{
+    var nationalities = ViewBag.Nationalities as List<Nationality> ?? new List<Nationality>();
+    var genders = ViewBag.Genders as List<Gender> ?? new List<Gender>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text" name="FullName" class="form-control" value="@Model.FullName" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Full Name (Arabic)</label>
+        <input type="text" name="FullName_ar" class="form-control" dir="rtl" value="@Model.FullName_ar" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="Email" class="form-control" value="@Model.Email" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Phone</label>
+        <input type="text" name="Phone" class="form-control" value="@Model.Phone" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Date of Birth</label>
+        <input type="date" name="DOB" class="form-control" value="@Model.DOB" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Emergency Contact</label>
+        <input type="text" name="EmergencyContact" class="form-control" value="@Model.EmergencyContact" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Gender</label>
+        <select name="GenderId" class="form-control">
+            <option value="">-- Select Gender --</option>
+            @foreach (var g in genders)
+            {
+                <option value="@g.Id" selected="@(Model.GenderId == g.Id)">@g.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Nationality</label>
+        <select name="NationalityId" class="form-control">
+            <option value="">-- Select Nationality --</option>
+            @foreach (var n in nationalities)
+            {
+                <option value="@n.Id" selected="@(Model.NationalityId == n.Id)">@n.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Driving License (Photo)</label>
+        <input type="file" name="DrivingLicenseFile" class="form-control-file" accept=".jpg,.jpeg,.png,.webp,.pdf" />
+        @if (!string.IsNullOrWhiteSpace(Model.DrivingLicense))
+        {
+            <div class="mt-2">
+                <a href="~/Images/Customers/@Model.DrivingLicense" target="_blank">
+                    <i class="fas fa-id-card mr-1"></i> View current license
+                </a>
+            </div>
+        }
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">License Expiry Date</label>
+        <input type="date" name="LicenseExpiryDate" class="form-control"
+               value="@(Model.LicenseExpiryDate == default(DateTime) ? DateTime.Today.ToString("yyyy-MM-dd") : Model.LicenseExpiryDate.ToString("yyyy-MM-dd"))" />
+    </div>
+
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Address</label>
+        <input type="text" name="Address" class="form-control" value="@Model.Address" />
+    </div>
+</div>

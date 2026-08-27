@@ -87,6 +87,7 @@ namespace RentalCar
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             // Other scoped services
+            services.AddScoped<IMenuItem, MenuItemServices>();
             services.AddScoped<IAppLabel, AppLabelServices>();
             services.AddScoped<IAnnouncement, AnnouncementsServices>();
             services.AddScoped<ILookUps, LookUpservices>();
@@ -123,6 +124,8 @@ namespace RentalCar
             services.AddScoped<IBranch, BranchServices>();
             services.AddScoped<ISupplier, SupplierServices>();
             services.AddScoped<IRepair, RepairServices>();
+            services.AddScoped<IRepairCategory, RepairCategoryServices>();
+            services.AddScoped<IRepairType, RepairTypeServices>();
             services.AddScoped<ISparePart, SparePartServices>();
             services.AddScoped<IWorkOrder, WorkOrderServices>();
             services.AddScoped<IWorkOrderDetail, WorkOrderDetailServices>();
@@ -133,6 +136,7 @@ namespace RentalCar
             // Accounting services
             services.AddScoped<ISAccount, SAccountServices>();
             services.AddScoped<ISAccountType, SAccountTypeServices>();
+            services.AddScoped<ISAccountCategory, SAccountCategoryServices>();
             services.AddScoped<ISTransaction, STransactionServices>();
             services.AddScoped<ISTransactionType, STransactionTypeServices>();
 
@@ -154,6 +158,9 @@ namespace RentalCar
             services.AddScoped<ILicensePlate, LicensePlateServices>();
             services.AddScoped<ILicensePlateOwnership, LicensePlateOwnershipServices>();
             services.AddScoped<IPlateOwner, PlateOwnerServices>();
+            services.AddScoped<IPlateType, PlateTypeServices>();
+            services.AddScoped<IPlateRegion, PlateRegionServices>();
+            services.AddScoped<ICarStatus, CarStatusServices>();
 
             // HttpClient (Scoped)
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44354") });
@@ -307,7 +314,7 @@ namespace RentalCar
             {
                 endpoints.MapControllerRoute(
                     "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    "{controller=Admin}/{action=Login}/{id?}");
                 endpoints.MapControllerRoute(
                     "adminError",
                     "{controller=Admin}/{action=Error}");

@@ -1,0 +1,42 @@
+@using RentalCar.DomainLayer.DTO
+@model RepairDTO
+@{
+    var types = ViewBag.Types as List<RepairTypeDTO> ?? new List<RepairTypeDTO>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name (Arabic)</label>
+        <input type="text" name="Name_ar" class="form-control" dir="rtl" value="@Model.Name_ar" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Type</label>
+        <select name="RepairTypeId" class="form-control" required>
+            <option value="">-- Select Type --</option>
+            @foreach (var type in types)
+            {
+                <option value="@type.Id" selected="@(Model.RepairTypeId == type.Id)">@type.Name</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 mb-3">
+        <label class="form-label">Work Time (hrs)</label>
+        <input type="number" step="0.01" name="WorkTime" class="form-control" value="@Model.WorkTime" />
+    </div>
+    <div class="col-md-3 mb-3">
+        <label class="form-label">Labor Cost</label>
+        <input type="number" step="0.01" name="LaborCost" class="form-control" value="@Model.LaborCost" />
+    </div>
+
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Details</label>
+        <textarea name="Details" class="form-control" rows="2">@Model.Details</textarea>
+    </div>
+</div>

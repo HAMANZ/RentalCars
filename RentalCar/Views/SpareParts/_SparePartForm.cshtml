@@ -1,0 +1,56 @@
+@using RentalCar.DomainLayer.DTO
+@using DomainLayer.Models
+@model SparePartDTO
+@{
+    var suppliers = ViewBag.Suppliers as List<Supplier> ?? new List<Supplier>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Part No</label>
+        <input type="text" name="PartNo" class="form-control" value="@Model.PartNo" required />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name (Arabic)</label>
+        <input type="text" name="Name_ar" class="form-control" dir="rtl" value="@Model.Name_ar" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Supplier</label>
+        <select name="SupplierId" class="form-control">
+            <option value="">-- Select Supplier --</option>
+            @foreach (var s in suppliers)
+            {
+                <option value="@s.Id" selected="@(Model.SupplierId == s.Id)">@s.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Purchase Price</label>
+        <input type="number" step="0.01" name="PurchasePrice" class="form-control" value="@Model.PurchasePrice" required />
+    </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Selling Price</label>
+        <input type="number" step="0.01" name="SellingPrice" class="form-control" value="@Model.SellingPrice" required />
+    </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Stock Qty</label>
+        <input type="number" name="StockQty" class="form-control" value="@Model.StockQty" required />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Warehouse</label>
+        <input type="text" name="Whse" class="form-control" value="@Model.Whse" />
+    </div>
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="Description" class="form-control" rows="2">@Model.Description</textarea>
+    </div>
+</div>

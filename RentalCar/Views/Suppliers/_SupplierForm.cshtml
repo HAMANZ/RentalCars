@@ -1,0 +1,33 @@
+@using RentalCar.DomainLayer.DTO
+@model SupplierDTO
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Name (Arabic)</label>
+        <input type="text" name="Name_ar" class="form-control" dir="rtl" value="@Model.Name_ar" />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="Email" class="form-control" value="@Model.Email" />
+    </div>
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Phone</label>
+        <input type="text" name="Phone" class="form-control" value="@Model.Phone" />
+    </div>
+
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Address</label>
+        <input type="text" name="Address" class="form-control" value="@Model.Address" />
+    </div>
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="Description" class="form-control" rows="2">@Model.Description</textarea>
+    </div>
+</div>

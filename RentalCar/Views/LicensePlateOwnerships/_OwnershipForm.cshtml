@@ -1,0 +1,65 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model LicensePlateOwnershipDTO
+@{
+    var plates = ViewBag.LicensePlates as List<LicensePlate> ?? new List<LicensePlate>();
+    var owners = ViewBag.PlateOwners as List<PlateOwner> ?? new List<PlateOwner>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <!-- License Plate -->
+    <div class="col-md-6 mb-3">
+        <label class="form-label">License Plate</label>
+        <select name="LicensePlateId" class="form-control" required>
+            <option value="">-- Select Plate --</option>
+            @foreach (var p in plates)
+            {
+                <option value="@p.Id" selected="@(Model.LicensePlateId == p.Id)">@p.PlateNumber</option>
+            }
+        </select>
+    </div>
+
+    <!-- Plate Owner -->
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Plate Owner</label>
+        <select name="PlateOwnerId" class="form-control" required>
+            <option value="">-- Select Owner --</option>
+            @foreach (var o in owners)
+            {
+                <option value="@o.Id" selected="@(Model.PlateOwnerId == o.Id)">@o.FullName</option>
+            }
+        </select>
+    </div>
+
+    <!-- Start Date -->
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Start Date</label>
+        <input type="date" name="StartDate" class="form-control"
+               value="@(Model.StartDate == default(DateTime) ? DateTime.Today.ToString("yyyy-MM-dd") : Model.StartDate.ToString("yyyy-MM-dd"))" required />
+    </div>
+
+    <!-- End Date -->
+    <div class="col-md-6 mb-3">
+        <label class="form-label">End Date <small class="text-muted">(optional)</small></label>
+        <input type="date" name="EndDate" class="form-control"
+               value="@(Model.EndDate.HasValue ? Model.EndDate.Value.ToString("yyyy-MM-dd") : "")" />
+    </div>
+
+    <!-- Notes -->
+    <div class="col-md-12 mb-3">
+        <label class="form-label">Notes</label>
+        <textarea name="Notes" class="form-control" rows="3">@Model.Notes</textarea>
+    </div>
+
+    <!-- Is Current -->
+    <div class="col-md-12 mb-3">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="IsCurrent" name="IsCurrent" value="true"
+                   @(Model.IsCurrent ? "checked" : "") />
+            <input type="hidden" name="IsCurrent" value="false" />
+            <label class="form-check-label" for="IsCurrent">Current owner</label>
+        </div>
+    </div>
+</div>

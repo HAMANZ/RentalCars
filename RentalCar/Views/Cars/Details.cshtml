@@ -1,0 +1,453 @@
+@using RentalCar.DomainLayer.Models
+@model Car
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Car Details";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+
+    string investorName = Model.Investor?.FullName
+                          ?? Model.Investor?.Email
+                          ?? "-";
+}
+
+@section Styles {
+    <style>
+        .info-table th { width: 40%; white-space: nowrap; color: #555; font-weight: 600; }
+        .info-table td { color: #222; }
+        .card-title i { margin-right: 6px; }
+        .car-hero-img {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e3e6ea;
+        }
+        .table-sm td, .table-sm th { padding: .45rem .5rem; vertical-align: middle; }
+        .empty-state { color: #888; text-align: center; padding: 18px 0; }
+    </style>
+}
+
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-car mr-2"></i>Car Details</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Cars">Cars</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- ============ 1. CAR INFORMATION ============ -->
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-info-circle"></i> Car Information</h3>
+                <div class="card-tools">
+                    <a href="/Cars" class="btn btn-sm btn-default"><i class="fas fa-arrow-left mr-1"></i> Back to Cars</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 text-center mb-3">
+                        <img class="car-hero-img"
+                             src="@(string.IsNullOrEmpty(Model.Image) ? "/Images/missing-image.jpg" : $"/Images/Cars/{Model.Image}")"
+                             alt="Car Image"
+                             onerror="this.onerror=null;this.src='/Images/missing-image.jpg';" />
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-sm info-table">
+                                    <tr><th>Brand</th><td>@(Model.Brand?.Name ?? "-")</td></tr>
+                                    <tr><th>Model</th><td>@(string.IsNullOrEmpty(Model.Model) ? "-" : Model.Model)</td></tr>
+                                    <tr><th>Year</th><td>@Model.Year</td></tr>
+                                    <tr><th>Color</th><td>@(string.IsNullOrEmpty(Model.Color) ? "-" : Model.Color)</td></tr>
+                                    <tr><th>License Plate</th><td>@(Model.LicensePlate?.PlateNumber ?? "-")</td></tr>
+                                    <tr><th>Fuel Type</th><td>@(Model.FuelType?.Name ?? "-")</td></tr>
+                                    <tr><th>Status</th><td><span class="badge bg-info">@(Model.CarStatus?.Name ?? "-")</span></td></tr>
+                                    <tr><th>Current KM</th><td>@Model.CurrentKM.ToString("N0")</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm info-table">
+                                    <tr><th>VIN</th><td>@(string.IsNullOrEmpty(Model.VIN) ? "-" : Model.VIN)</td></tr>
+                                    <tr><th>Engine No</th><td>@(string.IsNullOrEmpty(Model.EngineNo) ? "-" : Model.EngineNo)</td></tr>
+                                    <tr><th>Chassis Number</th><td>@(string.IsNullOrEmpty(Model.ChassisNumber) ? "-" : Model.ChassisNumber)</td></tr>
+                                    <tr><th>Branch</th><td>@(Model.Branch?.Name ?? "-")</td></tr>
+                                    <tr><th>Car Owner</th><td>@(Model.CarOwner?.FullName ?? "-")</td></tr>
+                                    <tr><th>Investor</th><td>@investorName</td></tr>
+                                    <tr><th>Purchase Price</th><td>@Model.PurchasePrice.ToString("N2")</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            <div class="mt-2">
+                                <strong>Description:</strong>
+                                <p class="mb-0 text-muted">@Model.Description</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- ============ 2. OIL SCHEDULES ============ -->
+            <div class="col-lg-6">
+                <div class="card card-outline card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-oil-can"></i> Oil Schedules</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        @if (Model.OilSchedules != null && Model.OilSchedules.Any())
+                        {
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Last Change Date</th>
+                                        <th>Last KM</th>
+                                        <th>Interval KM</th>
+                                        <th>Next Change KM</th>
+                                        <th>Oil Type</th>
+                                        <th>Cost</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var oil in Model.OilSchedules)
+                                    {
+                                        <tr>
+                                            <td>@oil.LastChangeDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@oil.LastChangeKM.ToString("N0")</td>
+                                            <td>@oil.ChangeIntervalKM.ToString("N0")</td>
+                                            <td><span class="badge bg-warning">@oil.NextChangeKM.ToString("N0")</span></td>
+                                            <td>@(string.IsNullOrEmpty(oil.OilType) ? "-" : oil.OilType)</td>
+                                            <td>@oil.Cost.ToString("N2")</td>
+                                            <td>@(string.IsNullOrEmpty(oil.Notes) ? "-" : oil.Notes)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No records found</div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ 3. TIRE SCHEDULES ============ -->
+            <div class="col-lg-6">
+                <div class="card card-outline card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-dharmachakra"></i> Tire Schedules</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        @if (Model.TireSchedules != null && Model.TireSchedules.Any())
+                        {
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Install Date</th>
+                                        <th>Install KM</th>
+                                        <th>Expected KM</th>
+                                        <th>Next Change KM</th>
+                                        <th>Brand</th>
+                                        <th>Qty</th>
+                                        <th>Cost</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tire in Model.TireSchedules)
+                                    {
+                                        <tr>
+                                            <td>@tire.InstallDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@tire.InstallKM.ToString("N0")</td>
+                                            <td>@tire.ExpectedKM.ToString("N0")</td>
+                                            <td><span class="badge bg-secondary">@tire.NextChangeKM.ToString("N0")</span></td>
+                                            <td>@(string.IsNullOrEmpty(tire.Brand) ? "-" : tire.Brand)</td>
+                                            <td>@tire.Quantity</td>
+                                            <td>@tire.Cost.ToString("N2")</td>
+                                            <td>@(string.IsNullOrEmpty(tire.Notes) ? "-" : tire.Notes)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No records found</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- ============ 4. BATTERY SCHEDULES ============ -->
+            <div class="col-lg-6">
+                <div class="card card-outline card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-car-battery"></i> Battery Schedules</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        @if (Model.BatterySchedules != null && Model.BatterySchedules.Any())
+                        {
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Install Date</th>
+                                        <th>Life (Months)</th>
+                                        <th>Expiry Date</th>
+                                        <th>Brand</th>
+                                        <th>Cost</th>
+                                        <th>Warranty</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bat in Model.BatterySchedules)
+                                    {
+                                        <tr>
+                                            <td>@bat.InstallDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@bat.LifeMonths</td>
+                                            <td><span class="badge bg-success">@bat.ExpiryDate.ToString("yyyy-MM-dd")</span></td>
+                                            <td>@(string.IsNullOrEmpty(bat.Brand) ? "-" : bat.Brand)</td>
+                                            <td>@bat.Cost.ToString("N2")</td>
+                                            <td>@(string.IsNullOrEmpty(bat.Warranty) ? "-" : bat.Warranty)</td>
+                                            <td>@(string.IsNullOrEmpty(bat.Notes) ? "-" : bat.Notes)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No records found</div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ 5. RENTAL CONTRACTS ============ -->
+            <div class="col-lg-6">
+                <div class="card card-outline card-info">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-file-signature"></i> Rental Contracts</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        @if (Model.Contracts != null && Model.Contracts.Any())
+                        {
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Daily Rate</th>
+                                        <th>Total</th>
+                                        <th>Paid</th>
+                                        <th>Remaining</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var rc in Model.Contracts)
+                                    {
+                                        <tr>
+                                            <td>@(rc.Customer?.FullName ?? rc.Customer?.Phone ?? "-")</td>
+                                            <td>@rc.StartDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@rc.EndDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@rc.DailyRate.ToString("N2")</td>
+                                            <td>@rc.TotalAmount.ToString("N2")</td>
+                                            <td>@rc.PaidAmount.ToString("N2")</td>
+                                            <td>@rc.RemainingAmount.ToString("N2")</td>
+                                            <td><span class="badge bg-info">@(rc.Status?.Name ?? "-")</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No records found</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- ============ 6. WORK ORDERS ============ -->
+            <div class="col-lg-6">
+                <div class="card card-outline card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-tools"></i> Work Orders</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        @if (Model.WorkOrders != null && Model.WorkOrders.Any())
+                        {
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Current KM</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var wo in Model.WorkOrders)
+                                    {
+                                        <tr>
+                                            <td>@wo.Id</td>
+                                            <td>@wo.Date.ToString("yyyy-MM-dd")</td>
+                                            <td>@wo.CurrentKM.ToString("N0")</td>
+                                            <td><span class="badge bg-danger">@(wo.Status?.Name ?? "-")</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No records found</div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ 7. INSURANCE ============ -->
+            <div class="col-lg-6">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-shield-alt"></i> Insurance</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        @if (Model.Insurances != null && Model.Insurances.Any())
+                        {
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Policy #</th>
+                                        <th>Company</th>
+                                        <th>Type</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Premium</th>
+                                        <th>Coverage</th>
+                                        <th>Deductible</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ins in Model.Insurances)
+                                    {
+                                        <tr>
+                                            <td>@(string.IsNullOrEmpty(ins.PolicyNumber) ? "-" : ins.PolicyNumber)</td>
+                                            <td>@(ins.InsuranceCompany?.Name ?? "-")</td>
+                                            <td>@(ins.InsuranceType?.Name ?? "-")</td>
+                                            <td>@ins.StartDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@ins.EndDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@ins.Premium.ToString("N2")</td>
+                                            <td>@(ins.CoverageAmount.HasValue ? ins.CoverageAmount.Value.ToString("N2") : "-")</td>
+                                            <td>@(ins.Deductible.HasValue ? ins.Deductible.Value.ToString("N2") : "-")</td>
+                                            <td><span class="badge bg-primary">@(ins.Status?.Name ?? "-")</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="empty-state">No records found</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ 8. CAR DOCUMENTS ============ -->
+        <div class="card card-outline card-dark">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-folder-open"></i> Car Documents</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                @if (Model.Documents != null && Model.Documents.Any())
+                {
+                    <table class="table table-sm table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Document Type</th>
+                                <th>File</th>
+                                <th>Expires At</th>
+                                <th>Status</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var doc in Model.Documents)
+                            {
+                                <tr>
+                                    <td>@(doc.DocumentType?.Name ?? "-")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(doc.FilePath))
+                                        {
+                                            <a href="@doc.FilePath" target="_blank" class="btn btn-xs btn-outline-primary">
+                                                <i class="fas fa-external-link-alt mr-1"></i> Open
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                    <td>@(doc.ExpiresAt.HasValue ? doc.ExpiresAt.Value.ToString("yyyy-MM-dd") : "-")</td>
+                                    <td>
+                                        @if (doc.IsExpired)
+                                        {
+                                            <span class="badge bg-danger">Expired</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">Valid</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (doc.IsActive == true)
+                                        {
+                                            <span class="badge bg-success">Yes</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">No</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="empty-state">No records found</div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>

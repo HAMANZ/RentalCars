@@ -1,0 +1,40 @@
+﻿@using RentalCar.DomainLayer.DTO
+@model BrandDTO
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Add Brand";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6"><h1 class="m-0"><i class="fas fa-tags mr-2"></i>Add Brand</h1></div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Brands">Brands</a></li>
+                    <li class="breadcrumb-item active">Add</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+        <div class="card card-primary card-outline">
+            <div class="card-header"><h3 class="card-title mt-1"><i class="fas fa-plus mr-1"></i> Brand Details</h3></div>
+            <div class="card-body">
+                <form asp-action="Create" asp-controller="Brands" method="post">
+                    <partial name="_BrandForm" model="Model" />
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+                        <a href="/Brands" class="btn btn-secondary ml-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

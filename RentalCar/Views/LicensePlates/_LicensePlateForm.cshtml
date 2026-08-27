@@ -1,0 +1,47 @@
+@using RentalCar.DomainLayer.DTO
+@using RentalCar.DomainLayer.Models
+@model LicensePlateDTO
+@{
+    var plateTypes = ViewBag.PlateTypes as List<PlateType> ?? new List<PlateType>();
+    var plateRegions = ViewBag.PlateRegions as List<PlateRegion> ?? new List<PlateRegion>();
+}
+
+<input type="hidden" name="Id" value="@Model.Id" />
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Plate Number</label>
+        <input type="text" name="PlateNumber" class="form-control" value="@Model.PlateNumber" required />
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Plate Type</label>
+        <select name="PlateTypeId" class="form-control" required>
+            <option value="">-- Select Type --</option>
+            @foreach (var t in plateTypes)
+            {
+                <option value="@t.Id" selected="@(Model.PlateTypeId == t.Id)">@t.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label">Plate Region</label>
+        <select name="PlateRegionId" class="form-control">
+            <option value="">-- Select Region --</option>
+            @foreach (var r in plateRegions)
+            {
+                <option value="@r.Id" selected="@(Model.PlateRegionId == r.Id)">@r.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3 d-flex align-items-end">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" value="true"
+                   @(Model.IsActive ? "checked" : "") />
+            <input type="hidden" name="IsActive" value="false" />
+            <label class="form-check-label" for="IsActive">Active</label>
+        </div>
+    </div>
+</div>
