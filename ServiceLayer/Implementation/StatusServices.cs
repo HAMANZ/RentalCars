@@ -32,6 +32,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 Code = dto.Code,
                 Name = dto.Name,
                 Name_ar = dto.Name_ar,
+                Is_WorkOrderStatus = dto.Is_WorkOrderStatus,
+                Is_InsuranceStatus = dto.Is_InsuranceStatus,
                 Is_deleted = dto.Is_deleted,
                 Created_by = dto.Created_by,
                 Updated_by = dto.Updated_by,
@@ -48,6 +50,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 Code = model.Code,
                 Name = model.Name,
                 Name_ar = model.Name_ar,
+                Is_WorkOrderStatus = model.Is_WorkOrderStatus,
+                Is_InsuranceStatus = model.Is_InsuranceStatus,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
                 Updated_by = model.Updated_by,
@@ -162,6 +166,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 model.Code = dto.Code;
                 model.Name = dto.Name;
                 model.Name_ar = dto.Name_ar;
+                model.Is_WorkOrderStatus = dto.Is_WorkOrderStatus;
+                model.Is_InsuranceStatus = dto.Is_InsuranceStatus;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
 

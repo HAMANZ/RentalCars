@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentalCar.DomainLayer.Models;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(RentalCarDbContext))]
-    partial class RentalCarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260827200643_Flag_WorkOrder_Statuses")]
+    partial class Flag_WorkOrder_Statuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

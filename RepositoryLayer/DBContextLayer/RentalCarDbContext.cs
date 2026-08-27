@@ -884,6 +884,7 @@ namespace RentalCar.DomainLayer.Models
     {
         Id = 1,
         Name = "Active",
+        Is_WorkOrderStatus = true,
         Created_at = new DateTime(2026, 1, 1),
         Created_by = 1,
         Updated_at = new DateTime(2026, 1, 1),
@@ -904,6 +905,7 @@ namespace RentalCar.DomainLayer.Models
     {
         Id = 3,
         Name = "Pending",
+        Is_WorkOrderStatus = true,
         Created_at = new DateTime(2026, 1, 1),
         Created_by = 1,
         Updated_at = new DateTime(2026, 1, 1),
@@ -914,6 +916,7 @@ namespace RentalCar.DomainLayer.Models
     {
         Id = 4,
         Name = "Cancelled",
+        Is_WorkOrderStatus = true,
         Created_at = new DateTime(2026, 1, 1),
         Created_by = 1,
         Updated_at = new DateTime(2026, 1, 1),

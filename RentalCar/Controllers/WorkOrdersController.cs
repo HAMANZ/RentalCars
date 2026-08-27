@@ -74,33 +74,64 @@ namespace RentalCar.Controllers
 
             var workOrderId = result.Data;
 
+            // Spare part prices/stock are looked up server-side (not trusted from the
+            // client) so PartsCost and the out-of-stock check are authoritative.
+            var spareParts = await _context.SpareParts.AsNoTracking()
+                .ToDictionaryAsync(p => p.Id, p => new { p.SellingPrice, p.StockQty });
+
             // Add the detail rows collected in the "Work Order Details" card
             // (parallel arrays, aligned by row index).
-            int added = 0;
+            int added = 0, skipped = 0;
+            decimal totalCost = 0;
+            decimal partsCost = 0;
             if (DetailRepairIds != null)
             {
                 for (int i = 0; i < DetailRepairIds.Count; i++)
                 {
+                    var repairId = DetailRepairIds[i] > 0 ? DetailRepairIds[i] : (int?)null;
+                    var sparePartId = (DetailSparePartIds != null && i < DetailSparePartIds.Count && DetailSparePartIds[i] > 0)
+                        ? DetailSparePartIds[i]
+                        : (int?)null;
+                    var quantity = (DetailQuantities != null && i < DetailQuantities.Count) ? DetailQuantities[i] : 0;
+                    var total = (DetailTotals != null && i < DetailTotals.Count) ? DetailTotals[i] : 0;
+
+                    if (repairId == null && sparePartId == null) continue;
+
+                    if (sparePartId.HasValue)
+                    {
+                        if (!spareParts.TryGetValue(sparePartId.Value, out var sparePart) || sparePart.StockQty <= 0)
+                        {
+                            skipped++;
+                            continue;
+                        }
+                        partsCost += sparePart.SellingPrice * quantity;
+                    }
+
                     var detailDto = new WorkOrderDetailDTO
                     {
                         WorkOrderId = workOrderId,
-                        RepairId = DetailRepairIds[i] > 0 ? DetailRepairIds[i] : (int?)null,
-                        SparePartId = (DetailSparePartIds != null && i < DetailSparePartIds.Count && DetailSparePartIds[i] > 0)
-                            ? DetailSparePartIds[i]
-                            : (int?)null,
-                        Quantity = (DetailQuantities != null && i < DetailQuantities.Count) ? DetailQuantities[i] : 0,
-                        Total = (DetailTotals != null && i < DetailTotals.Count) ? DetailTotals[i] : 0
+                        RepairId = repairId,
+                        SparePartId = sparePartId,
+                        Quantity = quantity,
+                        Total = total
                     };
-
-                    if (detailDto.RepairId == null && detailDto.SparePartId == null) continue;
 
                     var detailResult = await _detailService.AddAsync(detailDto);
                     if (detailResult.HttpStatusCode == HttpStatusCode.OK && detailResult.Data)
+                    {
                         added++;
+                        totalCost += total;
+                    }
                 }
             }
 
-            TempData["Success"] = $"Work order added successfully with {added} detail row(s).";
+            dto.Id = workOrderId;
+            dto.PartsCost = (double)partsCost;
+            dto.TotalCost = (double)totalCost;
+            await _service.UpdateAsync(dto);
+
+            TempData["Success"] = $"Work order added successfully with {added} detail row(s)." +
+                (skipped > 0 ? $" {skipped} row(s) skipped (spare part out of stock)." : "");
             return RedirectToAction(nameof(Index));
         }
         #endregion
@@ -129,7 +160,7 @@ namespace RentalCar.Controllers
                 .Where(c => !c.Is_deleted).OrderBy(c => c.Model).ToListAsync();
 
             ViewBag.Statuses = await _context.Statuses.AsNoTracking()
-                .Where(s => !s.Is_deleted).OrderBy(s => s.Name).ToListAsync();
+                .Where(s => !s.Is_deleted && s.Is_WorkOrderStatus).OrderBy(s => s.Name).ToListAsync();
 
             ViewBag.Repairs = await _context.Repairs.AsNoTracking()
                 .Where(r => !r.Is_deleted).OrderBy(r => r.Name).ToListAsync();

@@ -39,7 +39,7 @@
             </div>
             <div class="card-body">
                 <table id="woTable" class="table table-striped table-bordered nowrap" style="width:100%">
-                    <thead><tr><th>#</th><th>Car</th><th>Date</th><th>Current KM</th><th>Action</th></tr></thead>
+                    <thead><tr><th>#</th><th>Car</th><th>Date</th><th>Current KM</th><th>Parts Cost</th><th>Total Cost</th><th>Action</th></tr></thead>
                     <tbody>
                         @{ var count = 1; }
                         @foreach (var item in Model)
@@ -49,6 +49,8 @@
                                 <td>@(item.CarId.HasValue && carModels.ContainsKey(item.CarId.Value) ? carModels[item.CarId.Value] : "-")</td>
                                 <td>@item.Date.ToString("yyyy-MM-dd")</td>
                                 <td>@item.CurrentKM</td>
+                                <td>@item.PartsCost.ToString("N2")</td>
+                                <td>@item.TotalCost.ToString("N2")</td>
                                 <td>
                                     <form method="post" asp-action="Delete" asp-controller="WorkOrders" class="d-inline"
                                           onsubmit="return confirm('Delete this work order?');">
@@ -71,7 +73,7 @@
     <script>
         $(function () {
             $('#woTable').DataTable({ responsive: true, pageLength: 10, lengthMenu: [5,10,25,50],
-                language: { emptyTable: "No work orders found" }, columnDefs: [{ orderable:false, targets:[4] }] });
+                language: { emptyTable: "No work orders found" }, columnDefs: [{ orderable:false, targets:[6] }] });
         });
     </script>
 }

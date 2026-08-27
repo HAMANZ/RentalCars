@@ -83,16 +83,25 @@
                     <table class="table table-sm table-bordered" id="detailsTable">
                         <thead>
                             <tr>
-                                <th style="width:30%">Repair</th>
-                                <th style="width:30%">Spare Part</th>
-                                <th style="width:15%">Quantity</th>
-                                <th style="width:20%">Total</th>
+                                <th style="width:25%">Repair</th>
+                                <th style="width:25%">Spare Part</th>
+                                <th style="width:15%">Price</th>
+                                <th style="width:12%">Quantity</th>
+                                <th style="width:18%">Total</th>
                                 <th style="width:5%"></th>
                             </tr>
                         </thead>
                         <tbody id="detailsBody">
-                            <tr class="text-muted"><td colspan="5" class="text-center">No line items added.</td></tr>
+                            <tr class="text-muted"><td colspan="6" class="text-center">No line items added.</td></tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="text-end">Parts Cost</th>
+                                <th colspan="2"><input type="text" id="summaryPartsCost" class="form-control form-control-sm" readonly value="0.00" /></th>
+                                <th class="text-end">Total Cost</th>
+                                <th><input type="text" id="summaryTotalCost" class="form-control form-control-sm" readonly value="0.00" /></th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -111,7 +120,7 @@
                         <option value="0">-- Select Repair --</option>
                         @foreach (var r in repairs)
                         {
-                            <option value="@r.Id">@r.Name</option>
+                            <option value="@r.Id" data-price="@r.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)">@r.Name</option>
                         }
                     </select>
                 </td>
@@ -120,9 +129,18 @@
                         <option value="0">-- Select Spare Part --</option>
                         @foreach (var p in spareParts)
                         {
-                            <option value="@p.Id">@p.Name</option>
+                            var outOfStock = p.StockQty <= 0;
+                            <option value="@p.Id"
+                                    data-price="@p.SellingPrice.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                    data-stock="@p.StockQty"
+                                    disabled="@outOfStock">
+                                @p.Name @(outOfStock ? "(out of stock)" : $"(in stock: {p.StockQty})")
+                            </option>
                         }
                     </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control form-control-sm row-price" readonly value="0.00" />
                 </td>
                 <td>
                     <input type="number" name="DetailQuantities" class="form-control form-control-sm" value="1" min="0" />
@@ -143,7 +161,12 @@
         (function () {
             var body = document.getElementById('detailsBody');
             var template = document.getElementById('detailRowTemplate');
-            var placeholderHtml = '<tr class="text-muted"><td colspan="5" class="text-center">No line items added.</td></tr>';
+            var placeholderHtml = '<tr class="text-muted"><td colspan="6" class="text-center">No line items added.</td></tr>';
+
+            function toNumber(v) {
+                var n = parseFloat(v);
+                return isNaN(n) ? 0 : n;
+            }
 
             function hasRows() {
                 return body.querySelectorAll('tr.detail-row').length > 0;
@@ -155,11 +178,40 @@
                 }
             }
 
+            function recalcRow(tr) {
+                var priceInput = tr.querySelector('.row-price');
+                var qtyInput = tr.querySelector('input[name="DetailQuantities"]');
+                var totalInput = tr.querySelector('input[name="DetailTotals"]');
+                var price = toNumber(priceInput.value);
+                var qty = toNumber(qtyInput.value);
+                if (price > 0) {
+                    totalInput.value = (price * qty).toFixed(2);
+                }
+            }
+
+            function recalcSummary() {
+                var totalCost = 0, partsCost = 0;
+                body.querySelectorAll('tr.detail-row').forEach(function (tr) {
+                    var totalInput = tr.querySelector('input[name="DetailTotals"]');
+                    totalCost += toNumber(totalInput.value);
+
+                    var sparePartSelect = tr.querySelector('select[name="DetailSparePartIds"]');
+                    if (sparePartSelect.value && sparePartSelect.value !== '0') {
+                        var priceInput = tr.querySelector('.row-price');
+                        var qtyInput = tr.querySelector('input[name="DetailQuantities"]');
+                        partsCost += toNumber(priceInput.value) * toNumber(qtyInput.value);
+                    }
+                });
+                document.getElementById('summaryTotalCost').value = totalCost.toFixed(2);
+                document.getElementById('summaryPartsCost').value = partsCost.toFixed(2);
+            }
+
             document.getElementById('addDetailRow').addEventListener('click', function () {
                 if (!hasRows()) {
                     body.innerHTML = '';
                 }
                 body.appendChild(template.content.cloneNode(true));
+                recalcSummary();
             });
 
             body.addEventListener('click', function (e) {
@@ -167,6 +219,31 @@
                 if (!btn) return;
                 btn.closest('tr.detail-row').remove();
                 refreshPlaceholder();
+                recalcSummary();
+            });
+
+            body.addEventListener('change', function (e) {
+                var tr = e.target.closest('tr.detail-row');
+                if (!tr) return;
+
+                if (e.target.matches('select[name="DetailRepairIds"]') || e.target.matches('select[name="DetailSparePartIds"]')) {
+                    var opt = e.target.selectedOptions[0];
+                    var price = opt ? toNumber(opt.getAttribute('data-price')) : 0;
+                    tr.querySelector('.row-price').value = price.toFixed(2);
+                    recalcRow(tr);
+                }
+
+                if (e.target.matches('input[name="DetailQuantities"]')) {
+                    recalcRow(tr);
+                }
+
+                recalcSummary();
+            });
+
+            body.addEventListener('input', function (e) {
+                if (e.target.matches('input[name="DetailTotals"]') || e.target.matches('input[name="DetailQuantities"]')) {
+                    recalcSummary();
+                }
             });
         })();
     </script>

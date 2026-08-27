@@ -48,6 +48,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 Id = dto.Id,
                 Date = dto.Date,
                 CurrentKM = dto.CurrentKM,
+                PartsCost = dto.PartsCost,
+                TotalCost = dto.TotalCost,
                 Is_deleted = dto.Is_deleted,
                 Created_by = dto.Created_by,
                 Updated_by = dto.Updated_by,
@@ -65,6 +67,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 CurrentKM = model.CurrentKM,
                 CarId = model.Car?.Id,
                 StatusId = model.Status?.Id,
+                PartsCost = model.PartsCost,
+                TotalCost = model.TotalCost,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
                 Updated_by = model.Updated_by,
@@ -183,6 +187,8 @@ namespace RentalCar.ServiceLayer.Implementation
 
                 model.Date = dto.Date;
                 model.CurrentKM = dto.CurrentKM;
+                model.PartsCost = dto.PartsCost;
+                model.TotalCost = dto.TotalCost;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
 
