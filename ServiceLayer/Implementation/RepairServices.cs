@@ -35,6 +35,9 @@ namespace RentalCar.ServiceLayer.Implementation
                 Details = dto.Details,
                 WorkTime = dto.WorkTime,
                 LaborCost = dto.LaborCost,
+                Price = dto.Price,
+                Description = dto.Description,
+                Note = dto.Note,
                 Is_deleted = dto.Is_deleted,
                 Created_by = dto.Created_by,
                 Updated_by = dto.Updated_by,
@@ -55,6 +58,9 @@ namespace RentalCar.ServiceLayer.Implementation
                 Details = model.Details,
                 WorkTime = model.WorkTime,
                 LaborCost = model.LaborCost,
+                Price = model.Price,
+                Description = model.Description,
+                Note = model.Note,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
                 Updated_by = model.Updated_by,
@@ -174,6 +180,9 @@ namespace RentalCar.ServiceLayer.Implementation
                 model.Details = dto.Details;
                 model.WorkTime = dto.WorkTime;
                 model.LaborCost = dto.LaborCost;
+                model.Price = dto.Price;
+                model.Description = dto.Description;
+                model.Note = dto.Note;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
 

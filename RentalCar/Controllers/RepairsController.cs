@@ -120,7 +120,7 @@ namespace RentalCar.Controllers
 
         #region Import from Excel
         private static readonly string[] TemplateHeaders =
-            { "Name", "Name_ar", "Type", "Details", "WorkTime", "LaborCost" };
+            { "Name", "Name_ar", "Type", "Details", "WorkTime", "LaborCost", "Price", "Description", "Note" };
 
         [HttpGet]
         public IActionResult Import() => View();
@@ -197,7 +197,10 @@ namespace RentalCar.Controllers
                         RepairTypeId = typeId,
                         Details = GetCellString(row, 3),
                         WorkTime = GetCellDecimal(row, 4),
-                        LaborCost = GetCellDecimal(row, 5)
+                        LaborCost = GetCellDecimal(row, 5),
+                        Price = (double)GetCellDecimal(row, 6),
+                        Description = GetCellString(row, 7),
+                        Note = GetCellString(row, 8)
                     };
 
                     var result = await _service.AddAsync(dto);
@@ -247,6 +250,9 @@ namespace RentalCar.Controllers
             exampleRow.CreateCell(3).SetCellValue("Replace front and rear brake pads");
             exampleRow.CreateCell(4).SetCellValue(1.5);
             exampleRow.CreateCell(5).SetCellValue(50.0);
+            exampleRow.CreateCell(6).SetCellValue(75.0);
+            exampleRow.CreateCell(7).SetCellValue("Standard brake pad replacement service");
+            exampleRow.CreateCell(8).SetCellValue("Recommended every 20,000 km");
 
             using var ms = new MemoryStream();
             workbook.Write(ms, true);

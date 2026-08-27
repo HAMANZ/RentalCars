@@ -12,5 +12,8 @@ namespace RentalCar.DomainLayer.DTO
         public string Details { get; set; }
         public decimal WorkTime { get; set; }
         public decimal LaborCost { get; set; }
+        public double Price { get; set; }
+        public string Description { get; set; }
+        public string Note { get; set; }
     }
 }
