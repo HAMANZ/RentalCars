@@ -1,0 +1,473 @@
+@using RentalCar.DomainLayer.Models
+@model List<MenuItem>
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Menu Order";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.min.css" />
+    <style>
+        .menu-tree, .child-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .child-menu {
+            margin-left: 2.2rem;
+            border-left: 2px dashed #dee2e6;
+            padding-left: .5rem;
+            min-height: 12px; /* keep an empty group droppable */
+        }
+
+        .menu-node { margin: 6px 0; }
+
+        .menu-row {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            background: #fff;
+            border: 1px solid #e3e6ea;
+            border-radius: 6px;
+            padding: 8px 12px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.03);
+        }
+
+        .drag-handle {
+            cursor: move;
+            color: #adb5bd;
+            padding: 0 4px;
+        }
+        .drag-handle:hover { color: var(--primary-color, #0A0F37); }
+
+        .menu-icon { width: 18px; text-align: center; color: var(--primary-color, #0A0F37); }
+        .menu-title { font-weight: 600; }
+        .menu-url { color: #6c757d; background: #f6f7f9; }
+
+        .menu-edit { cursor: pointer; }
+        .menu-edit:hover { border-color: var(--secondary-color, #cab053); }
+        .menu-edit-icon { color: #adb5bd; margin-left: auto; padding-left: .5rem; }
+        .menu-edit:hover .menu-edit-icon { color: var(--primary-color, #0A0F37); }
+
+        .menu-placeholder {
+            border: 2px dashed var(--secondary-color, #cab053);
+            border-radius: 6px;
+            background: #fffdf3;
+            height: 42px;
+            margin: 6px 0;
+        }
+
+        .ui-sortable-helper .menu-row { box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+    </style>
+}
+
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-bars mr-2"></i>Menu Order</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Menu Order</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div id="saveStatus"></div>
+
+        <div class="card card-primary card-outline">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title mt-1"><i class="fas fa-sort mr-1"></i> Drag items to reorder</h3>
+                <div>
+                    <button type="button" id="btnAddMenu" class="btn btn-sm btn-success">
+                        <i class="fas fa-plus mr-1"></i> Add Menu
+                    </button>
+                    <button type="button" id="btnSaveOrder" class="btn btn-sm btn-primary">
+                        <i class="fas fa-save mr-1"></i> Save Order
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">
+                    Drag the <i class="fas fa-grip-lines"></i> handle to change the order.
+                    Top-level groups are reordered among themselves; sub-items can be dragged
+                    within their group or moved to another group. Changes save automatically on drop.
+                </p>
+
+                @if (Model == null || !Model.Any())
+                {
+                    <div class="alert alert-warning mb-0">No menu items found.</div>
+                }
+                else
+                {
+                    <ul id="rootMenu" class="menu-tree">
+                        @foreach (var root in Model)
+                        {
+                            <partial name="_MenuOrderNode" model="root" />
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Edit menu item modal -->
+<div class="modal fade" id="editMenuModal" tabindex="-1" role="dialog" aria-labelledby="editMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMenuModalLabel"><i class="fas fa-pen mr-1"></i> Edit Menu Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="editMenuError" class="alert alert-danger d-none"></div>
+                <input type="hidden" id="edit-id" />
+
+                <div class="form-group">
+                    <label for="edit-title">Title <small class="text-muted">(shown in the sidebar)</small></label>
+                    <input type="text" class="form-control" id="edit-title" />
+                </div>
+                <div class="form-group">
+                    <label for="edit-name">Name <small class="text-muted">(internal key)</small></label>
+                    <input type="text" class="form-control" id="edit-name" />
+                </div>
+                <div class="form-group">
+                    <label for="edit-parent">Parent <small class="text-muted">(leave empty for a top-level group)</small></label>
+                    <select class="form-control" id="edit-parent">
+                        <option value="">-- Top level --</option>
+                        @if (Model != null)
+                        {
+                            @foreach (var root in Model)
+                            {
+                                <option value="@root.Id">@root.Title</option>
+                                @if (root.Children != null)
+                                {
+                                    @foreach (var child in root.Children)
+                                    {
+                                        <option value="@child.Id">&nbsp;&nbsp;— @child.Title</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-url">URL <small class="text-muted">(redirection target, e.g. /Cars or #)</small></label>
+                    <input type="text" class="form-control" id="edit-url" />
+                </div>
+                <div class="form-group">
+                    <label for="edit-icon">Icon <small class="text-muted">(Font Awesome class, e.g. fas fa-car)</small></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i id="edit-icon-preview" class="far fa-circle"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="edit-icon" />
+                    </div>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="edit-active" />
+                    <label class="form-check-label" for="edit-active">Active <small class="text-muted">(inactive items are hidden from the sidebar)</small></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btnSaveMenuItem" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create menu item modal -->
+<div class="modal fade" id="createMenuModal" tabindex="-1" role="dialog" aria-labelledby="createMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createMenuModalLabel"><i class="fas fa-plus mr-1"></i> Add Menu Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="createMenuError" class="alert alert-danger d-none"></div>
+
+                <div class="form-group">
+                    <label for="create-title">Title <small class="text-muted">(shown in the sidebar)</small></label>
+                    <input type="text" class="form-control" id="create-title" />
+                </div>
+                <div class="form-group">
+                    <label for="create-name">Name <small class="text-muted">(internal key, optional)</small></label>
+                    <input type="text" class="form-control" id="create-name" />
+                </div>
+                <div class="form-group">
+                    <label for="create-parent">Parent <small class="text-muted">(leave empty for a top-level group)</small></label>
+                    <select class="form-control" id="create-parent">
+                        <option value="">-- Top level --</option>
+                        @if (Model != null)
+                        {
+                            @foreach (var root in Model)
+                            {
+                                <option value="@root.Id">@root.Title</option>
+                                @if (root.Children != null)
+                                {
+                                    @foreach (var child in root.Children)
+                                    {
+                                        <option value="@child.Id">&nbsp;&nbsp;— @child.Title</option>
+                                    }
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="create-url">URL <small class="text-muted">(redirection target, e.g. /Cars or #)</small></label>
+                    <input type="text" class="form-control" id="create-url" />
+                </div>
+                <div class="form-group">
+                    <label for="create-icon">Icon <small class="text-muted">(Font Awesome class, e.g. fas fa-car)</small></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i id="create-icon-preview" class="far fa-circle"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="create-icon" />
+                    </div>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="create-active" checked />
+                    <label class="form-check-label" for="create-active">Active</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" id="btnCreateMenuItem" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+        (function () {
+            var saveUrl = '@Url.Action("SaveMenuOrder", "Admin")';
+
+            function collectOrder() {
+                var items = [];
+
+                // Top-level items (parentId = null).
+                $('#rootMenu').children('li.menu-node').each(function (i) {
+                    items.push({ id: parseInt($(this).data('id'), 10), parentId: null, sortOrder: i + 1 });
+                });
+
+                // Every child group carries its parent id on the <ul>.
+                $('.child-menu').each(function () {
+                    var parentId = parseInt($(this).data('parent'), 10);
+                    $(this).children('li.menu-node').each(function (i) {
+                        items.push({ id: parseInt($(this).data('id'), 10), parentId: parentId, sortOrder: i + 1 });
+                    });
+                });
+
+                return items;
+            }
+
+            function showStatus(ok, message) {
+                var cls = ok ? 'alert-success' : 'alert-danger';
+                $('#saveStatus').html(
+                    '<div class="alert ' + cls + ' alert-dismissible">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    message + '</div>');
+            }
+
+            function saveOrder() {
+                $.ajax({
+                    url: saveUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(collectOrder()),
+                    success: function (res) { showStatus(res.success, res.message); },
+                    error: function () { showStatus(false, 'Could not save the menu order. Please try again.'); }
+                });
+            }
+
+            var sortableOptions = {
+                items: '> li.menu-node',
+                handle: '.drag-handle',
+                placeholder: 'menu-placeholder',
+                forcePlaceholderSize: true,
+                tolerance: 'pointer'
+            };
+
+            // Top-level list: reorder groups among themselves only.
+            $('#rootMenu').sortable($.extend({}, sortableOptions, { stop: saveOrder }));
+
+            // Child lists: reorder within a group and move between groups.
+            $('.child-menu').sortable($.extend({}, sortableOptions, {
+                connectWith: '.child-menu',
+                stop: saveOrder
+            }));
+
+            $('#btnSaveOrder').on('click', saveOrder);
+
+            /* ===== Edit menu item ===== */
+            var getUrl = '@Url.Action("GetMenuItem", "Admin")';
+            var updateUrl = '@Url.Action("UpdateMenuItem", "Admin")';
+
+            function showModalError(msg) {
+                $('#editMenuError').removeClass('d-none').text(msg);
+            }
+
+            // Open the modal when a row (but not the drag handle) is clicked.
+            $('#rootMenu').on('click', '.menu-edit', function (e) {
+                if ($(e.target).closest('.drag-handle').length) return;
+
+                var id = $(this).data('id');
+                $('#editMenuError').addClass('d-none').text('');
+
+                $.getJSON(getUrl, { id: id })
+                    .done(function (res) {
+                        if (!res.success) { alert(res.message || 'Menu item not found.'); return; }
+                        var d = res.data;
+                        $('#edit-id').val(d.id);
+                        $('#edit-title').val(d.title);
+                        $('#edit-name').val(d.name);
+                        // Reset then prevent an item from being its own parent.
+                        $('#edit-parent option').prop('disabled', false);
+                        $('#edit-parent option[value="' + d.id + '"]').prop('disabled', true);
+                        $('#edit-parent').val(d.parentId != null ? String(d.parentId) : '');
+                        $('#edit-url').val(d.url);
+                        $('#edit-icon').val(d.icon);
+                        $('#edit-icon-preview').attr('class', d.icon && d.icon.trim() ? d.icon : 'far fa-circle');
+                        $('#edit-active').prop('checked', d.isActive);
+                        $('#editMenuModal').modal('show');
+                    })
+                    .fail(function () { alert('Could not load the menu item.'); });
+            });
+
+            // Live icon preview.
+            $('#edit-icon').on('input', function () {
+                var v = $(this).val();
+                $('#edit-icon-preview').attr('class', v && v.trim() ? v : 'far fa-circle');
+            });
+
+            // Save edits.
+            $('#btnSaveMenuItem').on('click', function () {
+                var id = parseInt($('#edit-id').val(), 10);
+                var editParentVal = $('#edit-parent').val();
+                var dto = {
+                    id: id,
+                    title: $('#edit-title').val(),
+                    name: $('#edit-name').val(),
+                    url: $('#edit-url').val(),
+                    icon: $('#edit-icon').val(),
+                    isActive: $('#edit-active').is(':checked'),
+                    parentId: editParentVal ? parseInt(editParentVal, 10) : null
+                };
+
+                $.ajax({
+                    url: updateUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(dto),
+                    success: function (res) {
+                        if (!res.success) { showModalError(res.message || 'Failed to update.'); return; }
+
+                        // Reflect the changes in the row without a full reload.
+                        var row = $('.menu-edit[data-id="' + id + '"]');
+                        row.find('.menu-title').text(dto.title);
+                        row.find('.menu-icon').attr('class', 'menu-icon ' + (dto.icon && dto.icon.trim() ? dto.icon : 'far fa-circle'));
+                        row.find('.menu-inactive-badge').css('display', dto.isActive ? 'none' : '');
+                        var urlEl = row.find('.menu-url');
+                        if (dto.url && dto.url.trim() && dto.url !== '#') {
+                            urlEl.removeClass('d-none').text(dto.url);
+                        } else {
+                            urlEl.addClass('d-none').text('');
+                        }
+
+                        $('#editMenuModal').modal('hide');
+                        showStatus(true, res.message);
+                    },
+                    error: function () { showModalError('Request failed. Please try again.'); }
+                });
+            });
+
+            /* ===== Create menu item ===== */
+            var createUrl = '@Url.Action("CreateMenuItem", "Admin")';
+
+            $('#btnAddMenu').on('click', function () {
+                $('#createMenuError').addClass('d-none').text('');
+                $('#create-title').val('');
+                $('#create-name').val('');
+                $('#create-parent').val('');
+                $('#create-url').val('');
+                $('#create-icon').val('');
+                $('#create-icon-preview').attr('class', 'far fa-circle');
+                $('#create-active').prop('checked', true);
+                $('#createMenuModal').modal('show');
+            });
+
+            $('#create-icon').on('input', function () {
+                var v = $(this).val();
+                $('#create-icon-preview').attr('class', v && v.trim() ? v : 'far fa-circle');
+            });
+
+            $('#btnCreateMenuItem').on('click', function () {
+                var title = $('#create-title').val();
+                if (!title || !title.trim()) {
+                    $('#createMenuError').removeClass('d-none').text('Title is required.');
+                    return;
+                }
+                var parentVal = $('#create-parent').val();
+                var dto = {
+                    title: title,
+                    name: $('#create-name').val(),
+                    url: $('#create-url').val(),
+                    icon: $('#create-icon').val(),
+                    isActive: $('#create-active').is(':checked'),
+                    parentId: parentVal ? parseInt(parentVal, 10) : null
+                };
+
+                $.ajax({
+                    url: createUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(dto),
+                    success: function (res) {
+                        if (!res.success) { $('#createMenuError').removeClass('d-none').text(res.message || 'Failed to create.'); return; }
+                        location.reload();
+                    },
+                    error: function () { $('#createMenuError').removeClass('d-none').text('Request failed. Please try again.'); }
+                });
+            });
+
+            /* ===== Delete menu item ===== */
+            var deleteUrl = '@Url.Action("DeleteMenuItem", "Admin")';
+
+            $('#rootMenu').on('click', '.menu-delete-icon', function (e) {
+                e.stopPropagation();
+                var id = parseInt($(this).data('id'), 10);
+                var title = $(this).data('title');
+                if (!confirm('Delete "' + title + '" and all of its sub-items?')) return;
+
+                $.ajax({
+                    url: deleteUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ id: id }),
+                    success: function (res) {
+                        if (!res.success) { showStatus(false, res.message || 'Failed to delete.'); return; }
+                        location.reload();
+                    },
+                    error: function () { showStatus(false, 'Could not delete the menu item. Please try again.'); }
+                });
+            });
+        })();
+    </script>
+}

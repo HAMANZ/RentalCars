@@ -52,6 +52,7 @@ namespace RentalCar.Controllers
 		private readonly IWebHostEnvironment _env;
 		private readonly IAppSettings _IAppSettingsServices;
 		private readonly SignInManager<EUser> _signInManager;
+		private readonly IMenuItem _IMenuItemServices;
 		public AdminController(
 			RentalCarDbContext context,
 			IAdmin adminServices,
@@ -62,7 +63,8 @@ namespace RentalCar.Controllers
 			IEUser eUserServices,
 			IWebHostEnvironment env,
 			IAppSettings appSettingsServices,
-			SignInManager<EUser> signInManager
+			SignInManager<EUser> signInManager,
+			IMenuItem menuItemServices
 		)
 		{
 			_context = context;
@@ -75,7 +77,78 @@ namespace RentalCar.Controllers
 			_env = env;
 			_IAppSettingsServices = appSettingsServices;
 			_signInManager = signInManager;
+			_IMenuItemServices = menuItemServices;
 		}
+
+		#region Menu Items (sidebar navigation order)
+		[HttpGet]
+		public async Task<IActionResult> MenuItems()
+		{
+			var tree = await _IMenuItemServices.GetManagementTreeAsync();
+			return View(tree);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SaveMenuOrder([FromBody] List<MenuOrderItemDTO> items)
+		{
+			var result = await _IMenuItemServices.UpdateOrderAsync(items);
+
+			if (result.HttpStatusCode == HttpStatusCode.OK && result.Data)
+				return Json(new { success = true, message = "Menu order saved successfully." });
+
+			return Json(new { success = false, message = result.Message ?? "Failed to save menu order." });
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetMenuItem(int id)
+		{
+			var result = await _IMenuItemServices.GetByIdAsync(id);
+
+			if (result.HttpStatusCode == HttpStatusCode.OK && result.Data != null)
+				return Json(new { success = true, data = result.Data });
+
+			return Json(new { success = false, message = "Menu item not found." });
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> UpdateMenuItem([FromBody] MenuItemDTO dto)
+		{
+			var result = await _IMenuItemServices.UpdateDetailsAsync(dto);
+
+			if (result.HttpStatusCode == HttpStatusCode.OK && result.Data)
+				return Json(new { success = true, message = "Menu item updated successfully." });
+
+			if (result.HttpStatusCode == HttpStatusCode.NotFound)
+				return Json(new { success = false, message = "Menu item not found." });
+
+			return Json(new { success = false, message = result.Message ?? "Failed to update menu item." });
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateMenuItem([FromBody] MenuItemDTO dto)
+		{
+			var result = await _IMenuItemServices.CreateAsync(dto);
+
+			if (result.HttpStatusCode == HttpStatusCode.OK && result.Data)
+				return Json(new { success = true, message = "Menu item created successfully." });
+
+			return Json(new { success = false, message = result.Message ?? "Failed to create menu item." });
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteMenuItem([FromBody] MenuItemDTO dto)
+		{
+			var result = await _IMenuItemServices.DeleteAsync(dto.Id);
+
+			if (result.HttpStatusCode == HttpStatusCode.OK && result.Data)
+				return Json(new { success = true, message = "Menu item deleted successfully." });
+
+			if (result.HttpStatusCode == HttpStatusCode.NotFound)
+				return Json(new { success = false, message = "Menu item not found." });
+
+			return Json(new { success = false, message = result.Message ?? "Failed to delete menu item." });
+		}
+		#endregion
 
 		#region Login
 		[AllowAnonymous]
@@ -116,7 +189,7 @@ namespace RentalCar.Controllers
 						await _signInManager.SignInAsync(existingEUser, isPersistent: false);
 
 						HttpContext.Session.SetString("RentalCarId", existingEUser.Id);
-						HttpContext.Session.SetString("RentalCarUserName", existingEUser.FirstName_en);
+						HttpContext.Session.SetString("RentalCarUserName", existingEUser.FullName);
 
 						string delimitedString = string.Join(",", role);
 						if (role.Any(r => r != "EUser"))
@@ -862,10 +935,8 @@ namespace RentalCar.Controllers
 				return Json(new { success = false, message = "Invalid data." });
 
 			// Check required fields
-			if (string.IsNullOrWhiteSpace(model.FirstName_en) ||
-				string.IsNullOrWhiteSpace(model.LastName_en) ||
-				string.IsNullOrWhiteSpace(model.FirstName_ar) ||
-				string.IsNullOrWhiteSpace(model.LastName_ar) ||
+			if (string.IsNullOrWhiteSpace(model.FullName_ar) ||
+				string.IsNullOrWhiteSpace(model.FullName) ||
 				string.IsNullOrWhiteSpace(model.Email) ||
 				string.IsNullOrWhiteSpace(model.PhoneNumber) ||
 				string.IsNullOrWhiteSpace(model.Role) ||
@@ -934,7 +1005,16 @@ namespace RentalCar.Controllers
 			}
 
 			// ===== CALL SERVICE LAYER =====
-			var addUser = _IEUserServices.Add(model);
+			var addUser = await _IEUserServices.Add(model);
+
+			if (addUser.HttpStatusCode != HttpStatusCode.OK)
+			{
+				var errMsg = addUser.Errors != null
+					? string.Join(" ", addUser.Errors.Select(e => e.Description))
+					: (addUser.Message ?? "Failed to add user.");
+
+				return Json(new { success = false, message = errMsg });
+			}
 
 			return Json(new { success = true, message = "User added successfully!" });
 		}
@@ -944,7 +1024,70 @@ namespace RentalCar.Controllers
         [HttpPost]
 		public async Task<IActionResult> EditUser(EUserRegisterDTO model, IFormFile ProfileImage)
 		{
-			return Json(new { success = true, message = "User updated successfully!" });
+			if (model == null || string.IsNullOrWhiteSpace(model.Id))
+				return Json(new { success = false, message = "Invalid data." });
+
+			if (string.IsNullOrWhiteSpace(model.FullName_ar) ||
+				string.IsNullOrWhiteSpace(model.FullName) ||
+				string.IsNullOrWhiteSpace(model.Email) ||
+				string.IsNullOrWhiteSpace(model.Role))
+			{
+				return Json(new { success = false, message = "Please fill in all required fields." });
+			}
+
+			// ===== HANDLE OPTIONAL IMAGE UPLOAD =====
+			if (ProfileImage != null && ProfileImage.Length > 0)
+			{
+				var ext = Path.GetExtension(ProfileImage.FileName).ToLower();
+				var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
+
+				if (!allowed.Contains(ext))
+					return Json(new { success = false, message = "Invalid image type." });
+
+				var fileName = Guid.NewGuid() + ext;
+				var uploadPath = Path.Combine(_env.WebRootPath, "Images", "Profiles");
+
+				if (!Directory.Exists(uploadPath))
+					Directory.CreateDirectory(uploadPath);
+
+				var fullPath = Path.Combine(uploadPath, fileName);
+
+				using (var stream = new FileStream(fullPath, FileMode.Create))
+				{
+					await ProfileImage.CopyToAsync(stream);
+				}
+
+				model.ProfileImage = fileName;
+			}
+
+			// ===== CALL SERVICE LAYER =====
+			var result = await _IEUserServices.UpdateAsync(model);
+
+			if (result.HttpStatusCode != HttpStatusCode.OK)
+			{
+				var errMsg = result.Errors != null
+					? string.Join(" ", result.Errors.Select(e => e.Description))
+					: (result.Message ?? "Failed to update user.");
+
+				return Json(new { success = false, message = errMsg });
+			}
+
+			var dto = result.Data;
+
+			return Json(new
+			{
+				success = true,
+				message = "User updated successfully!",
+				updatedUser = new
+				{
+					UserId = dto.Id,
+					FullName = dto.FullName,
+					FullName_ar = dto.FullName_ar,
+					Email = dto.Email,
+					Role = dto.Role,
+					ProfileImage = dto.Profile
+				}
+			});
 		}
 		#endregion
 

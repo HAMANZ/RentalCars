@@ -1,0 +1,18 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand -->
+    <a href="/Admin/Index" class="brand-link text-center">
+        <i class="fas fa-car-side ml-2 mr-2"></i>
+        <span class="brand-text font-weight-light">RentalCars</span>
+    </a>
+
+    <div class="sidebar">
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <!-- Menu built dynamically from the MenuItem table -->
+                @await Component.InvokeAsync("Menu")
+
+            </ul>
+        </nav>
+    </div>
+</aside>

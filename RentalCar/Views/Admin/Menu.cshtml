@@ -1,222 +1,198 @@
-﻿@using DomainLayer.LookUpModels
+@using DomainLayer.LookUpModels
 @{
-    Layout = "_AdminLayout";
+    Layout = "_AdminLTELayout";
     ViewData["Title"] = "Menu";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <style>
+        #menuTable th, #menuTable td { text-align: center !important; }
+        .menu-title { white-space: nowrap; }
+        .title-en { direction: ltr; font-weight: 500; }
+        .title-ar { direction: rtl; font-weight: 500; }
+        .alert-wrapper { position: fixed; top: 80px; right: 20px; z-index: 1055; }
+        .modal-title { color: #c30e0e; font-weight: bold; }
+    </style>
+}
 
-<style>
-    .section-title {
-        color: var(--secondary-color);
-    }
-
-    th, td {
-        text-align: center !important;
-    }
-
-    .menu-title {
-        white-space: nowrap;
-    }
-
-    .title-en {
-        direction: ltr;
-        font-weight: 500;
-    }
-
-    .title-ar {
-        direction: rtl;
-        font-weight: 500;
-    }
-
-    .alert-wrapper {
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        z-index: 1055;
-    }
-
-    .modal-title {
-        color: #c30e0e;
-        font-weight: bold;
-    }
-</style>
-
-<div>
-    <h4 class="section-title mb-5 mt-3"><i class="fas fa-bars me-2"></i>Menu</h4>
-
-    <!-- Alert wrapper -->
-    <div id="alertWrapper" style="position: fixed; top: 20px; right: 20px; z-index: 1055;"></div>
-
-    <!-- DataTable -->
-    <table id="menuTable" class="display table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Menu Name English</th>
-                <th>Menu Name Arabic</th>
-                <th>Link</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                var count = 1;
-                var menuEn = ViewBag.MenuEn as List<Menu>;
-                var menuAr = ViewBag.MenuAr as List<Menu>;
-            }
-
-            @for (int i = 0; i < menuEn.Count; i++)
-            {
-                <tr>
-                    <td>@count</td>
-                    <td class="title-en">@menuEn[i].Title</td>
-                    <td class="title-ar" dir="rtl">@menuAr[i].Title</td>
-                    <td>@menuEn[i].Action</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editMenuModal"
-                                data-id-en="@menuEn[i].Id"
-                                data-id-ar="@menuAr[i].Id"
-                                data-title-en="@menuEn[i].Title"
-                                data-title-ar="@menuAr[i].Title"
-                                data-action="@menuEn[i].Action"
-                                data-subtest="@menuEn[i].is_subTest"
-                                data-positionnumber="@menuEn[i].PositionNumber">
-                            Edit
-                        </button>
-
-                        <button class="btn btn-sm btn-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteMenuModal"
-                                data-id-en="@menuEn[i].Id"
-                                data-id-ar="@menuAr[i].Id"
-                                data-title-en="@menuEn[i].Title"
-                                data-title-ar="@menuAr[i].Title">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                count++;
-            }
-        </tbody>
-    </table>
-
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editMenuModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="editMenuForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Menu</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="editIdEn" name="MenuEnId" />
-                        <input type="hidden" id="editIdAr" name="MenuArId" />
-
-                        <div class="mb-3">
-                            <label class="form-label">Title (English)</label>
-                            <input type="text" id="editTitleEn" class="form-control" dir="ltr" required />
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Title (Arabic)</label>
-                            <input type="text" id="editTitleAr" class="form-control" dir="rtl" required />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-bars mr-2"></i>Menu</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Menu</li>
+                </ol>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Delete Modal -->
-    <div class="modal fade" id="deleteMenuModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="deleteMenuForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirm Delete</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="deleteIdEn" name="MenuEnId" />
-                        <input type="hidden" id="deleteIdAr" name="MenuArId" />
-                        <p>Are you sure you want to delete <strong id="deleteTitle"></strong>?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </div>
-                </form>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- Alert wrapper -->
+        <div id="alertWrapper" class="alert-wrapper"></div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mt-1"><i class="fas fa-list mr-1"></i> Menu Items</h3>
             </div>
+            <div class="card-body">
+
+                <!-- DataTable -->
+                <table id="menuTable" class="display table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Menu Name English</th>
+                            <th>Menu Name Arabic</th>
+                            <th>Link</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var count = 1;
+                            var menuEn = ViewBag.MenuEn as List<Menu>;
+                            var menuAr = ViewBag.MenuAr as List<Menu>;
+                        }
+
+                        @for (int i = 0; i < menuEn.Count; i++)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td class="title-en">@menuEn[i].Title</td>
+                                <td class="title-ar" dir="rtl">@menuAr[i].Title</td>
+                                <td>@menuEn[i].Action</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#editMenuModal"
+                                            data-id-en="@menuEn[i].Id"
+                                            data-id-ar="@menuAr[i].Id"
+                                            data-title-en="@menuEn[i].Title"
+                                            data-title-ar="@menuAr[i].Title"
+                                            data-action="@menuEn[i].Action"
+                                            data-subtest="@menuEn[i].is_subTest"
+                                            data-positionnumber="@menuEn[i].PositionNumber">
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-danger"
+                                            data-toggle="modal"
+                                            data-target="#deleteMenuModal"
+                                            data-id-en="@menuEn[i].Id"
+                                            data-id-ar="@menuAr[i].Id"
+                                            data-title-en="@menuEn[i].Title"
+                                            data-title-ar="@menuAr[i].Title">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            count++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editMenuModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editMenuForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editIdEn" name="MenuEnId" />
+                    <input type="hidden" id="editIdAr" name="MenuArId" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Title (English)</label>
+                        <input type="text" id="editTitleEn" class="form-control" dir="ltr" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Title (Arabic)</label>
+                        <input type="text" id="editTitleAr" class="form-control" dir="rtl" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-    <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteMenuModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteMenuForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="deleteIdEn" name="MenuEnId" />
+                    <input type="hidden" id="deleteIdAr" name="MenuArId" />
+                    <p>Are you sure you want to delete <strong id="deleteTitle"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#menuTable').DataTable({ responsive: true, pageLength: 5, lengthMenu: [5, 10, 25, 50] });
         });
 
-        // ----------------------
-        // Alerts
-        // ----------------------
         function showMessage(message, type = 'success') {
             const wrapper = document.getElementById('alertWrapper');
-
-            // Ensure wrapper is always on top
-            wrapper.style.position = 'fixed';
-            wrapper.style.top = '20px';
-            wrapper.style.right = '20px';
-            wrapper.style.zIndex = '2000'; // higher than Bootstrap modal (1055)
-
             const div = document.createElement('div');
             div.innerHTML = `
                 <div class="alert alert-${type} alert-dismissible fade show" role="alert">
                     ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
                 </div>
             `;
-
             wrapper.append(div);
-
-            setTimeout(() => {
-                bootstrap.Alert.getOrCreateInstance(div.querySelector('.alert')).close();
-            }, 3000);
+            setTimeout(() => { $(div).find('.alert').alert('close'); }, 3000);
         }
 
-
-        // ----------------------
-        // Update Table Row
-        // ----------------------
         function updateRow(data) {
             const row = document.querySelector(`button[data-id-en="${data.MenuEnId}"]`).closest('tr');
             row.querySelector('.title-en').innerText = data.TitleEn;
             row.querySelector('.title-ar').innerText = data.TitleAr;
 
-            const editBtn = row.querySelector('[data-bs-target="#editMenuModal"]');
-            const deleteBtn = row.querySelector('[data-bs-target="#deleteMenuModal"]');
+            const editBtn = row.querySelector('[data-target="#editMenuModal"]');
+            const deleteBtn = row.querySelector('[data-target="#deleteMenuModal"]');
 
             editBtn.setAttribute('data-title-en', data.TitleEn);
             editBtn.setAttribute('data-title-ar', data.TitleAr);
-
             deleteBtn.setAttribute('data-title-en', data.TitleEn);
             deleteBtn.setAttribute('data-title-ar', data.TitleAr);
         }
 
-        // ----------------------
-        // Handle Edit Modal
-        // ----------------------
         let editMenuData = {};
 
         $('#editMenuModal').on('show.bs.modal', function (event) {
@@ -243,21 +219,18 @@
                 TitleEn: $('#editTitleEn').val(),
                 TitleAr: $('#editTitleAr').val(),
                 Action: editMenuData.action ?? "",
-                is_subTest: editMenuData.subTest,      
-                PositionNumber: editMenuData.position 
+                is_subTest: editMenuData.subTest,
+                PositionNumber: editMenuData.position
             };
 
             fetch('/Admin/EditMenu', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             })
                 .then(res => res.json())
                 .then(result => {
-                    bootstrap.Modal.getInstance(editMenuModal).hide();
-
+                    $('#editMenuModal').modal('hide');
                     if (result.success) {
                         updateRow(data);
                         showMessage(result.message, 'success');
@@ -268,9 +241,6 @@
                 .catch(() => showMessage('Update failed!', 'danger'));
         });
 
-        // ----------------------
-        // Handle Delete Modal
-        // ----------------------
         $('#deleteMenuModal').on('show.bs.modal', function (event) {
             const button = event.relatedTarget;
             $('#deleteIdEn').val(button.getAttribute('data-id-en'));
@@ -291,7 +261,7 @@
             })
                 .then(res => res.json())
                 .then(result => {
-                    bootstrap.Modal.getInstance(document.getElementById('deleteMenuModal')).hide();
+                    $('#deleteMenuModal').modal('hide');
                     if (result.success) {
                         const row = document.querySelector(`button[data-id-en="${data.MenuEnId}"]`).closest('tr');
                         row.remove();
@@ -301,3 +271,4 @@
                 .catch(() => showMessage('Delete failed!', 'danger'));
         });
     </script>
+}

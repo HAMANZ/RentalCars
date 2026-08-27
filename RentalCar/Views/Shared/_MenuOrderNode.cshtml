@@ -1,0 +1,27 @@
+@using System.Linq
+@using RentalCar.DomainLayer.Models
+@model MenuItem
+@{
+    var icon = string.IsNullOrWhiteSpace(Model.Icon) ? "far fa-circle" : Model.Icon;
+    var hasChildren = Model.Children != null && Model.Children.Any();
+}
+<li class="menu-node" data-id="@Model.Id">
+    <div class="menu-row menu-edit" data-id="@Model.Id" title="Click to edit">
+        <span class="drag-handle" title="Drag to reorder"><i class="fas fa-grip-lines"></i></span>
+        <i class="menu-icon @icon"></i>
+        <span class="menu-title">@Model.Title</span>
+        <span class="badge badge-secondary ml-2 menu-inactive-badge" style="@(Model.IsActive ? "display:none;" : "")">Inactive</span>
+        <code class="menu-url @(string.IsNullOrWhiteSpace(Model.Url) || Model.Url == "#" ? "d-none" : "")">@Model.Url</code>
+        <i class="fas fa-pen menu-edit-icon" title="Edit"></i>
+        <i class="fas fa-trash menu-delete-icon text-danger" title="Delete" data-id="@Model.Id" data-title="@Model.Title" style="cursor:pointer; padding-left:.5rem;"></i>
+    </div>
+    @if (hasChildren)
+    {
+        <ul class="child-menu" data-parent="@Model.Id">
+            @foreach (var child in Model.Children)
+            {
+                <partial name="_MenuOrderNode" model="child" />
+            }
+        </ul>
+    }
+</li>

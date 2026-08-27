@@ -1,14 +1,138 @@
-﻿@{   
-  Layout = "_AdminLayout";
-  ViewData["Title"] = "Home";
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Dashboard";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+    Func<string, string, string> L = (en, ar) => isRtl ? ar : en;
 }
 
-<style>
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">@L("Dashboard", "لوحة التحكم")</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">@L("Home", "الرئيسية")</a></li>
+                    <li class="breadcrumb-item active">@L("Dashboard", "لوحة التحكم")</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
 
-    .section-title{
-        color: var(--secondary-color);
-    }
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
 
-</style>
+        <!-- Info alert -->
+        <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-info"></i> @L("Welcome", "مرحباً")</h5>
+            @L("This is the AdminLTE dashboard for the Rental Cars & Maintenance System.",
+               "هذه لوحة تحكم AdminLTE لنظام تأجير وصيانة السيارات.")
+        </div>
 
-<h4 class="section-title">Admin</h4>
+        <!-- Small boxes (Stat widgets) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>0</h3>
+                        <p>@L("Cars", "السيارات")</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-car"></i></div>
+                    <a href="#" class="small-box-footer">@L("More info", "مزيد من المعلومات") <i class="fas fa-arrow-circle-@(isRtl ? "left" : "right")"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>0</h3>
+                        <p>@L("Active Contracts", "العقود النشطة")</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-file-signature"></i></div>
+                    <a href="#" class="small-box-footer">@L("More info", "مزيد من المعلومات") <i class="fas fa-arrow-circle-@(isRtl ? "left" : "right")"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>0</h3>
+                        <p>@L("Open Work Orders", "أوامر العمل المفتوحة")</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-tools"></i></div>
+                    <a href="#" class="small-box-footer">@L("More info", "مزيد من المعلومات") <i class="fas fa-arrow-circle-@(isRtl ? "left" : "right")"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>0</h3>
+                        <p>@L("Customers", "العملاء")</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <a href="#" class="small-box-footer">@L("More info", "مزيد من المعلومات") <i class="fas fa-arrow-circle-@(isRtl ? "left" : "right")"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Recent activity card with table -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-list mr-1"></i> @L("Recent Contracts", "أحدث العقود")</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>@L("Customer", "العميل")</th>
+                                    <th>@L("Car", "السيارة")</th>
+                                    <th>@L("Status", "الحالة")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">
+                                        @L("No data yet.", "لا توجد بيانات بعد.")
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick links card with badges -->
+            <div class="col-md-4">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-bolt mr-1"></i> @L("Quick Links", "روابط سريعة")</h3>
+                    </div>
+                    <div class="card-body">
+                        <a href="/Admin/Users" class="btn btn-block btn-outline-primary mb-2">
+                            <i class="fas fa-users mr-1"></i> @L("Manage Users", "إدارة المستخدمين")
+                        </a>
+                        <a href="/Admin/Announcements" class="btn btn-block btn-outline-info mb-2">
+                            <i class="fas fa-bullhorn mr-1"></i> @L("Announcements", "الإعلانات")
+                        </a>
+                        <a href="/Admin/websiteLabels" class="btn btn-block btn-outline-secondary mb-2">
+                            <i class="fas fa-tags mr-1"></i> @L("Website Labels", "تسميات الموقع")
+                        </a>
+                        <a href="/Admin/Contact" class="btn btn-block btn-outline-dark">
+                            <i class="fas fa-cog mr-1"></i> @L("App Settings", "إعدادات التطبيق")
+                        </a>
+                        <hr />
+                        <p class="mb-1">@L("System Status", "حالة النظام"): <span class="badge badge-success">@L("Online", "متصل")</span></p>
+                        <p class="mb-0">@L("Pending Tasks", "المهام المعلقة"): <span class="badge badge-warning">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

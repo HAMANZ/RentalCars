@@ -1,414 +1,400 @@
-﻿@model RentalCar.DomainLayer.DTO.AppSettingsDTO
-
+@model RentalCar.DomainLayer.DTO.AppSettingsDTO
 
 @{
-    Layout = "_AdminLayout";
+    Layout = "_AdminLTELayout";
     ViewData["Title"] = "Contact Settings";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
 }
 
-<style>
-    /* ===== MODERN SETTINGS TABS ===== */
-    .card {
-        border: none;
-    }
-
-    .settings-header {
-        margin-bottom: 20px;
-    }
-
-    .settings-tabs {
-        position: relative;
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        border-bottom: 1px solid #e5e7eb;
-        padding-bottom: 12px;
-        margin-bottom: 20px;
-    }
-
-    .settings-tab {
-        position: relative;
-        border: 1px solid #e5e7eb;
-        background: #f9fafb;
-        color: #374151;
-        padding: 14px 16px;
-        border-radius: 14px;
-        font-weight: 600;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        min-width: 230px;
-        text-align: left;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    }
-
-        .settings-tab:hover {
-            background: #f3f4f6;
-            transform: translateY(-2px);
-        }
-
-        .settings-tab.active,
-        .settings-tab[aria-selected="true"] {
-            background: #ffffff;
-            border-color: var(--secondary-color);
-            box-shadow: 0 8px 20px rgba(99,102,241,0.18);
-        }
-
-        .settings-tab .tab-title {
+@section Styles {
+    <style>
+        .settings-tabs {
+            position: relative;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 12px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
         }
 
-        .settings-tab .tab-desc {
-            font-size: 12px;
-            font-weight: 400;
-            color: #6b7280;
-            margin-top: 4px;
+        .settings-tab {
+            position: relative;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            color: #374151;
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            min-width: 230px;
+            text-align: left;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
         }
 
-        .settings-tab .tab-badge {
+            .settings-tab:hover {
+                background: #f3f4f6;
+                transform: translateY(-2px);
+            }
+
+            .settings-tab.active,
+            .settings-tab[aria-selected="true"] {
+                background: #ffffff;
+                border-color: var(--secondary-color);
+                box-shadow: 0 8px 20px rgba(99,102,241,0.18);
+            }
+
+            .settings-tab .tab-title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .settings-tab .tab-desc {
+                font-size: 12px;
+                font-weight: 400;
+                color: #6b7280;
+                margin-top: 4px;
+            }
+
+            .settings-tab .tab-badge {
+                background: var(--gradient-bg);
+                color: #fff;
+                font-size: 11px;
+                padding: 3px 10px;
+                border-radius: 999px;
+                margin-left: auto;
+            }
+
+        .tab-indicator {
+            position: absolute;
+            bottom: -2px;
+            height: 3px;
             background: var(--gradient-bg);
-            color: var(--primary-color);
-            font-size: 11px;
-            padding: 3px 10px;
-            border-radius: 999px;
-            margin-left: auto;
+            border-radius: 10px;
+            transition: all 0.35s ease;
         }
 
-    /* Animated underline */
-    .tab-indicator {
-        position: absolute;
-        bottom: -2px;
-        height: 3px;
-        background: var(--gradient-bg);
-        border-radius: 10px;
-        transition: all 0.35s ease;
-    }
-
-    /* ===== STICKY SAVE BAR ===== */
-    .sticky-save-bar {
-        position: sticky;
-        bottom: 0;
-        background: #ffffff;
-        border-top: 1px solid #e5e7eb;
-        padding: 14px 22px;
-        margin-top: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 50;
-        box-shadow: 0 -6px 16px rgba(0,0,0,0.06);
-    }
-
-        .sticky-save-bar .hint {
-            color: #6b7280;
-            font-size: 13px;
+        .sticky-save-bar {
+            position: sticky;
+            bottom: 0;
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            padding: 14px 22px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+            box-shadow: 0 -6px 16px rgba(0,0,0,0.06);
         }
-</style>
 
-<div class="card mt-2">
-    <div class="card-body">
+            .sticky-save-bar .hint {
+                color: #6b7280;
+                font-size: 13px;
+            }
+    </style>
+}
 
-        <!-- HEADER -->
-        <div class="settings-header mb-4">
-            <h4 class="mb-1" style="color: var(--secondary-color);"> <i class="bi bi-wechat"></i>  General Settings</h4>
-            <p class="text-muted mb-3">
-                Manage general info, contact details, policies and social media links.
-            </p>
-        </div>
-
-        <div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
-
-        <form id="generalSettingsForm" method="post" enctype="multipart/form-data">
-
-            <input asp-for="Id" class="form-control" type="hidden" />
-            <input asp-for="Password" class="form-control" type="hidden" />
-
-            <!-- MODERN TABS -->
-            <div class="settings-tabs" id="settingsTabs" role="tablist">
-
-                <button class="settings-tab active"
-                        id="tab-general"
-                        data-bs-toggle="tab"
-                        data-bs-target="#general"
-                        type="button"
-                        role="tab"
-                        aria-controls="general"
-                        aria-selected="true">
-                    <div class="tab-title">
-                        <i class="fa fa-cog"></i> General
-                        <span class="tab-badge">Core</span>
-                    </div>
-                    <div class="tab-desc">App name, URLs, branding</div>
-                </button>
-
-                <button class="settings-tab"
-                        id="tab-contact"
-                        data-bs-toggle="tab"
-                        data-bs-target="#contact"
-                        type="button"
-                        role="tab"
-                        aria-controls="contact"
-                        aria-selected="false">
-                    <div class="tab-title">
-                        <i class="fa fa-phone"></i> Contact
-                        <span class="tab-badge">Info</span>
-                    </div>
-                    <div class="tab-desc">Phone, email, website</div>
-                </button>
-
-                <button class="settings-tab"
-                        id="tab-policies"
-                        data-bs-toggle="tab"
-                        data-bs-target="#policies"
-                        type="button"
-                        role="tab"
-                        aria-controls="policies"
-                        aria-selected="false">
-                    <div class="tab-title">
-                        <i class="fa fa-file-alt"></i> Policies
-                        <span class="tab-badge">Legal</span>
-                    </div>
-                    <div class="tab-desc">Privacy, terms, refund</div>
-                </button>
-
-                <button class="settings-tab"
-                        id="tab-social"
-                        data-bs-toggle="tab"
-                        data-bs-target="#social"
-                        type="button"
-                        role="tab"
-                        aria-controls="social"
-                        aria-selected="false">
-                    <div class="tab-title">
-                        <i class="fa fa-share-alt"></i> Social
-                        <span class="tab-badge">Links</span>
-                    </div>
-                    <div class="tab-desc">Social media profiles</div>
-                </button>
-
-                <div class="tab-indicator" id="tabIndicator"></div>
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-comments mr-2"></i>General Settings</h1>
             </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Settings</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <!-- TAB CONTENT -->
-            <div class="tab-content pt-4">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
 
-                <!-- GENERAL -->
-                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="tab-general">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label>Application Name</label>
-                            <input asp-for="ApplicationName" class="form-control" />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label>Application URL</label>
-                            <input asp-for="ApplicationUrl" class="form-control" />
-                        </div>
-                        @*<div class="col-md-6 mb-3">
-                                <label>API URL</label>
-                                <input asp-for="ApplicationApiUrl" class="form-control" />
-                            </div>*@
+                <p class="text-muted mb-3">
+                    Manage general info, contact details, policies and social media links.
+                </p>
 
-                        <div class="col-4 mb-3">
-                            <label>Short Description</label>
-                            <textarea asp-for="ShortDescription" class="form-control" rows="3" id="shortDescription"></textarea>
-                        </div>
+                <div id="toastContainer" style="position: fixed; top: 80px; right: 20px; z-index: 9999;"></div>
 
-                        <div class="col-8 mb-3">
-                            <label>Description</label>
-                            <textarea asp-for="Description" class="form-control" rows="3" id="description"></textarea>
-                        </div>
+                <form id="generalSettingsForm" method="post" enctype="multipart/form-data">
 
-                        <div class="col-md-6 mb-3">
-                            <label>Logo</label>
+                    <input asp-for="Id" class="form-control" type="hidden" />
+                    <input asp-for="Password" class="form-control" type="hidden" />
 
-                            <input type="file" class="form-control" id="LogoInput" name="LogoUpload" accept="image/*" />
+                    <!-- MODERN TABS -->
+                    <div class="settings-tabs" id="settingsTabs" role="tablist">
 
-                            <!-- Image Preview -->
-                            <div class="mt-2">
-                                <img id="LogoPreview"
-                                     src="@(!string.IsNullOrEmpty(Model.Logo) ? "/images/" + Model.Logo : "/images/missing-image.jpg")"
-                                     onerror="this.src='/images/missing-image.jpg';"
-                                     style="width:150px; height:150px; object-fit:contain; border:1px solid #ccc; border-radius:8px;" />
+                        <button class="settings-tab active"
+                                id="tab-general"
+                                data-toggle="pill"
+                                data-target="#general"
+                                type="button"
+                                role="tab"
+                                aria-controls="general"
+                                aria-selected="true">
+                            <div class="tab-title">
+                                <i class="fas fa-cog"></i> General
+                                <span class="tab-badge">Core</span>
+                            </div>
+                            <div class="tab-desc">App name, URLs, branding</div>
+                        </button>
+
+                        <button class="settings-tab"
+                                id="tab-contact"
+                                data-toggle="pill"
+                                data-target="#contact"
+                                type="button"
+                                role="tab"
+                                aria-controls="contact"
+                                aria-selected="false">
+                            <div class="tab-title">
+                                <i class="fas fa-phone"></i> Contact
+                                <span class="tab-badge">Info</span>
+                            </div>
+                            <div class="tab-desc">Phone, email, website</div>
+                        </button>
+
+                        <button class="settings-tab"
+                                id="tab-policies"
+                                data-toggle="pill"
+                                data-target="#policies"
+                                type="button"
+                                role="tab"
+                                aria-controls="policies"
+                                aria-selected="false">
+                            <div class="tab-title">
+                                <i class="fas fa-file-alt"></i> Policies
+                                <span class="tab-badge">Legal</span>
+                            </div>
+                            <div class="tab-desc">Privacy, terms, refund</div>
+                        </button>
+
+                        <button class="settings-tab"
+                                id="tab-social"
+                                data-toggle="pill"
+                                data-target="#social"
+                                type="button"
+                                role="tab"
+                                aria-controls="social"
+                                aria-selected="false">
+                            <div class="tab-title">
+                                <i class="fas fa-share-alt"></i> Social
+                                <span class="tab-badge">Links</span>
+                            </div>
+                            <div class="tab-desc">Social media profiles</div>
+                        </button>
+
+                        <div class="tab-indicator" id="tabIndicator"></div>
+                    </div>
+
+                    <!-- TAB CONTENT -->
+                    <div class="tab-content pt-4">
+
+                        <!-- GENERAL -->
+                        <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="tab-general">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Application Name</label>
+                                    <input asp-for="ApplicationName" class="form-control" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Application URL</label>
+                                    <input asp-for="ApplicationUrl" class="form-control" />
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label>Short Description</label>
+                                    <textarea asp-for="ShortDescription" class="form-control" rows="3" id="shortDescription"></textarea>
+                                </div>
+
+                                <div class="col-8 mb-3">
+                                    <label>Description</label>
+                                    <textarea asp-for="Description" class="form-control" rows="3" id="description"></textarea>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label>Logo</label>
+                                    <input type="file" class="form-control" id="LogoInput" name="LogoUpload" accept="image/*" />
+                                    <div class="mt-2">
+                                        <img id="LogoPreview"
+                                             src="@(!string.IsNullOrEmpty(Model.Logo) ? "/images/" + Model.Logo : "/images/missing-image.jpg")"
+                                             onerror="this.src='/images/missing-image.jpg';"
+                                             style="width:150px; height:150px; object-fit:contain; border:1px solid #ccc; border-radius:8px;" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- CONTACT -->
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="tab-contact">
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label>Contact Website</label><input asp-for="ContactWebsite" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Email</label><input asp-for="Email" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Phone</label><input asp-for="Phone" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Phone 2</label><input asp-for="Phone2" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Mobile</label><input asp-for="Mobile" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Mobile 2</label><input asp-for="Mobile2" class="form-control" /></div>
+                            </div>
+                        </div>
+
+                        <!-- POLICIES -->
+                        <div class="tab-pane fade" id="policies" role="tabpanel" aria-labelledby="tab-policies">
+                            <div class="mb-3"><label>Privacy Policy</label><textarea asp-for="PrivacyPolicy" class="form-control" rows="4" id="privacyPolicy"></textarea></div>
+                            <div class="mb-3"><label>Terms &amp; Conditions</label><textarea asp-for="TermsConditions" class="form-control" rows="4" id="termsConditions"></textarea></div>
+                            <div class="mb-3"><label>Refund Policy</label><textarea asp-for="RefundPolicy" class="form-control" rows="4" id="refundPolicy"></textarea></div>
+                        </div>
+
+                        <!-- SOCIAL -->
+                        <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="tab-social">
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label>WhatsApp</label><input asp-for="Whatsapp" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Facebook</label><input asp-for="Facebook" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Twitter</label><input asp-for="Twitter" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>LinkedIn</label><input asp-for="LinkedIn" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>YouTube</label><input asp-for="Youtube" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Instagram</label><input asp-for="Instagram" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>TikTok</label><input asp-for="Tiktok" class="form-control" /></div>
+                                <div class="col-md-6 mb-3"><label>Snapchat</label><input asp-for="Snapchat" class="form-control" /></div>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
-                <!-- CONTACT -->
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="tab-contact">
-                    <div class="row">
-                        <div class="col-md-6 mb-3"><label>Contact Website</label><input asp-for="ContactWebsite" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Email</label><input asp-for="Email" class="form-control" /></div>
-                        @*<div class="col-md-6 mb-3"><label>Contact Email</label><input asp-for="ContactEmail" class="form-control" /></div>*@
-                        <div class="col-md-6 mb-3"><label>Phone</label><input asp-for="Phone" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Phone 2</label><input asp-for="Phone2" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Mobile</label><input asp-for="Mobile" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Mobile 2</label><input asp-for="Mobile2" class="form-control" /></div>
+                    <!-- STICKY SAVE BAR -->
+                    <div class="sticky-save-bar">
+                        <div class="hint">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Changes are not saved automatically.
+                        </div>
+                        <button id="btnSave" type="submit" class="btn btn-primary px-4">
+                            <i class="fas fa-save mr-1"></i> Save Changes
+                        </button>
                     </div>
-                </div>
 
-                <!-- POLICIES -->
-                <div class="tab-pane fade" id="policies" role="tabpanel" aria-labelledby="tab-policies">
-                    <div class="mb-3"><label>Privacy Policy</label><textarea asp-for="PrivacyPolicy" class="form-control" rows="4" id="privacyPolicy"></textarea></div>
-                    <div class="mb-3"><label>Terms & Conditions</label><textarea asp-for="TermsConditions" class="form-control" rows="4" id="termsConditions"></textarea></div>
-                    <div class="mb-3"><label>Refund Policy</label><textarea asp-for="RefundPolicy" class="form-control" rows="4"  id="refundPolicy"></textarea></div>
-                </div>
-
-                <!-- SOCIAL -->
-                <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="tab-social">
-                    <div class="row">
-                        <div class="col-md-6 mb-3"><label>WhatsApp</label><input asp-for="Whatsapp" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Facebook</label><input asp-for="Facebook" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Twitter</label><input asp-for="Twitter" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>LinkedIn</label><input asp-for="LinkedIn" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>YouTube</label><input asp-for="Youtube" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Instagram</label><input asp-for="Instagram" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>TikTok</label><input asp-for="Tiktok" class="form-control" /></div>
-                        <div class="col-md-6 mb-3"><label>Snapchat</label><input asp-for="Snapchat" class="form-control" /></div>
-                    </div>
-                </div>
-
+                </form>
             </div>
-
-            <!-- STICKY SAVE BAR -->
-            <div class="sticky-save-bar">
-                <div class="hint">
-                    <i class="fa fa-info-circle me-1"></i>
-                    Changes are not saved automatically.
-                </div>
-                <button id="btnSave" type="submit" class="btn btn-primary px-4">
-                    <i class="fa fa-save me-1"></i> Save Changes
-                </button>
-            </div>
-
-        </form>
+        </div>
     </div>
-</div>
-<!-- TinyMCE Rich Text Editor -->
-<script src="https://cdn.tiny.cloud/1/2vjorrwksq3pczeq1ne1spsn4gryra8lpyz7j5dj5dtlpzjq/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+</section>
 
-    // Initialize TinyMCE
-    tinymce.init({
-        selector: '#privacyPolicy, #termsConditions, #refundPolicy, #shortDescription, #description',
-        plugins: 'anchor autolink charmap codesample emoticons link lists media searchreplace table visualblocks wordcount',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table | align lineheight | numlist bullist | removeformat'
-    });
+@section Scripts {
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdn.tiny.cloud/1/2vjorrwksq3pczeq1ne1spsn4gryra8lpyz7j5dj5dtlpzjq/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+    <script>
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: '#privacyPolicy, #termsConditions, #refundPolicy, #shortDescription, #description',
+            plugins: 'anchor autolink charmap codesample emoticons link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table | align lineheight | numlist bullist | removeformat'
+        });
 
-    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabs = document.querySelectorAll(".settings-tab");
+            const indicator = document.getElementById("tabIndicator");
 
-        const tabs = document.querySelectorAll(".settings-tab");
-        const indicator = document.getElementById("tabIndicator");
+            function moveIndicator(tab) {
+                const rect = tab.getBoundingClientRect();
+                const parentRect = tab.parentElement.getBoundingClientRect();
+                indicator.style.width = rect.width + "px";
+                indicator.style.left = (rect.left - parentRect.left) + "px";
+            }
 
-        function moveIndicator(tab) {
-            const rect = tab.getBoundingClientRect();
-            const parentRect = tab.parentElement.getBoundingClientRect();
-
-            indicator.style.width = rect.width + "px";
-            indicator.style.left = (rect.left - parentRect.left) + "px";
-        }
-
-        // Sync with Bootstrap tab events
-        tabs.forEach(tab => {
-            tab.addEventListener('shown.bs.tab', function (event) {
-                moveIndicator(event.target);
+            // Sync with Bootstrap tab events
+            tabs.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function (event) {
+                    moveIndicator(event.target);
+                });
             });
-        });
 
-        // Init indicator
-        const activeTab = document.querySelector(".settings-tab.active");
-        if (activeTab) {
-            moveIndicator(activeTab);
-        }
-
-        //Image preview
-        document.getElementById("LogoInput").addEventListener("change", function () {
-            const file = this.files[0]; // get the selected file
-            const preview = document.getElementById("LogoPreview");
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result; // show the image preview
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = "/images/missing-image.jpg"; // fallback if no file selected
-            }
-        });
-    });
-
-    $(document).ready(function () {
-        // AJAX Form Submit (POST)
-        $('#generalSettingsForm').on('submit', function (e) {
-            e.preventDefault();
-
-            // Save TinyMCE content
-            if (typeof tinymce !== 'undefined') {
-                tinymce.triggerSave();
+            const activeTab = document.querySelector(".settings-tab.active");
+            if (activeTab) {
+                moveIndicator(activeTab);
             }
 
-            let formData = new FormData(this);
-
-            $('#btnSave').prop('disabled', true).text('Saving...');
-
-            $.ajax({
-                url: '/Admin/EditGeneralSettings',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    if (res.success) {
-                        showToast('success', res.message);
-
-                        // Update preview image if uploaded
-                        const fileInput = $('input[name="LogoUpload"]')[0];
-                        if (fileInput.files && fileInput.files[0]) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                $('#LogoPreview').attr('src', e.target.result);
-                            };
-                            reader.readAsDataURL(fileInput.files[0]);
-                        }
-                    } else {
-                        showToast('danger', res.message);
-                    }
-                },
-                error: function (xhr) {
-                    let msg = 'An unexpected error occurred.';
-                    if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
-                    showToast('danger', msg);
-                },
-                complete: function () {
-                    $('#btnSave').prop('disabled', false).text('Save Changes');
+            // Image preview
+            document.getElementById("LogoInput").addEventListener("change", function () {
+                const file = this.files[0];
+                const preview = document.getElementById("LogoPreview");
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) { preview.src = e.target.result; };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = "/images/missing-image.jpg";
                 }
             });
         });
-    });
 
+        $(document).ready(function () {
+            $('#generalSettingsForm').on('submit', function (e) {
+                e.preventDefault();
 
-    // Function to show toast alerts
-    function showToast(success, message) {
-        var id = 'toast_' + Date.now();
-        var typeClass = success ? 'alert-success' : 'alert-danger';
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.triggerSave();
+                }
 
-        var html = `
-            <div id="${id}" class="alert ${typeClass} alert-dismissible fade show shadow" role="alert" style="min-width:250px;">
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
+                let formData = new FormData(this);
 
-        $('#toastContainer').append(html);
+                $('#btnSave').prop('disabled', true).text('Saving...');
 
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            $('#' + id).fadeOut(500, function () { $(this).remove(); });
-        }, 5000);
-    }
-</script>
+                $.ajax({
+                    url: '/Admin/EditGeneralSettings',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res.success) {
+                            showToast(true, res.message);
+                            const fileInput = $('input[name="LogoUpload"]')[0];
+                            if (fileInput.files && fileInput.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    $('#LogoPreview').attr('src', e.target.result);
+                                };
+                                reader.readAsDataURL(fileInput.files[0]);
+                            }
+                        } else {
+                            showToast(false, res.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        let msg = 'An unexpected error occurred.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                        showToast(false, msg);
+                    },
+                    complete: function () {
+                        $('#btnSave').prop('disabled', false).html('<i class="fas fa-save mr-1"></i> Save Changes');
+                    }
+                });
+            });
+        });
 
+        // Function to show toast alerts
+        function showToast(success, message) {
+            var id = 'toast_' + Date.now();
+            var typeClass = success ? 'alert-success' : 'alert-danger';
+            var html = `
+                <div id="${id}" class="alert ${typeClass} alert-dismissible fade show shadow" role="alert" style="min-width:250px;">
+                    ${message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            `;
+            $('#toastContainer').append(html);
+            setTimeout(() => {
+                $('#' + id).fadeOut(500, function () { $(this).remove(); });
+            }, 5000);
+        }
+    </script>
+}

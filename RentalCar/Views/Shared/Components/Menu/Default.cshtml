@@ -1,0 +1,10 @@
+@using RentalCar.DomainLayer.Models
+@model List<MenuItem>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <partial name="_MenuNode" model="item" />
+    }
+}

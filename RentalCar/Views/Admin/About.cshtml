@@ -1,184 +1,197 @@
-﻿@{
-    Layout = "_AdminLayout";
+@{
+    Layout = "_AdminLTELayout";
     ViewData["Title"] = "About Us";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
 }
 
-<style>
-    .section-title {
-        color: var(--secondary-color);
-    }
+@section Styles {
+    <style>
+        .heading-title {
+            color: var(--primary-color);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
 
-    .heading-title {
-        color: var(--primary-color);
-        text-decoration: underline;
-        text-underline-offset: 2px;
-    }
+        .toast-container-custom {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1200;
+            min-width: 300px;
+        }
+    </style>
+}
 
-    .toast-container-custom {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1200;
-        min-width: 300px;
-    }
-</style>
-
-<h4 class="section-title mb-5 mt-3">
-    <i class="bi bi-people-fill"></i> About Us
-</h4>
-
-<form id="aboutForm" method="post" enctype="multipart/form-data">
-    <div class="row">
-        <!-- ENGLISH -->
-        <div class="col-md-6">
-            <h5 class="mb-3 heading-title text-center">About Us (English)</h5>
-
-            <input type="hidden" name="AboutUsEnId" value="@ViewBag.AboutUsEn.Id" />
-
-            <div class="form-group mb-3">
-                <label class="mb-2">Title (EN)</label>
-                <input class="form-control" name="AboutUsEnTitle"
-                       value="@ViewBag.AboutUsEn.Title" />
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-users mr-2"></i>About Us</h1>
             </div>
-
-            <div class="form-group mb-3">
-                <label class="mb-2">Description (EN)</label>
-                <textarea id="descEn" class="form-control" name="AboutUsEnDescription">
-                    @Html.Raw(ViewBag.AboutUsEn.Description)
-                </textarea>
-            </div>
-
-            <div class="form-group mb-3">
-                <label class="mb-2">Image</label>
-                <input type="file" class="form-control"
-                       name="AboutUsUploadImage" accept="image/*"
-                       onchange="previewImage(this, 'imgPreviewEn')" />
-
-                <img id="imgPreviewEn"
-                     src="@(string.IsNullOrEmpty(ViewBag.AboutUsEn?.Image)
-                        ? "/Images/missing-image.jpg"
-                        : Url.Content("~/Images/" + ViewBag.AboutUsEn.Image))"
-                     class="mt-2"
-                     style="max-height:150px;"
-                     onerror="this.onerror=null; this.src='/Images/missing-image.jpg';" />
-            </div>
-        </div>
-
-        <!-- ARABIC -->
-        <div class="col-md-6">
-            <h5 class="mb-3 heading-title text-center">About Us (Arabic)</h5>
-
-            <input type="hidden" name="AboutUsArId" value="@ViewBag.AboutUsAr.Id" />
-
-            <div class="form-group mb-3">
-                <label class="mb-2">Title (AR)</label>
-                <input class="form-control" name="AboutUsArTitle"
-                       value="@ViewBag.AboutUsAr.Title" dir="rtl" />
-            </div>
-
-            <div class="form-group mb-3">
-                <label class="mb-2">Description (AR)</label>
-                <textarea id="descAr" class="form-control" name="AboutUsArDescription" dir="rtl">
-                    @Html.Raw(ViewBag.AboutUsAr.Description)
-                </textarea>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">About Us</li>
+                </ol>
             </div>
         </div>
     </div>
+</section>
 
-    <button id="btnSave" type="submit" class="btn btn-primary mt-3">
-        Save About Us
-    </button>
-</form>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
 
-<div id="toastContainer" class="toast-container-custom"></div>
+                <form id="aboutForm" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <!-- ENGLISH -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3 heading-title text-center">About Us (English)</h5>
 
-<!-- TinyMCE Rich Text Editor -->
-<script src="https://cdn.tiny.cloud/1/2vjorrwksq3pczeq1ne1spsn4gryra8lpyz7j5dj5dtlpzjq/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
-    // Initialize TinyMCE
-    tinymce.init({
-        selector: '#descEn, #descAr',
-        plugins: 'anchor autolink charmap codesample emoticons link lists media searchreplace table visualblocks wordcount',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table | align lineheight | numlist bullist | removeformat'
-    });
+                            <input type="hidden" name="AboutUsEnId" value="@ViewBag.AboutUsEn.Id" />
 
-    // Image Preview before upload
-    function previewImage(input, previewId) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById(previewId).src = e.target.result;
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+                            <div class="form-group mb-3">
+                                <label class="mb-2">Title (EN)</label>
+                                <input class="form-control" name="AboutUsEnTitle" value="@ViewBag.AboutUsEn.Title" />
+                            </div>
 
-    $(document).ready(function () {
-        // AJAX Form Submit (POST)
-        $('#aboutForm').on('submit', function (e) {
-            e.preventDefault();
+                            <div class="form-group mb-3">
+                                <label class="mb-2">Description (EN)</label>
+                                <textarea id="descEn" class="form-control" name="AboutUsEnDescription">
+                                    @Html.Raw(ViewBag.AboutUsEn.Description)
+                                </textarea>
+                            </div>
 
-            // Save TinyMCE content
-            if (typeof tinymce !== 'undefined') {
-                tinymce.triggerSave();
+                            <div class="form-group mb-3">
+                                <label class="mb-2">Image</label>
+                                <input type="file" class="form-control"
+                                       name="AboutUsUploadImage" accept="image/*"
+                                       onchange="previewImage(this, 'imgPreviewEn')" />
+
+                                <img id="imgPreviewEn"
+                                     src="@(string.IsNullOrEmpty(ViewBag.AboutUsEn?.Image)
+                                        ? "/Images/missing-image.jpg"
+                                        : Url.Content("~/Images/" + ViewBag.AboutUsEn.Image))"
+                                     class="mt-2"
+                                     style="max-height:150px;"
+                                     onerror="this.onerror=null; this.src='/Images/missing-image.jpg';" />
+                            </div>
+                        </div>
+
+                        <!-- ARABIC -->
+                        <div class="col-md-6">
+                            <h5 class="mb-3 heading-title text-center">About Us (Arabic)</h5>
+
+                            <input type="hidden" name="AboutUsArId" value="@ViewBag.AboutUsAr.Id" />
+
+                            <div class="form-group mb-3">
+                                <label class="mb-2">Title (AR)</label>
+                                <input class="form-control" name="AboutUsArTitle" value="@ViewBag.AboutUsAr.Title" dir="rtl" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="mb-2">Description (AR)</label>
+                                <textarea id="descAr" class="form-control" name="AboutUsArDescription" dir="rtl">
+                                    @Html.Raw(ViewBag.AboutUsAr.Description)
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btnSave" type="submit" class="btn btn-primary mt-3">
+                        <i class="fas fa-save mr-1"></i> Save About Us
+                    </button>
+                </form>
+
+                <div id="toastContainer" class="toast-container-custom"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdn.tiny.cloud/1/2vjorrwksq3pczeq1ne1spsn4gryra8lpyz7j5dj5dtlpzjq/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+    <script>
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: '#descEn, #descAr',
+            plugins: 'anchor autolink charmap codesample emoticons link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table | align lineheight | numlist bullist | removeformat'
+        });
+
+        // Image Preview before upload
+        function previewImage(input, previewId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(previewId).src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
             }
+        }
 
-            let formData = new FormData(this);
+        $(document).ready(function () {
+            $('#aboutForm').on('submit', function (e) {
+                e.preventDefault();
 
-            $('#btnSave').prop('disabled', true).text('Saving...');
-
-            $.ajax({
-                url: '/Admin/EditAboutUs',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    if (res.success) {
-                        showToast('success', res.message);
-
-                        // Update preview image if uploaded
-                        const fileInput = $('input[name="AboutUsUploadImage"]')[0];
-                        if (fileInput.files && fileInput.files[0]) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                $('#imgPreviewEn').attr('src', e.target.result);
-                            };
-                            reader.readAsDataURL(fileInput.files[0]);
-                        }
-                    } else {
-                        showToast('danger', res.message);
-                    }
-                },
-                error: function (xhr) {
-                    let msg = 'An unexpected error occurred.';
-                    if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
-                    showToast('danger', msg);
-                },
-                complete: function () {
-                    $('#btnSave').prop('disabled', false).text('Save About Us');
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.triggerSave();
                 }
+
+                let formData = new FormData(this);
+
+                $('#btnSave').prop('disabled', true).text('Saving...');
+
+                $.ajax({
+                    url: '/Admin/EditAboutUs',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res.success) {
+                            showToast('success', res.message);
+                            const fileInput = $('input[name="AboutUsUploadImage"]')[0];
+                            if (fileInput.files && fileInput.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    $('#imgPreviewEn').attr('src', e.target.result);
+                                };
+                                reader.readAsDataURL(fileInput.files[0]);
+                            }
+                        } else {
+                            showToast('danger', res.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        let msg = 'An unexpected error occurred.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                        showToast('danger', msg);
+                    },
+                    complete: function () {
+                        $('#btnSave').prop('disabled', false).html('<i class="fas fa-save mr-1"></i> Save About Us');
+                    }
+                });
             });
         });
-    });
 
-    // Toast Notification
-    function showToast(type, message) {
-        let id = 'toast_' + Date.now();
-
-        let html = `
-            <div id="${id}" class="alert alert-${type} alert-dismissible fade show shadow" role="alert">
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            `;
-
-        $('#toastContainer').append(html);
-
-        // Auto remove after 4 seconds if not dismissed
-        setTimeout(function () {
-            $('#' + id).fadeOut(500, function () { $(this).remove(); });
-        }, 4000);
-    }
-</script>
+        // Toast Notification
+        function showToast(type, message) {
+            let id = 'toast_' + Date.now();
+            let html = `
+                <div id="${id}" class="alert alert-${type} alert-dismissible fade show shadow" role="alert">
+                    ${message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                `;
+            $('#toastContainer').append(html);
+            setTimeout(function () {
+                $('#' + id).fadeOut(500, function () { $(this).remove(); });
+            }, 4000);
+        }
+    </script>
+}

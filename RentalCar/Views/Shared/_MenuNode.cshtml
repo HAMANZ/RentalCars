@@ -1,0 +1,51 @@
+@using System
+@using System.Linq
+@using RentalCar.DomainLayer.Models
+@model MenuItem
+
+@functions {
+    // A branch is "open"/highlighted when any descendant matches the current URL.
+    private static bool ContainsActive(MenuItem node, string currentPath)
+    {
+        if (!string.IsNullOrWhiteSpace(node.Url) && node.Url != "#" &&
+            string.Equals(node.Url, currentPath, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return node.Children != null && node.Children.Any(c => ContainsActive(c, currentPath));
+    }
+}
+
+@{
+    var currentPath = Context.Request.Path.Value ?? "";
+    var url = string.IsNullOrWhiteSpace(Model.Url) ? "#" : Model.Url;
+    var icon = string.IsNullOrWhiteSpace(Model.Icon) ? "far fa-circle" : Model.Icon;
+    var hasChildren = Model.Children != null && Model.Children.Any();
+
+    var isActive = url != "#" && string.Equals(url, currentPath, StringComparison.OrdinalIgnoreCase);
+    var isOpen = hasChildren && ContainsActive(Model, currentPath);
+}
+
+@if (hasChildren)
+{
+    <li class="nav-item has-treeview @(isOpen ? "menu-open" : "")">
+        <a href="#" class="nav-link @(isOpen ? "active" : "")">
+            <i class="nav-icon @icon"></i>
+            <p>@Model.Title<i class="right fas fa-angle-left"></i></p>
+        </a>
+        <ul class="nav nav-treeview">
+            @foreach (var child in Model.Children)
+            {
+                <partial name="_MenuNode" model="child" />
+            }
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a href="@url" class="nav-link @(isActive ? "active" : "")">
+            <i class="nav-icon @icon"></i>
+            <p>@Model.Title</p>
+        </a>
+    </li>
+}

@@ -1,0 +1,94 @@
+@{
+    // Language / direction. "localization-ready": driven by a simple "lang" cookie
+    // ("ar" | "en") so a future language switcher only needs to set that cookie.
+    var lang = Context.Request.Cookies["lang"];
+    if (string.IsNullOrEmpty(lang)) lang = "en";
+    var isRtl = lang == "ar";
+    ViewData["IsRtl"] = isRtl;
+    ViewData["Lang"] = lang;
+}
+<!DOCTYPE html>
+<html lang="@lang" dir="@(isRtl ? "rtl" : "ltr")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | RentalCars Admin</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- AdminLTE 3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
+    <link rel="icon" type="image/x-icon" href="~/Images/website-icon.jpeg" />
+
+    <!-- Brand palette (shared by all admin views) -->
+    <style>
+        :root {
+            --main-color: #0A0F37;
+            --primary-color: #0A0F37;
+            --secondary-color: #cab053;
+            --third-color: #4CAF50;
+            --gradient-bg: linear-gradient(90deg, #0A0F37, #cab053);
+        }
+    </style>
+    @if (isRtl)
+    {
+        <style>
+            /* Minimal RTL adjustments for AdminLTE (BS4 has no official RTL). */
+            body.sidebar-mini .content-wrapper,
+            body.sidebar-mini .main-header,
+            body.sidebar-mini .main-footer {
+                margin-left: 0 !important;
+                margin-right: 250px;
+            }
+            .main-sidebar { right: 0; left: auto; }
+            .nav-sidebar .nav-link p { text-align: right; }
+            .nav-sidebar .nav-icon { margin-right: 0; margin-left: .5rem; }
+            .nav-sidebar .right { transform: rotate(180deg); }
+            @@media (max-width: 991.98px) {
+                body.sidebar-mini .content-wrapper,
+                body.sidebar-mini .main-header,
+                body.sidebar-mini .main-footer { margin-right: 0; }
+            }
+        </style>
+    }
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <partial name="_Navbar" />
+
+        <!-- Sidebar -->
+        <partial name="_Sidebar" />
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        <partial name="_Footer" />
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <!-- Bootstrap 4 bundle (required by AdminLTE 3) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+
+    <script>
+        // Simple language switcher: sets the "lang" cookie and reloads.
+        function setLang(code) {
+            document.cookie = "lang=" + code + ";path=/;max-age=" + (60 * 60 * 24 * 365);
+            location.reload();
+        }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

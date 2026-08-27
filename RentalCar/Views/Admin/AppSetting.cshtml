@@ -1,412 +1,161 @@
-﻿@using RentalCar.DomainLayer.CommonObjects;
+@using RentalCar.DomainLayer.CommonObjects;
 @using RentalCar.DomainLayer.DTO;
 @model DynamicResponse<AppSettingsDTO>
 
-    @{
-        ViewData["Title"] = "App Setting";
-        
-    ViewBag.View = "Edit App Setting";
-    }
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "App Setting";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+}
 
-
-    <h2> &nbsp; View Application Detail</h2>
-    <hr />
-
-
-
-    <style>
-        .form-actions {
-            display: block;
-            padding: 13px 14px 15px;
-            border-top: 1px solid rgba(0,0,0,.1);
-            background: rgb(255, 255, 255);
-            margin-top: 25px;
-            margin-left: -13px;
-            margin-right: -13px;
-            margin-bottom: -13px;
-            text-align: right;
-        }
-
-        label {
-            font-weight: 600
-        }
-
-        a {
-            color: black
-        }
-
-        h2 {
-            color: black;
-            font-size: 20px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .in {
-            width: 100px;
-            display: inline-flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-        }
-
-        /*.id{
-                display:inline-block;
-            }*/
-
-    </style>
-    <div>
-    @using (Html.BeginForm("UpdateAppSetting", "Admin", FormMethod.Post, new { @class = "id", enctype = "multipart/form-data" }))
-    {
-
-            <div id="content">
-                <section id="widget-grid" class="">
-                    <div class="row">
-                        <article class="col-sm-12 col-md-12 col-lg-10">
-                            <div class="widget-body">
-                                <fieldset>
-                                    <div class="row">
-
-                                        <input class="form-control" placeholder="Id" name="Id" value="@Model.Data.Id" type="hidden">
-
-
-
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Application Name</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="ApplicationName" name="ApplicationName" value="@Model.Data.ApplicationName" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Application URL</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="ApplicationUrl" name="ApplicationUrl" value="@Model.Data.ApplicationUrl" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Description</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Description" name="Description" value="@Model.Data.Description" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Contact Website</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="ContactWebsite" name="ContactWebsite" value="@Model.Data.ContactWebsite" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;License Detail</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="LicenseDetail" name="LicenseDetail" value="@Model.Data.LicenseDetail" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Phone</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Phone" name="Phone" value="@Model.Data.Phone" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Email</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Email" name="Email" value="@Model.Data.Email" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Facebook</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Facebook" name="Facebook" value="@Model.Data.Facebook" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Twitter</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Twitter" name="Twitter" value="@Model.Data.Twitter" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Created_by</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Created_by" name="Created_by" value="@Model.Data.Created_by" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Updated_by</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Updated_by" name="Updated_by" value="@Model.Data.Updated_by" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Created_at</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Created_at" name="Created_at" value="@Model.Data.Created_at" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Updated_at</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Updated_at" name="Updated_at" value="@Model.Data.Updated_at" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Api Url</label>
-                                                <div class="col-md-7">
-                                                <input class="form-control" placeholder="ApiUrl" name="ApplicationApiUrl" value="@Model.Data.ApplicationApiUrl" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Contact Email</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="ContactEmail" name="ContactEmail" value="@Model.Data.ContactEmail" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Instagram</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Instagram" name="Instagram" value="@Model.Data.Instagram" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Linked_In</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="LinkedIn" name="LinkedIn" value="@Model.Data.LinkedIn" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Mobile</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Mobile" name="Mobile" value="@Model.Data.Mobile" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Mobile 2</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Mobile2" name="Mobile2" value="@Model.Data.Mobile2" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Phone 2</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Phone2" name="Phone2" value="@Model.Data.Phone2" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Short Description</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="ShortDescription" name="ShortDescription" value="@Model.Data.ShortDescription" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Snapchat</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Snapchat" name="Snapchat" value="@Model.Data.Snapchat" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Tiktok</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Tiktok" name="Tiktok" value="@Model.Data.Tiktok" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Whatsapp</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Whatsapp" name="Whatsapp" value="@Model.Data.Whatsapp" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Youtube</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Youtube" name="Youtube" value="@Model.Data.Youtube" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                            <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Facebook</label>
-                                                <div class="col-md-7">
-                                                <input class="form-control" placeholder="Facebook" name="Facebook" value="@Model.Data.Facebook" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                            <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Instagram</label>
-                                                <div class="col-md-7">
-                                                <input class="form-control" placeholder="Instagram" name="Instagram" value="@Model.Data.Instagram" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                            <label class="col-md-5"> &nbsp; &nbsp; &nbsp;LinkedIn</label>
-                                                <div class="col-md-7">
-                                                <input class="form-control" placeholder="LinkedIn" name="LinkedIn" value="@Model.Data.LinkedIn" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                            <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Twitter</label>
-                                                <div class="col-md-7">
-                                                <input class="form-control" placeholder="Twitter" name="Twitter" value="@Model.Data.Twitter" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Privacy</label>
-                                                <div class="col-md-7">
-                                                <input class="form-control" placeholder="Privacy" name="PrivacyPolicy" value="@Model.Data.PrivacyPolicy" type="text">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="col-md-5"> &nbsp; &nbsp; &nbsp;Logo</label>
-                                                <div class="col-md-7">
-                                                    <input class="form-control" placeholder="Logo" name="Logo" value="@Model.Data.Logo" type="image">
-                                                </div>
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                    <div class="col-md-12">
-                                              <div class="form-group">
-                                        <button class="btn btn-primary submit-form" type="submit" style="align-items:center">
-                                            <i class="fa fa-save"></i>
-                                            Update
-                                        </button>
-                                    </div>
-                                    </div>
-
-
-                                    </div>
-
-                                
-                                </fieldset>
-                              
-                            </div>
-
-                        </article>
-                    </div>
-                </section>
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-cogs mr-2"></i>Application Settings</h1>
             </div>
-
-        }
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">App Setting</li>
+                </ol>
+            </div>
+        </div>
     </div>
+</section>
 
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mt-1"><i class="fas fa-sliders-h mr-1"></i> Application Detail</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("UpdateAppSetting", "Admin", FormMethod.Post, new { @class = "id", enctype = "multipart/form-data" }))
+                {
+                    <input name="Id" value="@Model.Data.Id" type="hidden" />
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Application Name</label>
+                            <input class="form-control" placeholder="ApplicationName" name="ApplicationName" value="@Model.Data.ApplicationName" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Application URL</label>
+                            <input class="form-control" placeholder="ApplicationUrl" name="ApplicationUrl" value="@Model.Data.ApplicationUrl" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Api Url</label>
+                            <input class="form-control" placeholder="ApiUrl" name="ApplicationApiUrl" value="@Model.Data.ApplicationApiUrl" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Contact Website</label>
+                            <input class="form-control" placeholder="ContactWebsite" name="ContactWebsite" value="@Model.Data.ContactWebsite" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Short Description</label>
+                            <input class="form-control" placeholder="ShortDescription" name="ShortDescription" value="@Model.Data.ShortDescription" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Description</label>
+                            <input class="form-control" placeholder="Description" name="Description" value="@Model.Data.Description" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>License Detail</label>
+                            <input class="form-control" placeholder="LicenseDetail" name="LicenseDetail" value="@Model.Data.LicenseDetail" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Logo</label>
+                            <input class="form-control" placeholder="Logo" name="Logo" value="@Model.Data.Logo" type="text" />
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label>Email</label>
+                            <input class="form-control" placeholder="Email" name="Email" value="@Model.Data.Email" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Contact Email</label>
+                            <input class="form-control" placeholder="ContactEmail" name="ContactEmail" value="@Model.Data.ContactEmail" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Phone</label>
+                            <input class="form-control" placeholder="Phone" name="Phone" value="@Model.Data.Phone" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Phone 2</label>
+                            <input class="form-control" placeholder="Phone2" name="Phone2" value="@Model.Data.Phone2" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Mobile</label>
+                            <input class="form-control" placeholder="Mobile" name="Mobile" value="@Model.Data.Mobile" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Mobile 2</label>
+                            <input class="form-control" placeholder="Mobile2" name="Mobile2" value="@Model.Data.Mobile2" type="text" />
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label>Facebook</label>
+                            <input class="form-control" placeholder="Facebook" name="Facebook" value="@Model.Data.Facebook" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Twitter</label>
+                            <input class="form-control" placeholder="Twitter" name="Twitter" value="@Model.Data.Twitter" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Instagram</label>
+                            <input class="form-control" placeholder="Instagram" name="Instagram" value="@Model.Data.Instagram" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>LinkedIn</label>
+                            <input class="form-control" placeholder="LinkedIn" name="LinkedIn" value="@Model.Data.LinkedIn" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Snapchat</label>
+                            <input class="form-control" placeholder="Snapchat" name="Snapchat" value="@Model.Data.Snapchat" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Tiktok</label>
+                            <input class="form-control" placeholder="Tiktok" name="Tiktok" value="@Model.Data.Tiktok" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Whatsapp</label>
+                            <input class="form-control" placeholder="Whatsapp" name="Whatsapp" value="@Model.Data.Whatsapp" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Youtube</label>
+                            <input class="form-control" placeholder="Youtube" name="Youtube" value="@Model.Data.Youtube" type="text" />
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label>Privacy</label>
+                            <input class="form-control" placeholder="Privacy" name="PrivacyPolicy" value="@Model.Data.PrivacyPolicy" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Created by</label>
+                            <input class="form-control" placeholder="Created_by" name="Created_by" value="@Model.Data.Created_by" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Updated by</label>
+                            <input class="form-control" placeholder="Updated_by" name="Updated_by" value="@Model.Data.Updated_by" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Created at</label>
+                            <input class="form-control" placeholder="Created_at" name="Created_at" value="@Model.Data.Created_at" type="text" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Updated at</label>
+                            <input class="form-control" placeholder="Updated_at" name="Updated_at" value="@Model.Data.Updated_at" type="text" />
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary submit-form" type="submit">
+                        <i class="fas fa-save mr-1"></i> Update
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</section>

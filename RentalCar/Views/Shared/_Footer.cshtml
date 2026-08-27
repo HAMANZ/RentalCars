@@ -1,0 +1,11 @@
+@{
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+    Func<string, string, string> L = (en, ar) => isRtl ? ar : en;
+}
+<footer class="main-footer">
+    <div class="@(isRtl ? "float-left" : "float-right") d-none d-sm-inline">
+        @L("Rental Cars & Maintenance System", "نظام تأجير وصيانة السيارات")
+    </div>
+    <strong>&copy; @DateTime.Now.Year RentalCars.</strong>
+    @L("All rights reserved.", "جميع الحقوق محفوظة.")
+</footer>

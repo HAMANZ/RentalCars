@@ -1,98 +1,59 @@
-﻿@using RentalCar.DomainLayer.DTO;
-﻿@Model ContactusDTO;
+@using RentalCar.DomainLayer.DTO;
 
-    @{
-        ViewData["Title"] = "Contact us ";
-    ViewBag.View = "Contact us";
-    }
+@{
+    Layout = "_AdminLTELayout";
+    ViewData["Title"] = "Contact Us";
+    var isRtl = (bool?)ViewData["IsRtl"] ?? false;
+}
 
-    <!-- Start content -->
-    <div class="content">
-
-        <div class="container-fluid">
-
-        @Html.Partial("_PartialPageHeader")
-         <div class="row">
-
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h3><i class="fa fa-hand-pointer-o"></i> Contact us</h3>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <form  enctype="multipart/form-data" method="post" data-parsley-validate>
-                            <div class="form-group">
-                                <label form="Name"> Name<span class="text-danger">*</span></label>
-                                <input type="text" name="UserName" value="@Model.FirstName @Model.LastName" disabled data-parsley-trigger="change"  class="form-control" id="Name">
-                            </div>
-                              <div class="form-group">
-                                <label form="Name"> Email<span class="text-danger">*</span></label>
-                                <input type="text" name="Email" value="@Model.Email" data-parsley-trigger="change" disabled class="form-control" id="Name">
-                            </div>
-                              <div class="form-group">
-                                <label form="Name"> Subject<span class="text-danger">*</span></label>
-                                <input type="text" name="Subject" value="@Model.Subject" data-parsley-trigger="change" disabled class="form-control" id="Name">
-                            </div>
-
-                              <div class="form-group">
-                                <label form="Name"> Message<span class="text-danger">*</span></label>
-                                <textarea disabled name="Text" data-parsley-trigger="change"
-                                          required style="height: 147px;" class="form-control" id="Name">@Model.Message</textarea>
-                                </div>
-
-
-
-                        </form>
-
-                    </div>
-                </div><!-- end card-->
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"><i class="fas fa-hand-pointer mr-2"></i>Contact Us</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb @(isRtl ? "float-sm-left" : "float-sm-right")">
+                    <li class="breadcrumb-item"><a href="/Admin/Index">Home</a></li>
+                    <li class="breadcrumb-item active">Contact Us</li>
+                </ol>
             </div>
         </div>
-        <!-- end row -->
-	</div>
-	</div>
-	<!-- END content -->
-    <script>
-    $("document").ready(function () {
+    </div>
+</section>
 
-        $("#imgInp").change(function () {
-        readURL(this);
-    });
-    
-    });
-
-    function readURL(input) {
-        console.log(input.files[0].name);
-        $("#BackGroundImage").val(input.files[0].name);
-        $("#BackgroundImage").val(input.files[0].name);
-        $("#ArticleImage").val(input.files[0].name);
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#blah').attr('src', e.target.result);
-                $("#ImageBase").val(e.target.result)
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-
-    }
-
-    //$(document).ready(function () {
-
-    //    $(".ImgClick").on("click", function () {
-    //        var selected = $(this).attr("value");
-    //        console.log(selected);
-    //        //alert(selected);
-    //        $("#oldBackgroundImage_" + selected).val("");
-
-    //        $(".updateImagee_" + selected).css("display", "none");
-    //        $(".updateImage_" + selected).css("display", "none");
-
-    //    });
-
-    //  });
-</script>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title mt-1"><i class="fas fa-hand-pointer mr-1"></i> Message Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <form enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <label>Name <span class="text-danger">*</span></label>
+                                <input type="text" name="UserName" value="@Model.FirstName @Model.LastName" disabled class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email <span class="text-danger">*</span></label>
+                                <input type="text" name="Email" value="@Model.Email" disabled class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Subject <span class="text-danger">*</span></label>
+                                <input type="text" name="Subject" value="@Model.Subject" disabled class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Message <span class="text-danger">*</span></label>
+                                <textarea disabled name="Text" style="height: 147px;" class="form-control">@Model.Message</textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
