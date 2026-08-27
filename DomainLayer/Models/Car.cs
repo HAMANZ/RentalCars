@@ -24,7 +24,7 @@ namespace RentalCar.DomainLayer.Models
         public double PurchasePrice { get; set; }
         public int CurrentKM { get; set; }
         public string Description  { get; set; }
-        public int? InvestorId { get; set; }
+        public string InvestorId { get; set; }
 
 
 
@@ -38,6 +38,8 @@ namespace RentalCar.DomainLayer.Models
         public CarOwner CarOwner { get; set; }
         [ForeignKey("BrandId")]
         public Brand Brand { get; set; }
+        [ForeignKey("CarStatusId")]
+        public CarStatus CarStatus { get; set; }
         public Investor? Investor { get; set; }
 
 

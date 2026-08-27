@@ -13,9 +13,12 @@ namespace RentalCar.DomainLayer.Models
         [Key]
         public long Id { get; set; }
         public string PlateNumber { get; set; }
-
-        public string PlateType { get; set; } // عمومي، خصوصي، أجرة...
-
+        public long PlateTypeId { get; set; }
+        [ForeignKey("PlateTypeId")]
+        public PlateType PlateType { get; set; }
+        public long? PlateRegionId { get; set; }
+        [ForeignKey("PlateRegionId")]
+        public PlateRegion PlateRegion { get; set; }
         public bool IsActive { get; set; }
 
         public ICollection<Car> Cars { get; set; }

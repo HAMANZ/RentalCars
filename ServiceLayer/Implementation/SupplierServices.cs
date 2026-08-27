@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 
 namespace RentalCar.ServiceLayer.Implementation
 {
+    // Supplier is a plain entity (BaseEntity), not an Identity/EUser account —
+    // it only optionally links to one via Supplier.UserId/User.
     public class SupplierServices : ISupplier
     {
         private readonly IRepository<Supplier> _repository;
@@ -30,7 +32,9 @@ namespace RentalCar.ServiceLayer.Implementation
             return new Supplier
             {
                 Id = dto.Id,
+                Email = dto.Email,
                 Name = dto.Name,
+                Name_ar = dto.Name_ar,
                 Phone = dto.Phone,
                 Address = dto.Address,
                 Description = dto.Description,
@@ -47,7 +51,9 @@ namespace RentalCar.ServiceLayer.Implementation
             return new SupplierDTO
             {
                 Id = model.Id,
+                Email = model.Email,
                 Name = model.Name,
+                Name_ar = model.Name_ar,
                 Phone = model.Phone,
                 Address = model.Address,
                 Description = model.Description,
@@ -85,7 +91,7 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Get
-        public async Task<DynamicResponse<SupplierDTO>> GetAsync(int id)
+        public async Task<DynamicResponse<SupplierDTO>> GetAsync(long id)
         {
             var response = new DynamicResponse<SupplierDTO>();
             try
@@ -152,6 +158,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.Suppliers
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -161,7 +168,9 @@ namespace RentalCar.ServiceLayer.Implementation
                     return response;
                 }
 
+                model.Email = dto.Email;
                 model.Name = dto.Name;
+                model.Name_ar = dto.Name_ar;
                 model.Phone = dto.Phone;
                 model.Address = dto.Address;
                 model.Description = dto.Description;
@@ -185,12 +194,13 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Delete (soft)
-        public async Task<DynamicResponse<bool>> DeleteAsync(int id)
+        public async Task<DynamicResponse<bool>> DeleteAsync(long id)
         {
             var response = new DynamicResponse<bool>();
             try
             {
                 var model = await _dbContext.Suppliers
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

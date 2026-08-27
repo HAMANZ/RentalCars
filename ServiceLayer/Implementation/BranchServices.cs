@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RepositoryLayer.RespositoryPattern;
 using RentalCar.DomainLayer.CommonObjects;
@@ -46,6 +46,7 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 Id = dto.Id,
                 Name = dto.Name,
+                Name_ar = dto.Name_ar,
                 Phone = dto.Phone,
                 Is_deleted = dto.Is_deleted,
                 Created_by = dto.Created_by,
@@ -61,6 +62,7 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 Id = model.Id,
                 Name = model.Name,
+                Name_ar = model.Name_ar,
                 Phone = model.Phone,
                 CityId = model.City?.Id,
                 Is_deleted = model.Is_deleted,
@@ -169,6 +171,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.Branches
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -179,6 +182,7 @@ namespace RentalCar.ServiceLayer.Implementation
                 }
 
                 model.Name = dto.Name;
+                model.Name_ar = dto.Name_ar;
                 model.Phone = dto.Phone;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
@@ -207,6 +211,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.Branches
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

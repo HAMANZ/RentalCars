@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 
 namespace RentalCar.DomainLayer.Models
 {
-    public class Investor : BaseEntity
+    public class Investor : EUser
     {
-        [Key]
-        public int Id { get; set; }
+     
         public string Phone { get; set; }
-        public string Email { get; set; }
         public string DrivingLicense { get; set; }
         public string Address { get; set; }
         public DateTime LicenseExpiryDate { get; set; }
@@ -26,9 +24,6 @@ namespace RentalCar.DomainLayer.Models
         public Nationality Nationality { get; set; }
 
         public ICollection<RentalContract> Contracts { get; set; }
-
-        [ForeignKey("UserId")]
-        public EUser User { get; set; }
 
     }
 }

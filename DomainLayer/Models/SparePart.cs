@@ -19,6 +19,9 @@ namespace DomainLayer.Models
 
 
         public string Name { get; set; }
+        public string Name_ar { get; set; }
+        public string Description { get; set; }
+        public string Whse { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
 
@@ -32,6 +35,7 @@ namespace DomainLayer.Models
         public int StockQty { get; set; }
 
 
+        public long? SupplierId { get; set; }
 
         [ForeignKey("SupplierId")]
 

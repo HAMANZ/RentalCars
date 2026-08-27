@@ -17,7 +17,8 @@ namespace RentalCar.DomainLayer.Models
 
         public LicensePlate LicensePlate { get; set; }
 
-        public int PlateOwnerId { get; set; }
+        [ForeignKey("PlateOwner")]
+        public string PlateOwnerId { get; set; }
 
         public PlateOwner PlateOwner { get; set; }
 
@@ -28,5 +29,6 @@ namespace RentalCar.DomainLayer.Models
         public bool IsCurrent { get; set; }
 
         public string Notes { get; set; }
+
     }
 }

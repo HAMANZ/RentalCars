@@ -12,23 +12,20 @@ namespace  RentalCar.DomainLayer.Models
     {
 
         public long EUserId { get; set; }
-        public string FirstName_ar { get; set; }
-        public string FirstName_en { get; set; }
-        public string LastName_ar { get; set; }
-        public string LastName_en { get; set; }
+        public string FullName { get; set; }
+        public string FullName_ar { get; set; }
         public string Profile { get; set; }
+        public string DOB { get; set; }
+        public string EmergencyContact { get; set; }
         //public long RoleId { get; set; }
         //[ForeignKey("RoleId")]
         //public Role Role { get; set; }
         public DateTime? LastLoginAt { get; set; }
 
-        public long GenderId { get; set; }
+        public long? GenderId { get; set; }
         [ForeignKey("GenderId")]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
         public string FToken { get; set; }
-        public int? CustomerId { get; set; }
-
-        public Customer Customer { get; set; }
         public bool Is_deleted { get; set; }
         public long Created_by { get; set; }
         public long Updated_by { get; set; }

@@ -13,10 +13,8 @@ namespace  RentalCar.DomainLayer.DTO
 
         public string Id { get; set; }
         public long EUserId { get; set; }
-        public string FirstName_ar { get; set; }
-        public string FirstName_en { get; set; }
-        public string LastName_ar { get; set; }
-        public string LastName_en { get; set; }
+        public string FullName_ar { get; set; }
+        public string FullName { get; set; }
         public long GenderId { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsAdmin { get; set; }

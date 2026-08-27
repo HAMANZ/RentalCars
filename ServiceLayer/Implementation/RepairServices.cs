@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.RespositoryPattern;
 using RentalCar.DomainLayer.CommonObjects;
 using RentalCar.DomainLayer.DTO;
@@ -30,7 +30,8 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                Category = dto.Category,
+                Name_ar = dto.Name_ar,
+                RepairTypeId = dto.RepairTypeId,
                 Details = dto.Details,
                 WorkTime = dto.WorkTime,
                 LaborCost = dto.LaborCost,
@@ -48,7 +49,9 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 Id = model.Id,
                 Name = model.Name,
-                Category = model.Category,
+                Name_ar = model.Name_ar,
+                RepairTypeId = model.RepairTypeId,
+                RepairTypeName = model.RepairType?.Name,
                 Details = model.Details,
                 WorkTime = model.WorkTime,
                 LaborCost = model.LaborCost,
@@ -69,6 +72,7 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 var list = await _dbContext.Repairs
                     .AsNoTracking()
+                    .Include(e => e.RepairType)
                     .Where(e => !e.Is_deleted)
                     .ToListAsync();
 
@@ -93,6 +97,7 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 var model = await _dbContext.Repairs
                     .AsNoTracking()
+                    .Include(e => e.RepairType)
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)
@@ -153,6 +158,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.Repairs
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -163,7 +169,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 }
 
                 model.Name = dto.Name;
-                model.Category = dto.Category;
+                model.Name_ar = dto.Name_ar;
+                model.RepairTypeId = dto.RepairTypeId;
                 model.Details = dto.Details;
                 model.WorkTime = dto.WorkTime;
                 model.LaborCost = dto.LaborCost;
@@ -193,6 +200,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.Repairs
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

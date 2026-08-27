@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,12 +16,19 @@ namespace RentalCar.DomainLayer.Models
 {
         [Key]
     public long TransactionId { get; set; }
-    public int TransactionTypeId { get; set; }
+    public long TransactionTypeId { get; set; }
+    public string Description { get; set; }
+    public int BranchIdId { get; set; }
 
-    /// <summary>
-    /// The account being debited (receiving value or recording receivable).
-    /// </summary>
-    public long DebitAccountId { get; set; }
+    [ForeignKey("TransactionTypeId")]
+    public STransactionType STransactionType { get; set; }
+
+    [ForeignKey("BranchId")]
+    public Branch Branch { get; set; }
+        /// <summary>
+        /// The account being debited (receiving value or recording receivable).
+        /// </summary>
+        public long DebitAccountId { get; set; }
 
     /// <summary>
     /// The account being credited (giving value or recording payable).
@@ -36,7 +44,7 @@ namespace RentalCar.DomainLayer.Models
     /// The type of entity this transaction references.
     /// Values: "Rental", "RentalPayment", "MaintenanceExpense", "InvestorWithdrawal", "BankTransfer"
     /// </summary>
-    public string? ReferenceType { get; set; }
+    
 
     /// <summary>
     /// The ID of the referenced entity (e.g., RentalPayment.Id).
@@ -53,7 +61,9 @@ namespace RentalCar.DomainLayer.Models
     /// </summary>
     public string? Notes { get; set; }
 
-    // Navigation properties
+    public ICollection<STransactionDocuments> Documents { get; set; }
+
+        // Navigation properties
     public STransactionType TransactionType { get; set; } = null!;
     public SAccount DebitAccount { get; set; } = null!;
     public SAccount CreditAccount { get; set; } = null!;

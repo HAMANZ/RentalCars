@@ -30,7 +30,8 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 Id = dto.Id,
                 PlateNumber = dto.PlateNumber,
-                PlateType = dto.PlateType,
+                PlateTypeId = dto.PlateTypeId,
+                PlateRegionId = dto.PlateRegionId,
                 IsActive = dto.IsActive,
                 Is_deleted = dto.Is_deleted,
                 Created_by = dto.Created_by,
@@ -46,7 +47,8 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 Id = model.Id,
                 PlateNumber = model.PlateNumber,
-                PlateType = model.PlateType,
+                PlateTypeId = model.PlateTypeId,
+                PlateRegionId = model.PlateRegionId,
                 IsActive = model.IsActive,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
@@ -148,7 +150,9 @@ namespace RentalCar.ServiceLayer.Implementation
             var response = new DynamicResponse<bool>();
             try
             {
+                // AsTracking because the context's global default is NoTracking.
                 var model = await _dbContext.LicensePlates
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -159,7 +163,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 }
 
                 model.PlateNumber = dto.PlateNumber;
-                model.PlateType = dto.PlateType;
+                model.PlateRegionId = dto.PlateRegionId;
+                model.PlateTypeId = dto.PlateTypeId;
                 model.IsActive = dto.IsActive;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
@@ -187,6 +192,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.LicensePlates
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

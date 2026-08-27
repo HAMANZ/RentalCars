@@ -44,10 +44,8 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             EUser Model = new EUser();
             Model.Id = dto.Id;
-            Model.FirstName_ar = dto.FirstName_ar;
-            Model.FirstName_en = dto.FirstName_en;
-            Model.LastName_ar = dto.LastName_ar;
-            Model.LastName_en = dto.LastName_en;
+            Model.FullName = dto.FullName;
+            Model.FullName_ar = dto.FullName_ar;
             Model.Profile = dto.Profile;
             return Model;
         }
@@ -57,10 +55,8 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             EUserDTO DTO = new EUserDTO();
             DTO.Id = model.Id;
-            DTO.FirstName_ar = model.FirstName_ar;
-            DTO.FirstName_en = model.FirstName_en;
-            DTO.LastName_ar = model.LastName_ar;
-            DTO.LastName_en = model.LastName_en;
+            DTO.FullName = model.FullName;
+            DTO.FullName_ar = model.FullName_ar;
             DTO.Profile = model.Profile;
             return DTO;
         }
@@ -82,13 +78,11 @@ namespace RentalCar.ServiceLayer.Implementation
                     EUserDTO data = new EUserDTO();
                     data.Id = user.Id;
                     data.Email = user.Email;
-                    data.FirstName_ar = user.FirstName_ar;
-                    data.FirstName_en = user.FirstName_en;
-                    data.LastName_ar = user.LastName_ar;
-                    data.LastName_en = user.LastName_en;
+                    data.FullName_ar = user.FullName_ar;
+                    data.FullName = user.FullName;
                     data.Profile = user.Profile;
                     data.PhoneNumber = user.PhoneNumber;
-                    data.GenderId = user.GenderId;
+                    data.GenderId =(long) user.GenderId;
 
                     response.Data = data;
                     return response;
@@ -147,10 +141,8 @@ namespace RentalCar.ServiceLayer.Implementation
                     var newEUser = new EUser()
                     {
                         EUserId = count,
-                        FirstName_ar = toAdd.FirstName_ar,
-                        FirstName_en = toAdd.FirstName_en,
-                        LastName_ar = toAdd.LastName_ar,
-                        LastName_en = toAdd.LastName_en,
+                        FullName_ar = toAdd.FullName_ar,
+                        FullName = toAdd.FullName,
                         PhoneNumber = toAdd.PhoneNumber,
                         GenderId = toAdd.GenderId,
                         Email = toAdd.Email,

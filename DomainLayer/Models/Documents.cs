@@ -12,6 +12,7 @@ namespace  RentalCar.DomainLayer.Models
         [Key]
         public long Id { get; set; }
         public string FilePath { get; set; }
+        public string Description { get; set; }
 
         public DateTime? ExpiresAt { get; set; }
 
@@ -26,5 +27,6 @@ namespace  RentalCar.DomainLayer.Models
 
         [ForeignKey("UserId")]
         public EUser User { get; set; }
+        public bool IsCustomerDoc { get; set; }
     }
 }

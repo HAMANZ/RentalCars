@@ -31,6 +31,7 @@ namespace RentalCar.ServiceLayer.Implementation
             Country Model = new Country();
             Model.Id = dto.Id;
             Model.Name = dto.Name;
+            Model.Name_ar = dto.Name_ar;
             Model.Is_deleted = dto.Is_deleted;
             Model.Created_at = dto.Created_at;
             Model.Updated_at = dto.Updated_at;
@@ -44,6 +45,7 @@ namespace RentalCar.ServiceLayer.Implementation
             DefinedDTO DTO = new DefinedDTO();
             DTO.Id = model.Id;
             DTO.Name = model.Name;
+            DTO.Name_ar = model.Name_ar;
             DTO.Is_deleted = model.Is_deleted;
             DTO.Created_at = model.Created_at;
             DTO.Updated_at = model.Updated_at;

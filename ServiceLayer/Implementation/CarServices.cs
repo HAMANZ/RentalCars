@@ -29,8 +29,12 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             if (value == null) return;
             var prop = entry.Metadata.FindProperty(name) ?? entry.Metadata.FindProperty(name.Trim());
-            if (prop != null)
-                entry.Property(prop.Name).CurrentValue = value;
+            if (prop == null) return;
+
+            // Convert to the FK's actual CLR type (e.g. Branch's key is int while the DTO carries long).
+            var targetType = Nullable.GetUnderlyingType(prop.ClrType) ?? prop.ClrType;
+            var converted = Convert.ChangeType(value, targetType);
+            entry.Property(prop.Name).CurrentValue = converted;
         }
 
         private void ApplyForeignKeys(Car model, CarDTO dto)
@@ -41,6 +45,7 @@ namespace RentalCar.ServiceLayer.Implementation
             SetFk(entry, "LicensePlateId", dto.LicensePlateId);
             SetFk(entry, "CarOwnerId", dto.CarOwnerId);
             SetFk(entry, "BrandId", dto.BrandId);
+            SetFk(entry, "CarStatusId", dto.CarStatusId);
         }
 
         #region DTOtoModel / ModeltoDTO
@@ -89,6 +94,7 @@ namespace RentalCar.ServiceLayer.Implementation
                 LicensePlateId = model.LicensePlate?.Id,
                 CarOwnerId = model.CarOwner?.Id,
                 BrandId = model.Brand?.Id,
+                CarStatusId = model.CarStatus?.Id,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
                 Updated_by = model.Updated_by,
@@ -141,6 +147,7 @@ namespace RentalCar.ServiceLayer.Implementation
                     .Include(c => c.LicensePlate)
                     .Include(c => c.CarOwner)
                     .Include(c => c.Brand)
+                    .Include(c => c.CarStatus)
                     .Include(c => c.Investor)
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
@@ -204,7 +211,10 @@ namespace RentalCar.ServiceLayer.Implementation
             var response = new DynamicResponse<bool>();
             try
             {
+                // Global QueryTrackingBehavior is NoTracking, so force tracking here
+                // otherwise the mutated entity is never detected as modified on SaveChanges.
                 var model = await _dbContext.Cars
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -251,7 +261,9 @@ namespace RentalCar.ServiceLayer.Implementation
             var response = new DynamicResponse<bool>();
             try
             {
+                // Force tracking (global default is NoTracking) so the soft-delete flag persists.
                 var model = await _dbContext.Cars
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

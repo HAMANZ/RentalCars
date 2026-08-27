@@ -8,7 +8,6 @@ namespace  RentalCar.DomainLayer.Models
     public partial class CarDocuments : BaseEntity
     {
 
-
         [Key]
         public long Id { get; set; }
         public string FilePath { get; set; }
@@ -26,5 +25,7 @@ namespace  RentalCar.DomainLayer.Models
 
         [ForeignKey("CarId")]
         public Car Car { get; set; }
+
+       
     }
 }

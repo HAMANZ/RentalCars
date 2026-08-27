@@ -37,6 +37,7 @@ public class SAccount : BaseEntity
     /// Display name for the account.
     /// </summary>
     public string Name { get; set; } = string.Empty;
+    public string Name_ar { get; set; } = string.Empty;
 
     /// <summary>
     /// Current balance. NEVER update directly - only via TransactionEngine.

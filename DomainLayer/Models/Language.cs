@@ -19,6 +19,7 @@ namespace RentalCar.DomainLayer.Models
         [StringLength(50)]
         public string LanguageCode { get; set; }
         public string Name { get; set; }
+        public string Name_ar { get; set; }
         public string Name_ex { get; set; }
         public string Flag { get; set; }
         public bool Is_ltr { get; set; }

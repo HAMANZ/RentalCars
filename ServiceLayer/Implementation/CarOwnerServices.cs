@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RepositoryLayer.RespositoryPattern;
@@ -17,12 +18,17 @@ namespace RentalCar.ServiceLayer.Implementation
     {
         private readonly IRepository<CarOwner> _repository;
         private readonly RentalCarDbContext _dbContext;
+        private readonly UserManager<EUser> _userManager;
 
-        public CarOwnerServices(IRepository<CarOwner> rep, RentalCarDbContext dbContext)
+        public CarOwnerServices(IRepository<CarOwner> rep, RentalCarDbContext dbContext, UserManager<EUser> userManager)
         {
             _repository = rep;
             _dbContext = dbContext;
+            _userManager = userManager;
         }
+
+        // A policy-compliant random password for admin-created party accounts.
+        private static string GeneratePassword() => $"Aa1!{Guid.NewGuid():N}";
 
         // Sets a (possibly shadow) FK property; tolerant of trailing-space FK names in the model.
         private static void SetFk(EntityEntry entry, string name, object value)
@@ -36,10 +42,24 @@ namespace RentalCar.ServiceLayer.Implementation
         private void ApplyForeignKeys(CarOwner model, CarOwnerDTO dto)
         {
             var entry = _dbContext.Entry(model);
-            SetFk(entry, "UserId", dto.UserId);
             SetFk(entry, "NationalId", dto.NationalityId);
             SetFk(entry, "CountryId", dto.CountryId);
             SetFk(entry, "CityId", dto.CityId);
+        }
+
+        // Party entities inherit EUser (Identity user) — populate the required Identity
+        // fields when saving directly (i.e. not through UserManager).
+        private static void EnsureIdentityFields(EUser user)
+        {
+            if (string.IsNullOrWhiteSpace(user.Id))
+                user.Id = Guid.NewGuid().ToString();
+            if (string.IsNullOrWhiteSpace(user.UserName))
+                user.UserName = !string.IsNullOrWhiteSpace(user.Email) ? user.Email : $"user_{Guid.NewGuid():N}";
+            user.NormalizedUserName = user.UserName.ToUpperInvariant();
+            if (!string.IsNullOrWhiteSpace(user.Email))
+                user.NormalizedEmail = user.Email.ToUpperInvariant();
+            if (string.IsNullOrWhiteSpace(user.SecurityStamp))
+                user.SecurityStamp = Guid.NewGuid().ToString();
         }
 
         #region DTOtoModel / ModeltoDTO
@@ -83,7 +103,6 @@ namespace RentalCar.ServiceLayer.Implementation
                 IsCompany = model.IsCompany,
                 IsActive = model.IsActive,
                 Notes = model.Notes,
-                UserId = model.User?.Id,
                 NationalityId = model.Nationality?.Id,
                 CountryId = model.Country?.Id,
                 CityId = model.City?.Id,
@@ -104,7 +123,6 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 var list = await _dbContext.CarOwners
                     .AsNoTracking()
-                    .Include(c => c.User)
                     .Include(c => c.Nationality)
                     .Include(c => c.Country)
                     .Include(c => c.City)
@@ -125,14 +143,13 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Get
-        public async Task<DynamicResponse<CarOwnerDTO>> GetAsync(long id)
+        public async Task<DynamicResponse<CarOwnerDTO>> GetAsync(string id)
         {
             var response = new DynamicResponse<CarOwnerDTO>();
             try
             {
                 var model = await _dbContext.CarOwners
                     .AsNoTracking()
-                    .Include(c => c.User)
                     .Include(c => c.Nationality)
                     .Include(c => c.Country)
                     .Include(c => c.City)
@@ -173,8 +190,22 @@ namespace RentalCar.ServiceLayer.Implementation
                 var model = FromDTOtoModel(dto);
                 model.Is_deleted = false;
                 model.Created_at = DateTime.UtcNow;
+                if (string.IsNullOrWhiteSpace(model.UserName))
+                    model.UserName = !string.IsNullOrWhiteSpace(model.Email) ? model.Email : $"user_{Guid.NewGuid():N}";
 
-                await _dbContext.CarOwners.AddAsync(model);
+                // Create as an Identity user (hashed password + normalized fields).
+                var createResult = await _userManager.CreateAsync(model, GeneratePassword());
+                if (!createResult.Succeeded)
+                {
+                    response.Data = false;
+                    response.HttpStatusCode = HttpStatusCode.BadRequest;
+                    response.Message = string.Join("; ", createResult.Errors.Select(e => e.Description));
+                    return response;
+                }
+
+                await _userManager.AddToRoleAsync(model, "CarOwner");
+
+                // Persist the foreign keys now that the row exists and is tracked.
                 ApplyForeignKeys(model, dto);
                 await _dbContext.SaveChangesAsync();
 
@@ -199,6 +230,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.CarOwners
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -221,6 +253,7 @@ namespace RentalCar.ServiceLayer.Implementation
                 model.Notes = dto.Notes;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
+                EnsureIdentityFields(model);
 
                 ApplyForeignKeys(model, dto);
                 await _dbContext.SaveChangesAsync();
@@ -240,12 +273,13 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Delete (soft)
-        public async Task<DynamicResponse<bool>> DeleteAsync(long id)
+        public async Task<DynamicResponse<bool>> DeleteAsync(string id)
         {
             var response = new DynamicResponse<bool>();
             try
             {
                 var model = await _dbContext.CarOwners
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

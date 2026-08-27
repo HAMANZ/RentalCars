@@ -6,7 +6,8 @@ namespace RentalCar.DomainLayer.DTO
     {
         public long Id { get; set; }
         public string PlateNumber { get; set; }
-        public string PlateType { get; set; }
+        public long? PlateRegionId { get; set; }
+        public long PlateTypeId { get; set; }
         public bool IsActive { get; set; }
     }
 }

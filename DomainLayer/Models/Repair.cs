@@ -16,9 +16,15 @@ namespace RentalCar.DomainLayer.Models
 
 
         public string Name { get; set; }
+        public string Name_ar { get; set; }
 
 
-        public string Category { get; set; }
+
+
+        public int RepairTypeId { get; set; }
+
+        [ForeignKey(nameof(RepairTypeId))]
+        public RepairType RepairType { get; set; }
         public string Details { get; set; }
         [Column(TypeName = "decimal(18,2)")]
 
@@ -28,7 +34,15 @@ namespace RentalCar.DomainLayer.Models
 
         public decimal LaborCost { get; set; }
 
+        public double PartsCost { get; set; }
 
+        public double TotalCost { get; set; }
+        public double Price { get; set; }
+        public string Description { get; set; }
+        public string Note { get; set; }
+
+
+        public DateTime RepairDate { get; set; }
 
         public ICollection<WorkOrderDetail> WorkOrderDetails { get; set; }
     }

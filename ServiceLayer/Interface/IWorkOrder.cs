@@ -9,7 +9,9 @@ namespace RentalCar.ServiceLayer.Interface
     {
         Task<DynamicResponse<List<WorkOrderDTO>>> GetAllAsync();
         Task<DynamicResponse<WorkOrderDTO>> GetAsync(int id);
-        Task<DynamicResponse<bool>> AddAsync(WorkOrderDTO dto);
+
+        // Returns the new WorkOrder's Id so callers can attach WorkOrderDetail rows.
+        Task<DynamicResponse<int>> AddAsync(WorkOrderDTO dto);
         Task<DynamicResponse<bool>> UpdateAsync(WorkOrderDTO dto);
         Task<DynamicResponse<bool>> DeleteAsync(int id);
     }

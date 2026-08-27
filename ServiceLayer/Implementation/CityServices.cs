@@ -31,6 +31,7 @@ namespace RentalCar.ServiceLayer.Implementation
             City Model = new City();
             Model.Id = dto.Id;
             Model.Name = dto.Name;
+            Model.Name_ar = dto.Name_ar;
             Model.CountryId = dto.CountryId;
             Model.Is_deleted = dto.Is_deleted;
             Model.Created_at = dto.Created_at;
@@ -45,6 +46,7 @@ namespace RentalCar.ServiceLayer.Implementation
             CityDTO DTO = new CityDTO();
             DTO.Id = model.Id;
             DTO.Name = model.Name;
+            DTO.Name_ar = model.Name_ar;
             DTO.CountryId = model.CountryId;
             DTO.Is_deleted = model.Is_deleted;
             DTO.Created_at = model.Created_at;

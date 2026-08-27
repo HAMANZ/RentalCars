@@ -16,22 +16,13 @@ namespace RentalCar.DomainLayer.Models
 
         public Car Car { get; set; }
 
-
         // آخر تغيير زيت
         public DateTime LastChangeDate { get; set; }
-
-
         // عداد السيارة وقت تغيير الزيت
         public int LastChangeKM { get; set; }
-
-
-
         // كل كم يجب تغيير الزيت
         // مثال: كل 5000 KM
         public int ChangeIntervalKM { get; set; } = 5000;
-
-
-
         // موعد التغيير القادم بالكيلومتر
         public int NextChangeKM
         {
@@ -41,20 +32,12 @@ namespace RentalCar.DomainLayer.Models
             }
         }
 
-
-
         // نوع الزيت
         public string OilType { get; set; }
 
-
-
         // تكلفة الزيت
-        [Column(TypeName = "decimal(18,2)")]
 
-        public decimal Cost { get; set; }
-
-
-
+        public double Cost { get; set; }
         // ملاحظات
         public string Notes { get; set; }
     }

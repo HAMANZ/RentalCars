@@ -42,10 +42,8 @@ namespace ServiceLayer.Implementation
             return new EUserDTO
             {
                 Id = dto.Id,
-                FirstName_ar = dto.FirstName_ar,
-                LastName_ar = dto.LastName_ar,
-                FirstName_en = dto.FirstName_en,
-                LastName_en = dto.LastName_en,
+                FullName = dto.FullName,
+                FullName_ar = dto.FullName_ar,
                 Profile = dto.Profile,
                 Email = dto.Email,
                 Created_at = dto.Created_at,
@@ -60,10 +58,8 @@ namespace ServiceLayer.Implementation
             return new EUserDTO
             {
                 Id = dto.Id,
-                FirstName_ar = dto.FirstName_ar,
-                LastName_ar = dto.LastName_ar,
-                FirstName_en = dto.FirstName_en,
-                LastName_en = dto.LastName_en,
+                FullName_ar = dto.FullName_ar,
+                FullName = dto.FullName,
                 Profile = dto.Profile,
                 Email = dto.Email,
                 Role = (await this.GetRoleNameAsync(dto.Id)).Data,
@@ -117,10 +113,8 @@ namespace ServiceLayer.Implementation
 
                 var euser = new EUser
                 {
-                    FirstName_ar = toAdd.FirstName_ar,
-                    FirstName_en = toAdd.FirstName_en,
-                    LastName_ar = toAdd.LastName_ar,
-                    LastName_en = toAdd.LastName_en,
+                    FullName = toAdd.FullName,
+                    FullName_ar = toAdd.FullName_ar,
                     Email = toAdd.Email,
                     UserName = toAdd.Email,
                     PhoneNumber = toAdd.PhoneNumber,
@@ -168,6 +162,82 @@ namespace ServiceLayer.Implementation
         }
         #endregion
 
+        #region Update User
+        public async Task<DynamicResponse<EUserDTO>> UpdateAsync(EUserRegisterDTO toUpdate)
+        {
+            var response = new DynamicResponse<EUserDTO>();
+
+            try
+            {
+                if (toUpdate == null || string.IsNullOrEmpty(toUpdate.Id))
+                {
+                    response.HttpStatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Invalid data";
+                    return response;
+                }
+
+                var euser = await _EUserManager.FindByIdAsync(toUpdate.Id);
+                if (euser == null)
+                {
+                    response.HttpStatusCode = HttpStatusCode.NotFound;
+                    response.Message = "User not found";
+                    return response;
+                }
+
+                euser.FullName = toUpdate.FullName;
+                euser.FullName_ar = toUpdate.FullName_ar;
+                euser.Email = toUpdate.Email;
+                euser.UserName = toUpdate.Email;
+
+                if (!string.IsNullOrEmpty(toUpdate.PhoneNumber))
+                    euser.PhoneNumber = toUpdate.PhoneNumber;
+
+                if (!string.IsNullOrEmpty(toUpdate.ProfileImage))
+                    euser.Profile = toUpdate.ProfileImage;
+
+                euser.Updated_at = DateTime.UtcNow;
+                euser.Updated_by = toUpdate.Created_by;
+
+                var updateResult = await _EUserManager.UpdateAsync(euser);
+                if (!updateResult.Succeeded)
+                {
+                    response.HttpStatusCode = HttpStatusCode.InternalServerError;
+                    response.Errors = updateResult.Errors;
+                    return response;
+                }
+
+                // Update role if provided
+                if (!string.IsNullOrEmpty(toUpdate.Role))
+                {
+                    if (!await _roleManager.RoleExistsAsync(toUpdate.Role))
+                        await _roleManager.CreateAsync(new IdentityRole(toUpdate.Role));
+
+                    var currentRoles = await _EUserManager.GetRolesAsync(euser);
+                    var rolesToRemove = currentRoles
+                        .Where(r => r != "EUser" && r != toUpdate.Role)
+                        .ToList();
+
+                    if (rolesToRemove.Any())
+                        await _EUserManager.RemoveFromRolesAsync(euser, rolesToRemove);
+
+                    if (!currentRoles.Contains(toUpdate.Role))
+                        await _EUserManager.AddToRoleAsync(euser, toUpdate.Role);
+                }
+
+                response.Data = await FromModeltoDTOfullWithRoleData(euser);
+                response.HttpStatusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                response.HttpStatusCode = HttpStatusCode.InternalServerError;
+                response.Message = "Please try again later";
+                response.ServerMessage = ex.Message;
+            }
+
+            return response;
+        }
+        #endregion
+
         #region Get All Roles
         public async Task<DynamicResponse<List<IdentityRole>>> GetAllRoles()
         {
@@ -195,14 +265,16 @@ namespace ServiceLayer.Implementation
 
             try
             {
-                var roleName = await (
+                var roles = await (
                     from ur in _dbContext.UserRoles
                     join r in _dbContext.Roles on ur.RoleId equals r.Id
                     where ur.UserId == userId
                     select r.Name
-                ).FirstOrDefaultAsync();
+                ).ToListAsync();
 
-                response.Data = roleName;
+                // Prefer the user's real role over the default "EUser" role so the
+                // displayed/selected role is consistent for every user.
+                response.Data = roles.FirstOrDefault(r => r != "EUser") ?? roles.FirstOrDefault();
                 response.HttpStatusCode = HttpStatusCode.OK;
             }
             catch (Exception ex)

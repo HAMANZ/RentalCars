@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.RespositoryPattern;
 using RentalCar.DomainLayer.CommonObjects;
@@ -16,11 +17,31 @@ namespace RentalCar.ServiceLayer.Implementation
     {
         private readonly IRepository<PlateOwner> _repository;
         private readonly RentalCarDbContext _dbContext;
+        private readonly UserManager<EUser> _userManager;
 
-        public PlateOwnerServices(IRepository<PlateOwner> rep, RentalCarDbContext dbContext)
+        public PlateOwnerServices(IRepository<PlateOwner> rep, RentalCarDbContext dbContext, UserManager<EUser> userManager)
         {
             _repository = rep;
             _dbContext = dbContext;
+            _userManager = userManager;
+        }
+
+        // A policy-compliant random password for admin-created party accounts.
+        private static string GeneratePassword() => $"Aa1!{Guid.NewGuid():N}";
+
+        // Party entities inherit EUser (Identity user) — populate the required Identity
+        // fields when saving directly (i.e. not through UserManager).
+        private static void EnsureIdentityFields(EUser user)
+        {
+            if (string.IsNullOrWhiteSpace(user.Id))
+                user.Id = Guid.NewGuid().ToString();
+            if (string.IsNullOrWhiteSpace(user.UserName))
+                user.UserName = !string.IsNullOrWhiteSpace(user.Email) ? user.Email : $"user_{Guid.NewGuid():N}";
+            user.NormalizedUserName = user.UserName.ToUpperInvariant();
+            if (!string.IsNullOrWhiteSpace(user.Email))
+                user.NormalizedEmail = user.Email.ToUpperInvariant();
+            if (string.IsNullOrWhiteSpace(user.SecurityStamp))
+                user.SecurityStamp = Guid.NewGuid().ToString();
         }
 
         #region DTOtoModel / ModeltoDTO
@@ -86,7 +107,7 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Get
-        public async Task<DynamicResponse<PlateOwnerDTO>> GetAsync(long id)
+        public async Task<DynamicResponse<PlateOwnerDTO>> GetAsync(string id)
         {
             var response = new DynamicResponse<PlateOwnerDTO>();
             try
@@ -130,7 +151,20 @@ namespace RentalCar.ServiceLayer.Implementation
                 var model = FromDTOtoModel(dto);
                 model.Is_deleted = false;
                 model.Created_at = DateTime.UtcNow;
-                await _repository.InsertAsync(model);
+                if (string.IsNullOrWhiteSpace(model.UserName))
+                    model.UserName = !string.IsNullOrWhiteSpace(model.Email) ? model.Email : $"user_{Guid.NewGuid():N}";
+
+                // Create as an Identity user (hashed password + normalized fields).
+                var createResult = await _userManager.CreateAsync(model, GeneratePassword());
+                if (!createResult.Succeeded)
+                {
+                    response.Data = false;
+                    response.HttpStatusCode = HttpStatusCode.BadRequest;
+                    response.Message = string.Join("; ", createResult.Errors.Select(e => e.Description));
+                    return response;
+                }
+
+                await _userManager.AddToRoleAsync(model, "PlateOwner");
 
                 response.Data = true;
                 response.HttpStatusCode = HttpStatusCode.OK;
@@ -153,6 +187,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.PlateOwners
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -169,6 +204,7 @@ namespace RentalCar.ServiceLayer.Implementation
                 model.Address = dto.Address;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
+                EnsureIdentityFields(model);
 
                 await _dbContext.SaveChangesAsync();
 
@@ -187,12 +223,13 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Delete (soft)
-        public async Task<DynamicResponse<bool>> DeleteAsync(long id)
+        public async Task<DynamicResponse<bool>> DeleteAsync(string id)
         {
             var response = new DynamicResponse<bool>();
             try
             {
                 var model = await _dbContext.PlateOwners
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

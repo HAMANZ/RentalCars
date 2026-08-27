@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RepositoryLayer.RespositoryPattern;
@@ -17,12 +18,17 @@ namespace RentalCar.ServiceLayer.Implementation
     {
         private readonly IRepository<Investor> _repository;
         private readonly RentalCarDbContext _dbContext;
+        private readonly UserManager<EUser> _userManager;
 
-        public InvestorServices(IRepository<Investor> rep, RentalCarDbContext dbContext)
+        public InvestorServices(IRepository<Investor> rep, RentalCarDbContext dbContext, UserManager<EUser> userManager)
         {
             _repository = rep;
             _dbContext = dbContext;
+            _userManager = userManager;
         }
+
+        // A policy-compliant random password for admin-created party accounts.
+        private static string GeneratePassword() => $"Aa1!{Guid.NewGuid():N}";
 
         // Sets a (possibly shadow) FK property; tolerant of trailing-space FK names in the model.
         private static void SetFk(EntityEntry entry, string name, object value)
@@ -38,7 +44,21 @@ namespace RentalCar.ServiceLayer.Implementation
             var entry = _dbContext.Entry(model);
             SetFk(entry, "StatusId", dto.StatusId);
             SetFk(entry, "NationalId", dto.NationalityId);
-            SetFk(entry, "UserId", dto.UserId);
+        }
+
+        // Party entities inherit EUser (Identity user) — populate the required Identity
+        // fields when saving directly (i.e. not through UserManager).
+        private static void EnsureIdentityFields(EUser user)
+        {
+            if (string.IsNullOrWhiteSpace(user.Id))
+                user.Id = Guid.NewGuid().ToString();
+            if (string.IsNullOrWhiteSpace(user.UserName))
+                user.UserName = !string.IsNullOrWhiteSpace(user.Email) ? user.Email : $"user_{Guid.NewGuid():N}";
+            user.NormalizedUserName = user.UserName.ToUpperInvariant();
+            if (!string.IsNullOrWhiteSpace(user.Email))
+                user.NormalizedEmail = user.Email.ToUpperInvariant();
+            if (string.IsNullOrWhiteSpace(user.SecurityStamp))
+                user.SecurityStamp = Guid.NewGuid().ToString();
         }
 
         #region DTOtoModel / ModeltoDTO
@@ -47,6 +67,7 @@ namespace RentalCar.ServiceLayer.Implementation
             return new Investor
             {
                 Id = dto.Id,
+                FullName = dto.FullName,
                 Phone = dto.Phone,
                 Email = dto.Email,
                 DrivingLicense = dto.DrivingLicense,
@@ -65,6 +86,7 @@ namespace RentalCar.ServiceLayer.Implementation
             return new InvestorDTO
             {
                 Id = model.Id,
+                FullName = model.FullName,
                 Phone = model.Phone,
                 Email = model.Email,
                 DrivingLicense = model.DrivingLicense,
@@ -72,7 +94,6 @@ namespace RentalCar.ServiceLayer.Implementation
                 LicenseExpiryDate = model.LicenseExpiryDate,
                 StatusId = model.Status?.Id,
                 NationalityId = model.Nationality?.Id,
-                UserId = model.User?.Id,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
                 Updated_by = model.Updated_by,
@@ -92,7 +113,6 @@ namespace RentalCar.ServiceLayer.Implementation
                     .AsNoTracking()
                     .Include(c => c.Status)
                     .Include(c => c.Nationality)
-                    .Include(c => c.User)
                     .Where(e => !e.Is_deleted)
                     .ToListAsync();
 
@@ -110,7 +130,7 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Get
-        public async Task<DynamicResponse<InvestorDTO>> GetAsync(int id)
+        public async Task<DynamicResponse<InvestorDTO>> GetAsync(string id)
         {
             var response = new DynamicResponse<InvestorDTO>();
             try
@@ -119,7 +139,6 @@ namespace RentalCar.ServiceLayer.Implementation
                     .AsNoTracking()
                     .Include(c => c.Status)
                     .Include(c => c.Nationality)
-                    .Include(c => c.User)
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)
@@ -157,8 +176,21 @@ namespace RentalCar.ServiceLayer.Implementation
                 var model = FromDTOtoModel(dto);
                 model.Is_deleted = false;
                 model.Created_at = DateTime.UtcNow;
+                if (string.IsNullOrWhiteSpace(model.UserName))
+                    model.UserName = !string.IsNullOrWhiteSpace(model.Email) ? model.Email : $"user_{Guid.NewGuid():N}";
 
-                await _dbContext.Investors.AddAsync(model);
+                // Create as an Identity user (hashed password + normalized fields).
+                var createResult = await _userManager.CreateAsync(model, GeneratePassword());
+                if (!createResult.Succeeded)
+                {
+                    response.Data = false;
+                    response.HttpStatusCode = HttpStatusCode.BadRequest;
+                    response.Message = string.Join("; ", createResult.Errors.Select(e => e.Description));
+                    return response;
+                }
+
+                await _userManager.AddToRoleAsync(model, "Investor");
+
                 ApplyForeignKeys(model, dto);
                 await _dbContext.SaveChangesAsync();
 
@@ -183,6 +215,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.Investors
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -192,6 +225,7 @@ namespace RentalCar.ServiceLayer.Implementation
                     return response;
                 }
 
+                model.FullName = dto.FullName;
                 model.Phone = dto.Phone;
                 model.Email = dto.Email;
                 model.DrivingLicense = dto.DrivingLicense;
@@ -199,6 +233,7 @@ namespace RentalCar.ServiceLayer.Implementation
                 model.LicenseExpiryDate = dto.LicenseExpiryDate;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
+                EnsureIdentityFields(model);
 
                 ApplyForeignKeys(model, dto);
                 await _dbContext.SaveChangesAsync();
@@ -218,12 +253,13 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Delete (soft)
-        public async Task<DynamicResponse<bool>> DeleteAsync(int id)
+        public async Task<DynamicResponse<bool>> DeleteAsync(string id)
         {
             var response = new DynamicResponse<bool>();
             try
             {
                 var model = await _dbContext.Investors
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

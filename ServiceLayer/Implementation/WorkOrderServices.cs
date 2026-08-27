@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RepositoryLayer.RespositoryPattern;
 using RentalCar.DomainLayer.CommonObjects;
@@ -132,14 +132,13 @@ namespace RentalCar.ServiceLayer.Implementation
         #endregion
 
         #region Add
-        public async Task<DynamicResponse<bool>> AddAsync(WorkOrderDTO dto)
+        public async Task<DynamicResponse<int>> AddAsync(WorkOrderDTO dto)
         {
-            var response = new DynamicResponse<bool>();
+            var response = new DynamicResponse<int>();
             try
             {
                 if (dto == null)
                 {
-                    response.Data = false;
                     response.HttpStatusCode = HttpStatusCode.BadRequest;
                     return response;
                 }
@@ -152,12 +151,11 @@ namespace RentalCar.ServiceLayer.Implementation
                 ApplyForeignKeys(model, dto);
                 await _dbContext.SaveChangesAsync();
 
-                response.Data = true;
+                response.Data = model.Id;
                 response.HttpStatusCode = HttpStatusCode.OK;
             }
             catch (Exception ex)
             {
-                response.Data = false;
                 response.HttpStatusCode = HttpStatusCode.InternalServerError;
                 response.Message = "Please try again later";
                 response.ServerMessage = ex.Message;
@@ -173,6 +171,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.WorkOrders
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -211,6 +210,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.WorkOrders
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

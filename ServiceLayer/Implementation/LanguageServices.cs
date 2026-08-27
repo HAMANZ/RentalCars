@@ -31,6 +31,7 @@ namespace RentalCar.ServiceLayer.Implementation
             Language Model = new Language();
             Model.Id = dto.Id;
             Model.Name = dto.Name;
+            Model.Name_ar = dto.Name_ar;
             Model.Name_ex = dto.Name_ex;
             Model.Flag = dto.Flag;
             Model.Is_ltr = dto.Is_ltr;
@@ -43,6 +44,7 @@ namespace RentalCar.ServiceLayer.Implementation
             LanguageDTO DTO = new LanguageDTO();
             DTO.Id = model.Id;
             DTO.Name = model.Name;
+            DTO.Name_ar = model.Name_ar;
             DTO.Flag = model.Flag;
             DTO.Name_ex = model.Name_ex;
             DTO.LanguageCode = model.LanguageCode;

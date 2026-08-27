@@ -7,11 +7,14 @@ namespace RentalCar.DomainLayer.DTO
         public int Id { get; set; }
         public string PartNo { get; set; }
         public string Name { get; set; }
+        public string Name_ar { get; set; }
+        public string Description { get; set; }
+        public string Whse { get; set; }
         public decimal PurchasePrice { get; set; }
         public decimal SellingPrice { get; set; }
         public int StockQty { get; set; }
 
         // Foreign keys
-        public int? SupplierId { get; set; }
+        public long? SupplierId { get; set; }
     }
 }

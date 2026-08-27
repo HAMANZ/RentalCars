@@ -7,14 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace RentalCar.DomainLayer.Models
 {
 
-    public class CarOwner : BaseEntity
+    public class CarOwner : EUser
     {
 
-        [Key]
-        public long Id { get; set; }
-        [Required]
-        [MaxLength(200)]
-        public string FullName { get; set; }
 
         [MaxLength(100)]
         public string CompanyName { get; set; }
@@ -31,8 +26,6 @@ namespace RentalCar.DomainLayer.Models
         [MaxLength(30)]
         public string Phone2 { get; set; }
 
-        [MaxLength(150)]
-        public string Email { get; set; }
 
         [MaxLength(300)]
         public string Address { get; set; }
@@ -45,8 +38,6 @@ namespace RentalCar.DomainLayer.Models
 
 
 
-        [ForeignKey("UserId")]
-        public EUser User { get; set; }
         [ForeignKey("NationalId ")]
         public Nationality Nationality { get; set; }
 

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RepositoryLayer.RespositoryPattern;
 using RentalCar.DomainLayer.CommonObjects;
@@ -48,6 +48,9 @@ namespace RentalCar.ServiceLayer.Implementation
                 Id = dto.Id,
                 PartNo = dto.PartNo,
                 Name = dto.Name,
+                Name_ar = dto.Name_ar,
+                Description = dto.Description,
+                Whse = dto.Whse,
                 PurchasePrice = dto.PurchasePrice,
                 SellingPrice = dto.SellingPrice,
                 StockQty = dto.StockQty,
@@ -66,6 +69,9 @@ namespace RentalCar.ServiceLayer.Implementation
                 Id = model.Id,
                 PartNo = model.PartNo,
                 Name = model.Name,
+                Name_ar = model.Name_ar,
+                Description = model.Description,
+                Whse = model.Whse,
                 PurchasePrice = model.PurchasePrice,
                 SellingPrice = model.SellingPrice,
                 StockQty = model.StockQty,
@@ -176,6 +182,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.SpareParts
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -187,6 +194,9 @@ namespace RentalCar.ServiceLayer.Implementation
 
                 model.PartNo = dto.PartNo;
                 model.Name = dto.Name;
+                model.Name_ar = dto.Name_ar;
+                model.Description = dto.Description;
+                model.Whse = dto.Whse;
                 model.PurchasePrice = dto.PurchasePrice;
                 model.SellingPrice = dto.SellingPrice;
                 model.StockQty = dto.StockQty;
@@ -217,6 +227,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.SpareParts
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

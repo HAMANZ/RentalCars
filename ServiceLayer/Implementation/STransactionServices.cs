@@ -30,10 +30,11 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 TransactionId = dto.TransactionId,
                 TransactionTypeId = dto.TransactionTypeId,
+                Description = dto.Description,
+                BranchIdId = dto.BranchIdId,
                 DebitAccountId = dto.DebitAccountId,
                 CreditAccountId = dto.CreditAccountId,
                 Amount = dto.Amount,
-                ReferenceType = dto.ReferenceType,
                 ReferenceId = dto.ReferenceId,
                 OccurredAt = dto.OccurredAt,
                 Notes = dto.Notes,
@@ -51,10 +52,11 @@ namespace RentalCar.ServiceLayer.Implementation
             {
                 TransactionId = model.TransactionId,
                 TransactionTypeId = model.TransactionTypeId,
+                Description = model.Description,
+                BranchIdId = model.BranchIdId,
                 DebitAccountId = model.DebitAccountId,
                 CreditAccountId = model.CreditAccountId,
                 Amount = model.Amount,
-                ReferenceType = model.ReferenceType,
                 ReferenceId = model.ReferenceId,
                 OccurredAt = model.OccurredAt,
                 Notes = model.Notes,
@@ -169,10 +171,11 @@ namespace RentalCar.ServiceLayer.Implementation
                 }
 
                 model.TransactionTypeId = dto.TransactionTypeId;
+                model.Description = dto.Description;
+                model.BranchIdId = dto.BranchIdId;
                 model.DebitAccountId = dto.DebitAccountId;
                 model.CreditAccountId = dto.CreditAccountId;
                 model.Amount = dto.Amount;
-                model.ReferenceType = dto.ReferenceType;
                 model.ReferenceId = dto.ReferenceId;
                 model.OccurredAt = dto.OccurredAt;
                 model.Notes = dto.Notes;

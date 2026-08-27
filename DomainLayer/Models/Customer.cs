@@ -9,16 +9,10 @@ using System.Threading.Tasks;
 
 namespace RentalCar.DomainLayer.Models
 {
-    public class Customer : BaseEntity
+    public class Customer : EUser
     {
-        [Key]
-        public int Id { get; set; }
-
 
         public string Phone { get; set; }
-
-
-        public string Email { get; set; }
 
 
         public string DrivingLicense { get; set; }
@@ -33,7 +27,6 @@ namespace RentalCar.DomainLayer.Models
         public Nationality Nationality { get; set; }
 
         public ICollection<RentalContract> Contracts { get; set; }
-        public EUser User { get; set; }
 
     }
 }

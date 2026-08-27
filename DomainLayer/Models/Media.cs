@@ -13,6 +13,7 @@ namespace  RentalCar.DomainLayer.Models
         public int Id { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
+        public string Name_ar { get; set; }
         [Column("isActive")]
         public bool? IsActive { get; set; }
         [Column(TypeName = "date")]

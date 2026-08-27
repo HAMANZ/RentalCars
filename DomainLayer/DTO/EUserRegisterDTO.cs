@@ -11,10 +11,9 @@ namespace DomainLayer.DTO
     public class EUserRegisterDTO
     {
         public long UserId { get; set; }
-        public string FirstName_ar { get; set; }
-        public string FirstName_en { get; set; }
-        public string LastName_ar { get; set; }
-        public string LastName_en { get; set; }
+        public string Id { get; set; }
+        public string FullName { get; set; }
+        public string FullName_ar { get; set; }
         public string Profile { get; set; }
 
         [MinLength(8, ErrorMessage = "The Password value cannot less 8 symbols. ")]

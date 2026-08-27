@@ -9,7 +9,7 @@ namespace RentalCar.DomainLayer.DTO
         public int LastChangeKM { get; set; }
         public int ChangeIntervalKM { get; set; } = 5000;
         public string OilType { get; set; }
-        public decimal Cost { get; set; }
+        public double Cost { get; set; }
         public string Notes { get; set; }
 
         // Computed (read-only)

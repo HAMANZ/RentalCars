@@ -12,6 +12,6 @@ namespace RentalCar.DomainLayer.DTO
 
         // Foreign keys
         public long? LicensePlateId { get; set; }
-        public int PlateOwnerId { get; set; }
+        public string PlateOwnerId { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace RentalCar.ServiceLayer.Implementation
         {
             var entry = _dbContext.Entry(model);
             SetFk(entry, "LicensePlateId", dto.LicensePlateId);
+            // PlateOwnerId is now a real long FK, set directly via model.PlateOwnerId.
         }
 
         #region DTOtoModel / ModeltoDTO
@@ -176,7 +177,9 @@ namespace RentalCar.ServiceLayer.Implementation
             var response = new DynamicResponse<bool>();
             try
             {
+                // AsTracking because the context's global default is NoTracking.
                 var model = await _dbContext.LicensePlateOwnerships
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == dto.Id && !e.Is_deleted);
 
                 if (model == null)
@@ -218,6 +221,7 @@ namespace RentalCar.ServiceLayer.Implementation
             try
             {
                 var model = await _dbContext.LicensePlateOwnerships
+                    .AsTracking()
                     .FirstOrDefaultAsync(e => e.Id == id && !e.Is_deleted);
 
                 if (model == null)

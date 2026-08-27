@@ -8,9 +8,9 @@ namespace RentalCar.ServiceLayer.Interface
     public interface IPlateOwner
     {
         Task<DynamicResponse<List<PlateOwnerDTO>>> GetAllAsync();
-        Task<DynamicResponse<PlateOwnerDTO>> GetAsync(long id);
+        Task<DynamicResponse<PlateOwnerDTO>> GetAsync(string id);
         Task<DynamicResponse<bool>> AddAsync(PlateOwnerDTO dto);
         Task<DynamicResponse<bool>> UpdateAsync(PlateOwnerDTO dto);
-        Task<DynamicResponse<bool>> DeleteAsync(long id);
+        Task<DynamicResponse<bool>> DeleteAsync(string id);
     }
 }

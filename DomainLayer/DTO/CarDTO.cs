@@ -17,11 +17,12 @@ namespace RentalCar.DomainLayer.DTO
         public string Description { get; set; }
 
         // Foreign keys
-        public int? InvestorId { get; set; }
+        public string InvestorId { get; set; }
         public long? BranchId { get; set; }
         public long? FuelTypeId { get; set; }
         public long? LicensePlateId { get; set; }
-        public long? CarOwnerId { get; set; }
+        public string CarOwnerId { get; set; }
         public long? BrandId { get; set; }
+        public long? CarStatusId { get; set; }
     }
 }

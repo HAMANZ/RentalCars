@@ -12,15 +12,13 @@ namespace  RentalCar.DomainLayer.DTO
     {
 
         public string Id { get; set; }
-        public string FirstName_ar { get; set; }
-        public string FirstName_en { get; set; }
-        public string LastName_ar { get; set; }
-        public string LastName_en { get; set; }
+        public string FullName_ar { get; set; }
+        public string FullName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Profile { get; set; }
         public string Role { get; set; }
-        public long GenderId { get; set; }
+        public long? GenderId { get; set; }
         public long Created_by { get; set; }
         public long Updated_by { get; set; }
         public DateTime Created_at { get; set; }
