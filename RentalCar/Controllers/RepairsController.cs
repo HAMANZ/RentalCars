@@ -145,9 +145,14 @@ namespace RentalCar.Controllers
             var errors = new List<string>();
 
             var typesResult = await _typeService.GetAllAsync();
-            var typesByName = (typesResult.Data ?? new List<RepairTypeDTO>())
+            var allTypes = typesResult.Data ?? new List<RepairTypeDTO>();
+            var typesByName = allTypes
                 .Where(t => !string.IsNullOrWhiteSpace(t.Name))
                 .GroupBy(t => t.Name.Trim(), StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(g => g.Key, g => g.First().Id, StringComparer.OrdinalIgnoreCase);
+            var typesByCode = allTypes
+                .Where(t => !string.IsNullOrWhiteSpace(t.Code))
+                .GroupBy(t => t.Code.Trim(), StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(g => g.Key, g => g.First().Id, StringComparer.OrdinalIgnoreCase);
 
             using (var stream = new MemoryStream())
@@ -183,7 +188,9 @@ namespace RentalCar.Controllers
                     }
 
                     var typeName = GetCellString(row, 2);
-                    if (string.IsNullOrWhiteSpace(typeName) || !typesByName.TryGetValue(typeName.Trim(), out var typeId))
+                    if (string.IsNullOrWhiteSpace(typeName) ||
+                        !(typesByName.TryGetValue(typeName.Trim(), out var typeId) ||
+                          typesByCode.TryGetValue(typeName.Trim(), out typeId)))
                     {
                         failed++;
                         errors.Add($"Row {rowIndex + 1}: Type '{typeName}' not found; row skipped.");
