@@ -29,6 +29,10 @@ namespace RentalCar.DomainLayer.Models
         public int CurrentKM { get; set; }
 
 
+        public double price { get; set; }
+        public double PartsCost { get; set; }
+
+        public double TotalCost { get; set; }
 
 
         [ForeignKey("StatusId")]

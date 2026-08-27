@@ -15,5 +15,8 @@ namespace RentalCar.DomainLayer.DTO
         public double Price { get; set; }
         public string Description { get; set; }
         public string Note { get; set; }
+
+        public string Description_ar { get; set; }
+        public string Note_ar { get; set; }
     }
 }

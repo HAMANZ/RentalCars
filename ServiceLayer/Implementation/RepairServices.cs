@@ -38,6 +38,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 Price = dto.Price,
                 Description = dto.Description,
                 Note = dto.Note,
+                Description_ar = dto.Description_ar,
+                Note_ar = dto.Note_ar,
                 Is_deleted = dto.Is_deleted,
                 Created_by = dto.Created_by,
                 Updated_by = dto.Updated_by,
@@ -61,6 +63,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 Price = model.Price,
                 Description = model.Description,
                 Note = model.Note,
+                Description_ar = model.Description_ar,
+                Note_ar = model.Note_ar,
                 Is_deleted = model.Is_deleted,
                 Created_by = model.Created_by,
                 Updated_by = model.Updated_by,
@@ -183,6 +187,8 @@ namespace RentalCar.ServiceLayer.Implementation
                 model.Price = dto.Price;
                 model.Description = dto.Description;
                 model.Note = dto.Note;
+                model.Description_ar = dto.Description_ar;
+                model.Note_ar = dto.Note_ar;
                 model.Updated_by = dto.Updated_by;
                 model.Updated_at = DateTime.UtcNow;
 
