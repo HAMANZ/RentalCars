@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class intial_create_8_8_2026 : Migration
+    public partial class Intial_migration_2026_8_12 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,6 +122,27 @@ namespace RepositoryLayer.Migrations
                     table.PrimaryKey("PK_Brands", x => x.Id);
                 },
                 comment: "Brand Table is for predefined data used in the app");
+
+            migrationBuilder.CreateTable(
+                name: "CarStatus",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarStatus", x => x.Id);
+                },
+                comment: "CarStatus Table is for predefined data used in the app");
 
             migrationBuilder.CreateTable(
                 name: "Contactus",
@@ -300,27 +321,6 @@ namespace RepositoryLayer.Migrations
                 comment: "Language Table is for predefined data used in the app");
 
             migrationBuilder.CreateTable(
-                name: "LicensePlates",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PlateNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PlateType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LicensePlates", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "LoggerActions",
                 schema: "dbo",
                 columns: table => new
@@ -383,6 +383,38 @@ namespace RepositoryLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LookUpTables", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuItems",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<int>(type: "int", nullable: true),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_MenuItems_ParentId",
+                        column: x => x.ParentId,
+                        principalSchema: "dbo",
+                        principalTable: "MenuItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -472,17 +504,14 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlateOwners",
+                name: "PlateRegion",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NationalId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
                     Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
                     Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
@@ -491,8 +520,30 @@ namespace RepositoryLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlateOwners", x => x.Id);
-                });
+                    table.PrimaryKey("PK_PlateRegion", x => x.Id);
+                },
+                comment: "PlateRegion Table is for predefined data used in the app");
+
+            migrationBuilder.CreateTable(
+                name: "PlateTypes",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlateTypes", x => x.Id);
+                },
+                comment: "PlateType Table is for predefined data used in the app");
 
             migrationBuilder.CreateTable(
                 name: "Repairs",
@@ -533,7 +584,7 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SAccountTypes",
+                name: "SAccountCategory",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -541,6 +592,7 @@ namespace RepositoryLayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name_ar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
                     Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
                     Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
@@ -549,9 +601,8 @@ namespace RepositoryLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SAccountTypes", x => x.Id);
-                },
-                comment: "AccountType Table is for predefined data used in the app");
+                    table.PrimaryKey("PK_SAccountCategory", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Statuses",
@@ -593,28 +644,6 @@ namespace RepositoryLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_STransactionType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Suppliers",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Suppliers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -699,50 +728,16 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DrivingLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LicenseExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NationalId = table.Column<long>(type: "bigint", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_Nationalities_NationalId",
-                        column: x => x.NationalId,
-                        principalSchema: "dbo",
-                        principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LicensePlateOwnerships",
+                name: "LicensePlates",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LicensePlateId = table.Column<long>(type: "bigint", nullable: true),
-                    PlateOwnerId = table.Column<int>(type: "int", nullable: false),
-                    PlateOwnerId1 = table.Column<long>(type: "bigint", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsCurrent = table.Column<bool>(type: "bit", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlateNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlateTypeId = table.Column<long>(type: "bigint", nullable: false),
+                    PlateRegionId = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
                     Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
                     Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
@@ -751,21 +746,21 @@ namespace RepositoryLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LicensePlateOwnerships", x => x.Id);
+                    table.PrimaryKey("PK_LicensePlates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LicensePlateOwnerships_LicensePlates_LicensePlateId",
-                        column: x => x.LicensePlateId,
+                        name: "FK_LicensePlates_PlateRegion_PlateRegionId",
+                        column: x => x.PlateRegionId,
                         principalSchema: "dbo",
-                        principalTable: "LicensePlates",
+                        principalTable: "PlateRegion",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LicensePlateOwnerships_PlateOwners_PlateOwnerId1",
-                        column: x => x.PlateOwnerId1,
+                        name: "FK_LicensePlates_PlateTypes_PlateTypeId",
+                        column: x => x.PlateTypeId,
                         principalSchema: "dbo",
-                        principalTable: "PlateOwners",
+                        principalTable: "PlateTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -792,21 +787,17 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SAccounts",
+                name: "SAccountTypes",
                 schema: "dbo",
                 columns: table => new
                 {
-                    AccountId = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountTypeId = table.Column<int>(type: "int", nullable: false),
-                    OwnerType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerId = table.Column<int>(type: "int", nullable: true),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Balance = table.Column<double>(type: "float", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name_ar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountCategoryId = table.Column<long>(type: "bigint", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    AccountTypeId1 = table.Column<long>(type: "bigint", nullable: true),
                     Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
                     Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
                     Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
@@ -815,46 +806,16 @@ namespace RepositoryLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SAccounts", x => x.AccountId);
+                    table.PrimaryKey("PK_SAccountTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SAccounts_SAccountTypes_AccountTypeId1",
-                        column: x => x.AccountTypeId1,
+                        name: "FK_SAccountTypes_SAccountCategory_AccountCategoryId",
+                        column: x => x.AccountCategoryId,
                         principalSchema: "dbo",
-                        principalTable: "SAccountTypes",
+                        principalTable: "SAccountCategory",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SpareParts",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PartNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PurchasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SellingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    StockQty = table.Column<int>(type: "int", nullable: false),
-                    SupplierId = table.Column<int>(type: "int", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                        onDelete: ReferentialAction.Cascade);
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SpareParts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SpareParts_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalSchema: "dbo",
-                        principalTable: "Suppliers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                comment: "AccountType Table is for predefined data used in the app");
 
             migrationBuilder.CreateTable(
                 name: "RefreshTokens",
@@ -1106,49 +1067,36 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EUser",
+                name: "SAccounts",
                 schema: "dbo",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EUserId = table.Column<long>(type: "bigint", nullable: false),
-                    FirstName_ar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName_ar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Profile = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GenderId = table.Column<long>(type: "bigint", nullable: false),
-                    FToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerId = table.Column<int>(type: "int", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AccountId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AccountTypeId = table.Column<int>(type: "int", nullable: false),
+                    OwnerType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerId = table.Column<int>(type: "int", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name_ar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Balance = table.Column<double>(type: "float", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    AccountTypeId1 = table.Column<long>(type: "bigint", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EUser", x => x.Id);
+                    table.PrimaryKey("PK_SAccounts", x => x.AccountId);
                     table.ForeignKey(
-                        name: "FK_EUser_Customers_CustomerId",
-                        column: x => x.CustomerId,
+                        name: "FK_SAccounts_SAccountTypes_AccountTypeId1",
+                        column: x => x.AccountTypeId1,
                         principalSchema: "dbo",
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_EUser_Gender_GenderId",
-                        column: x => x.GenderId,
-                        principalSchema: "dbo",
-                        principalTable: "Gender",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EUser_User_Id",
-                        column: x => x.Id,
-                        principalSchema: "dbo",
-                        principalTable: "User",
+                        principalTable: "SAccountTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1202,151 +1150,6 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarOwners",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    PassportNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CommercialRegister = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Phone1 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Phone2 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    IsCompany = table.Column<bool>(type: "bit", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    NationalId = table.Column<long>(type: "bigint", nullable: true),
-                    CountryId = table.Column<long>(type: "bigint", nullable: true),
-                    CityId = table.Column<long>(type: "bigint", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CarOwners", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CarOwners_Cities_CityId",
-                        column: x => x.CityId,
-                        principalSchema: "dbo",
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CarOwners_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalSchema: "dbo",
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CarOwners_EUser_UserId",
-                        column: x => x.UserId,
-                        principalSchema: "dbo",
-                        principalTable: "EUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CarOwners_Nationalities_NationalId",
-                        column: x => x.NationalId,
-                        principalSchema: "dbo",
-                        principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Documents",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: true),
-                    DocumentTypeId = table.Column<long>(type: "bigint", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Documents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Documents_DocumentTypes_DocumentTypeId",
-                        column: x => x.DocumentTypeId,
-                        principalSchema: "dbo",
-                        principalTable: "DocumentTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Documents_EUser_UserId",
-                        column: x => x.UserId,
-                        principalSchema: "dbo",
-                        principalTable: "EUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Investors",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DrivingLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LicenseExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StatusId = table.Column<long>(type: "bigint", nullable: true),
-                    NationalId = table.Column<long>(type: "bigint", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Investors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Investors_EUser_UserId",
-                        column: x => x.UserId,
-                        principalSchema: "dbo",
-                        principalTable: "EUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Investors_Nationalities_NationalId",
-                        column: x => x.NationalId,
-                        principalSchema: "dbo",
-                        principalTable: "Nationalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Investors_Statuses_StatusId",
-                        column: x => x.StatusId,
-                        principalSchema: "dbo",
-                        principalTable: "Statuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cars",
                 schema: "dbo",
                 columns: table => new
@@ -1363,12 +1166,13 @@ namespace RepositoryLayer.Migrations
                     PurchasePrice = table.Column<double>(type: "float", nullable: false),
                     CurrentKM = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InvestorId = table.Column<int>(type: "int", nullable: true),
+                    InvestorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     BranchId = table.Column<int>(type: "int", nullable: true),
                     FuelTypeId = table.Column<long>(type: "bigint", nullable: true),
                     LicensePlateId = table.Column<long>(type: "bigint", nullable: true),
-                    CarOwnerId = table.Column<long>(type: "bigint", nullable: true),
+                    CarOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     BrandId = table.Column<long>(type: "bigint", nullable: true),
+                    CarStatusId = table.Column<long>(type: "bigint", nullable: true),
                     Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
                     Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
                     Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
@@ -1393,10 +1197,10 @@ namespace RepositoryLayer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Cars_CarOwners_CarOwnerId",
-                        column: x => x.CarOwnerId,
+                        name: "FK_Cars_CarStatus_CarStatusId",
+                        column: x => x.CarStatusId,
                         principalSchema: "dbo",
-                        principalTable: "CarOwners",
+                        principalTable: "CarStatus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -1404,13 +1208,6 @@ namespace RepositoryLayer.Migrations
                         column: x => x.FuelTypeId,
                         principalSchema: "dbo",
                         principalTable: "FuelTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Cars_Investors_InvestorId",
-                        column: x => x.InvestorId,
-                        principalSchema: "dbo",
-                        principalTable: "Investors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -1619,7 +1416,7 @@ namespace RepositoryLayer.Migrations
                     LastChangeKM = table.Column<int>(type: "int", nullable: false),
                     ChangeIntervalKM = table.Column<int>(type: "int", nullable: false),
                     OilType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Cost = table.Column<double>(type: "float", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
                     Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
@@ -1635,65 +1432,6 @@ namespace RepositoryLayer.Migrations
                         column: x => x.CarId,
                         principalSchema: "dbo",
                         principalTable: "Cars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RentalContracts",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ActualReturnDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    OdometerStart = table.Column<int>(type: "int", nullable: false),
-                    OdometerEnd = table.Column<int>(type: "int", nullable: true),
-                    DailyRate = table.Column<double>(type: "float", nullable: false),
-                    Discount = table.Column<double>(type: "float", nullable: false),
-                    TotalAmount = table.Column<double>(type: "float", nullable: false),
-                    PaidAmount = table.Column<double>(type: "float", nullable: false),
-                    StatusId = table.Column<long>(type: "bigint", nullable: true),
-                    CustomerId = table.Column<int>(type: "int", nullable: true),
-                    CarId = table.Column<long>(type: "bigint", nullable: true),
-                    InvestorId = table.Column<int>(type: "int", nullable: true),
-                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
-                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
-                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RentalContracts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RentalContracts_Cars_CarId",
-                        column: x => x.CarId,
-                        principalSchema: "dbo",
-                        principalTable: "Cars",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RentalContracts_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalSchema: "dbo",
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RentalContracts_Investors_InvestorId",
-                        column: x => x.InvestorId,
-                        principalSchema: "dbo",
-                        principalTable: "Investors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RentalContracts_Statuses_StatusId",
-                        column: x => x.StatusId,
-                        principalSchema: "dbo",
-                        principalTable: "Statuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1834,6 +1572,51 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RentalContracts",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ActualReturnDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OdometerStart = table.Column<int>(type: "int", nullable: false),
+                    OdometerEnd = table.Column<int>(type: "int", nullable: true),
+                    DailyRate = table.Column<double>(type: "float", nullable: false),
+                    Discount = table.Column<double>(type: "float", nullable: false),
+                    TotalAmount = table.Column<double>(type: "float", nullable: false),
+                    PaidAmount = table.Column<double>(type: "float", nullable: false),
+                    StatusId = table.Column<long>(type: "bigint", nullable: true),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CarId = table.Column<long>(type: "bigint", nullable: true),
+                    InvestorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RentalContracts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RentalContracts_Cars_CarId",
+                        column: x => x.CarId,
+                        principalSchema: "dbo",
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RentalContracts_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalSchema: "dbo",
+                        principalTable: "Statuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RentalPayments",
                 schema: "dbo",
                 columns: table => new
@@ -1867,6 +1650,350 @@ namespace RepositoryLayer.Migrations
                         column: x => x.RentalContractId,
                         principalSchema: "dbo",
                         principalTable: "RentalContracts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarOwners",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    PassportNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CommercialRegister = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Phone1 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Phone2 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    IsCompany = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NationalId = table.Column<long>(type: "bigint", nullable: true),
+                    CountryId = table.Column<long>(type: "bigint", nullable: true),
+                    CityId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarOwners", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CarOwners_Cities_CityId",
+                        column: x => x.CityId,
+                        principalSchema: "dbo",
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CarOwners_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalSchema: "dbo",
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CarOwners_Nationalities_NationalId",
+                        column: x => x.NationalId,
+                        principalSchema: "dbo",
+                        principalTable: "Nationalities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EUser",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EUserId = table.Column<long>(type: "bigint", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName_ar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Profile = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GenderId = table.Column<long>(type: "bigint", nullable: true),
+                    FToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
+                    CustomerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EUser_Gender_GenderId",
+                        column: x => x.GenderId,
+                        principalSchema: "dbo",
+                        principalTable: "Gender",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EUser_User_Id",
+                        column: x => x.Id,
+                        principalSchema: "dbo",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DrivingLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LicenseExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NationalId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_EUser_Id",
+                        column: x => x.Id,
+                        principalSchema: "dbo",
+                        principalTable: "EUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Customers_Nationalities_NationalId",
+                        column: x => x.NationalId,
+                        principalSchema: "dbo",
+                        principalTable: "Nationalities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Documents",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExpiresAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: true),
+                    DocumentTypeId = table.Column<long>(type: "bigint", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Documents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Documents_DocumentTypes_DocumentTypeId",
+                        column: x => x.DocumentTypeId,
+                        principalSchema: "dbo",
+                        principalTable: "DocumentTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Documents_EUser_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "dbo",
+                        principalTable: "EUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Investors",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DrivingLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LicenseExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StatusId = table.Column<long>(type: "bigint", nullable: true),
+                    NationalId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Investors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Investors_EUser_Id",
+                        column: x => x.Id,
+                        principalSchema: "dbo",
+                        principalTable: "EUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Investors_Nationalities_NationalId",
+                        column: x => x.NationalId,
+                        principalSchema: "dbo",
+                        principalTable: "Nationalities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Investors_Statuses_StatusId",
+                        column: x => x.StatusId,
+                        principalSchema: "dbo",
+                        principalTable: "Statuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlateOwners",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NationalId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlateOwners", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlateOwners_EUser_Id",
+                        column: x => x.Id,
+                        principalSchema: "dbo",
+                        principalTable: "EUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Suppliers",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Suppliers_EUser_Id",
+                        column: x => x.Id,
+                        principalSchema: "dbo",
+                        principalTable: "EUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserMenuPermissions",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MenuItemId = table.Column<int>(type: "int", nullable: false),
+                    CanView = table.Column<bool>(type: "bit", nullable: false),
+                    CanCreate = table.Column<bool>(type: "bit", nullable: false),
+                    CanEdit = table.Column<bool>(type: "bit", nullable: false),
+                    CanDelete = table.Column<bool>(type: "bit", nullable: false),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMenuPermissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserMenuPermissions_EUser_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "dbo",
+                        principalTable: "EUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserMenuPermissions_MenuItems_MenuItemId",
+                        column: x => x.MenuItemId,
+                        principalSchema: "dbo",
+                        principalTable: "MenuItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LicensePlateOwnerships",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LicensePlateId = table.Column<long>(type: "bigint", nullable: true),
+                    PlateOwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsCurrent = table.Column<bool>(type: "bit", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LicensePlateOwnerships", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LicensePlateOwnerships_LicensePlates_LicensePlateId",
+                        column: x => x.LicensePlateId,
+                        principalSchema: "dbo",
+                        principalTable: "LicensePlates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LicensePlateOwnerships_PlateOwners_PlateOwnerId",
+                        column: x => x.PlateOwnerId,
+                        principalSchema: "dbo",
+                        principalTable: "PlateOwners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SpareParts",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PartNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PurchasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SellingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StockQty = table.Column<int>(type: "int", nullable: false),
+                    SupplierId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Is_deleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Deleted Record"),
+                    Created_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Created_by"),
+                    Updated_by = table.Column<long>(type: "bigint", nullable: false, comment: "User Id that Updated_by"),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Created_at"),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "DateTime that Updated_at")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpareParts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SpareParts_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalSchema: "dbo",
+                        principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1919,7 +2046,57 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo",
                 table: "AppSettings",
                 columns: new[] { "Id", "ApplicationApiUrl", "ApplicationName", "ApplicationUrl", "ContactEmail", "ContactWebsite", "Created_at", "Created_by", "Description", "Email", "Facebook", "Instagram", "Is_deleted", "LicenseDetail", "LinkedIn", "Logo", "Mobile", "Mobile2", "Password", "Phone", "Phone2", "PrivacyPolicy", "RefundPolicy", "ShortDescription", "Snapchat", "TermsConditions", "Tiktok", "Twitter", "Updated_at", "Updated_by", "Whatsapp", "Youtube" },
-                values: new object[] { 1L, null, "RentalCar", null, null, "", new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(3472), 1L, "", "oonlinetutoring@gmail.com", "", null, false, "", null, "RentalCar.jpg", null, null, "P@ssw0rdsse", "09999999", null, null, null, null, null, null, null, "", new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(3502), 1L, null, null });
+                values: new object[] { 1L, null, "RentalCar", null, null, "", new DateTime(2026, 8, 12, 11, 13, 7, 22, DateTimeKind.Local).AddTicks(1757), 1L, "", "oonlinetutoring@gmail.com", "", null, false, "", null, "RentalCar.jpg", null, null, "P@ssw0rdsse", "09999999", null, null, null, null, null, null, null, "", new DateTime(2026, 8, 12, 11, 13, 7, 22, DateTimeKind.Local).AddTicks(1793), 1L, null, null });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "Branches",
+                columns: new[] { "Id", "CityId", "Created_at", "Created_by", "Is_deleted", "Name", "Phone", "Updated_at", "Updated_by" },
+                values: new object[] { 1, null, new DateTime(2026, 8, 12, 11, 13, 7, 27, DateTimeKind.Local).AddTicks(6116), 1L, false, "Saida", null, new DateTime(2026, 8, 12, 11, 13, 7, 27, DateTimeKind.Local).AddTicks(6142), 1L });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "Brands",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 15L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Jeep", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 17L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Volvo", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 16L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Porsche", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 20L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Renault", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 14L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Lexus", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 13L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Mazda", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 12L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Mitsubishi", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 11L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Volkswagen", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 10L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Chevrolet", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 9L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Ford", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 8L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Audi", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 7L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "BMW", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Mercedes-Benz", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Honda", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Nissan", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Hyundai", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Toyota", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Kia", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 18L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Subaru", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 19L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Peugeot", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "CarStatus",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Available", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Reserved", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Maintenance", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Accident", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Out of Service", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 7L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Sold", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 8L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Inactive", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Rented", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
@@ -1927,9 +2104,47 @@ namespace RepositoryLayer.Migrations
                 columns: new[] { "Id", "Code", "Created_at", "Created_by", "Description", "Is_deleted", "Name", "Updated_at", "Updated_by" },
                 values: new object[,]
                 {
-                    { 1L, null, new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9193), 1L, null, false, "Palestinne", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9221), 1L },
-                    { 2L, null, new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9234), 1L, null, false, "Lebanon", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9242), 1L },
-                    { 3L, null, new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9251), 1L, null, false, "Turkey", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(9256), 1L }
+                    { 2L, null, new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(2831), 1L, null, false, "Lebanon", new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(2835), 1L },
+                    { 3L, null, new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(2848), 1L, null, false, "Turkey", new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(2853), 1L },
+                    { 1L, null, new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(2792), 1L, null, false, "Palestinne", new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(2816), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "DocumentTypes",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Customs Document", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Ownership Certificate", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Vehicle License", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Technical Inspection", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Vehicle Insurance", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Vehicle Registration", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 10L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Other", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 9L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Maintenance Record", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 7L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Purchase Invoice", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "DocumentTypes",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[] { 8L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Rental Agreement", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "FuelTypes",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 7L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "CNG", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "LPG", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Electric", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Plug-in Hybrid", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Hybrid", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Diesel", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Gasoline", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -1938,8 +2153,45 @@ namespace RepositoryLayer.Migrations
                 columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
                 values: new object[,]
                 {
-                    { 1L, "M", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3220), 1L, false, "Male", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3247), 1L },
-                    { 2L, "F", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3267), 1L, false, "Female", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(3278), 1L }
+                    { 1L, "M", new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(8134), 1L, false, "Male", new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(8157), 1L },
+                    { 2L, "F", new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(8171), 1L, false, "Female", new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(8178), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "InsuranceCompanies",
+                columns: new[] { "Id", "Address", "Created_at", "Created_by", "Description", "Email", "Is_deleted", "Mobile", "Name", "Phone", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 8L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "LIA Assurex", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 7L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Arabia Insurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Arope Insurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 10L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Comin Insurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 11L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Cumberland Insurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 12L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Securite Assurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 13L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Commercial Insurance Company", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 14L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Trust Insurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 15L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "UCA", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Fidelity Assurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Bankers Assurance", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 9L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "GroupMed", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Libano-Suisse", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Allianz SNA", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, null, null, false, null, "Medgulf", null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "InsuranceTypes",
+                columns: new[] { "Id", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 6, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Full Coverage", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Personal Accident Insurance", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Theft Protection", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Collision Damage Waiver (CDW)", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Comprehensive", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Third Party", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -1948,8 +2200,79 @@ namespace RepositoryLayer.Migrations
                 columns: new[] { "id", "Created_at", "Created_by", "Flag", "Is_deleted", "Is_ltr", "LanguageCode", "Name", "Name_ex", "Updated_at", "Updated_by" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9807), 1L, null, false, false, "ar", "Arabic", null, new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9837), 1L },
-                    { 2, new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9854), 1L, null, false, false, "en", "English", null, new DateTime(2026, 8, 8, 11, 13, 58, 147, DateTimeKind.Local).AddTicks(9859), 1L }
+                    { 1, new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(3998), 1L, null, false, false, "ar", "Arabic", null, new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(4052), 1L },
+                    { 2, new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(4088), 1L, null, false, false, "en", "English", null, new DateTime(2026, 8, 12, 11, 13, 7, 23, DateTimeKind.Local).AddTicks(4097), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "MenuItems",
+                columns: new[] { "Id", "Created_at", "Created_by", "Icon", "IsActive", "Is_deleted", "Name", "ParentId", "SortOrder", "Title", "Updated_at", "Updated_by", "Url" },
+                values: new object[,]
+                {
+                    { 100, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9926), 0L, "fas fa-cogs", true, false, "Administration", null, 11, "Administration", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 10, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9663), 0L, "fas fa-car", true, false, "FleetManagement", null, 2, "Fleet Management", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 40, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9822), 0L, "fas fa-shield-alt", true, false, "Insurance", null, 5, "Insurance", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 50, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9839), 0L, "fas fa-tools", true, false, "Maintenance", null, 6, "Maintenance", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 60, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9863), 0L, "fas fa-folder", true, false, "Documents", null, 7, "Documents", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 70, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9872), 0L, "fas fa-exclamation-triangle", true, false, "AccidentsAndFines", null, 8, "Accidents & Fines", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 80, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9881), 0L, "fas fa-wallet", true, false, "Finance", null, 9, "Finance", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 90, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9895), 0L, "fas fa-chart-bar", true, false, "Reports", null, 10, "Reports", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 30, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9809), 0L, "fas fa-users", true, false, "Customers", null, 4, "Customers", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "MenuItems",
+                columns: new[] { "Id", "Created_at", "Created_by", "Icon", "IsActive", "Is_deleted", "Name", "ParentId", "SortOrder", "Title", "Updated_at", "Updated_by", "Url" },
+                values: new object[,]
+                {
+                    { 20, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9789), 0L, "fas fa-file-contract", true, false, "RentalManagement", null, 3, "Rental Management", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "#" },
+                    { 1, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(2564), 0L, "fas fa-tachometer-alt", true, false, "Dashboard", null, 1, "Dashboard", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Dashboard" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "PaymentMethods",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Cash", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 7L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Cheque", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Debit Card", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Credit Card", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Bank Transfer", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "WISH", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "OMT", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "PlateRegion",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 2L, "Y", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Aley", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1L, "B", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Beirut", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 4L, "N", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Nabatieh", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, "G", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Jounieh", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, "S", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Sidon", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 7L, "T", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Tripoli", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, "O", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Ouzai", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 8L, "K", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Baalbek", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 9L, "Z", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Zahle", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "PlateTypes",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 1L, "PRIVATE", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(1977), 1L, false, "Private ", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2037), 1L },
+                    { 2L, "P", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2054), 1L, false, "Public", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2060), 1L },
+                    { 4L, "RENTAL", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2084), 1L, false, "Rental Vehicle", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2089), 1L },
+                    { 3L, "C", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2069), 1L, false, "Company/Commercial", new DateTime(2026, 8, 12, 11, 13, 7, 24, DateTimeKind.Local).AddTicks(2074), 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -1958,17 +2281,77 @@ namespace RepositoryLayer.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2fc26134-21d9-486c-bfb6-50b117a5bee7", "6799ea36-b469-4b67-b100-925198e3ea60", "EUser", "EUSER" },
-                    { "123ce71e-cda9-43fd-a237-58c8e53c9d9c", "bc376be8-d1a1-4264-a150-42c1d3f9a8b7", "Adminstrator", "ADMINSTRATOR" },
-                    { "bb7fdb4a-7c78-4ebf-8a81-001bd7e94985", "8a157312-23fd-4b65-aa04-57cf0aa07de2", "Tutor", "TUTOR" },
-                    { "a5acd0c0-d607-40bd-be03-86ba7dce909d", "3b891801-1002-4381-9229-b4379ea2c61f", "Student", "STUDENT" }
+                    { "308301f4-e83f-40f8-9624-66c89317d8b0", "0e1988fa-6e3b-4d50-858c-e71b078bf9f6", "EUser", "EUSER" },
+                    { "0ed6bf6b-600e-4e82-a9dc-b186d9ea05fd", "cf65bbb1-8538-4fd1-9009-d22c2a284812", "Supplier", "SUPPLIER" },
+                    { "12948cbc-c643-457e-b32f-daf35b35643d", "6f7cac06-5fe3-45e8-abc0-f251994b12d5", "PlateOwner", "PLATEOWNER" },
+                    { "7bcc0a7c-e8ad-4af9-99cd-94aa01b1286f", "f2b93541-4f64-495f-ba43-b9af1109d7ef", "CarOwner", "CAROWNER" },
+                    { "c2a70822-c005-419c-ab4e-209b1ad42fd2", "ce7d8c5d-caae-4216-a87a-885fddd997b9", "Accountant", "ACCOUNTANT" },
+                    { "6c32fd82-47a5-4a14-856e-03101fffb005", "434444eb-cdb6-4c5b-ab4e-fb8c2e9882f6", "Investor", "INVESTOR" },
+                    { "327f80d6-0836-4823-84e9-a4aab00e7e77", "ff720dd7-48ea-4556-a82d-5f6e473ae12f", "Customer", "CUSTOMER" },
+                    { "ce97e2a3-47fa-4714-bb96-635c1186df6a", "4d1fdec4-1fba-49ce-a0b0-7af260dca608", "Adminstrator", "ADMINSTRATOR" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "SAccountCategory",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Name_ar", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 4L, "EXPENSE", new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(6534), 0L, false, "EXPENSE", "المصروفات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 3L, "REVENUE", new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(6532), 0L, false, "REVENUE", "الإيرادات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 2L, "LIABILITY", new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(6523), 0L, false, "LIABILITY", "الخصوم", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 1L, "ASSET", new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(3297), 0L, false, "ASSET", "الأصول", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 5L, "EQUITY", new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(6540), 0L, false, "EQUITY", "حقوق الملكية", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "SAccounts",
+                columns: new[] { "AccountId", "AccountTypeId", "AccountTypeId1", "Balance", "Code", "Created_at", "Created_by", "Currency", "IsActive", "Is_deleted", "Name", "Name_ar", "OwnerId", "OwnerType", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 12L, 14, null, 0.0, "EXPENSE-BATTERY", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6547), 0L, "USD", true, false, "مصروف البطاريات", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 8L, 10, null, 0.0, "EXPENSE-MAINTENANCE", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6532), 0L, "USD", true, false, "مصروف صيانة السيارات", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 11L, 13, null, 0.0, "EXPENSE-TIRES", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6544), 0L, "USD", true, false, "مصروف الإطارات", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 13L, 16, null, 0.0, "EQUITY-INVESTOR-001", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6552), 0L, "USD", true, false, "رأس مال المستثمر - تجريبي", "", 1, "Investor", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 10L, 12, null, 0.0, "EXPENSE-INSURANCE", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6541), 0L, "USD", true, false, "مصروف التأمين", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 6L, 7, null, 0.0, "REVENUE-RENTAL", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6519), 0L, "USD", true, false, "إيرادات تأجير السيارات", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 7L, 8, null, 0.0, "REVENUE-FINES", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6527), 0L, "USD", true, false, "إيرادات الغرامات", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "SAccounts",
+                columns: new[] { "AccountId", "AccountTypeId", "AccountTypeId1", "Balance", "Code", "Created_at", "Created_by", "Currency", "IsActive", "Is_deleted", "Name", "Name_ar", "OwnerId", "OwnerType", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 5L, 5, null, 0.0, "INVESTOR-PAYABLE-001", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6515), 0L, "USD", true, false, "مستحقات المستثمر - تجريبي", "", 1, "Investor", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 4L, 4, null, 0.0, "VEHICLE-001", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6510), 0L, "USD", true, false, "حساب سيارة تجريبية", "", 1, "Vehicle", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 3L, 3, null, 0.0, "CUSTOMER-001", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6499), 0L, "USD", true, false, "حساب عميل تجريبي", "", 1, "Customer", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 2L, 2, null, 0.0, "BANK-MAIN", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(5811), 0L, "USD", true, false, "الحساب البنكي الرئيسي", "الحساب البنكي الرئيسي", null, "Bank", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 1L, 1, null, 0.0, "CASHBOX-MAIN", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(9131), 0L, "USD", true, false, "الصندوق الرئيسي", "", null, "Cashbox", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 9L, 11, null, 0.0, "EXPENSE-FUEL", new DateTime(2026, 8, 12, 8, 13, 7, 31, DateTimeKind.Utc).AddTicks(6535), 0L, "USD", true, false, "مصروف الوقود", "", null, "Company", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "Statuses",
+                columns: new[] { "Id", "Code", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 4L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Cancelled", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 3L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Pending", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 6L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Renewal Required", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 1L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Active", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 5L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Suspended", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 2L, null, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L, false, "Expired", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
                 });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
                 table: "User",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "842baa14-3c17-49a6-bfef-6c6f2d505ffc", 0, "db8b76d3-51e1-4c41-aabe-757526b35809", "hudaabumayha.ham@gmail.com", false, false, null, null, "ADMIN", null, null, false, "b1a1a042-5c49-4319-954c-f213575e3002", false, "admin" });
+                values: new object[] { "33f4d0b8-9568-4576-95a6-e1724aa153a2", 0, "b0b843e5-3bc8-4cb1-9326-52315b2fd8ac", "hudaabumayha.ham@gmail.com", false, false, null, null, "ADMIN", null, null, false, "dd16f79b-7db3-44db-9b6d-1984f3caca0e", false, "admin" });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
@@ -1976,16 +2359,101 @@ namespace RepositoryLayer.Migrations
                 columns: new[] { "Id", "CountryId", "Created_at", "Created_by", "Is_deleted", "Name", "Updated_at", "Updated_by" },
                 values: new object[,]
                 {
-                    { 1L, 1L, new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6647), 1L, false, "AL-Kouds", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6676), 1L },
-                    { 2L, 2L, new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6690), 1L, false, "Beirut", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6697), 1L },
-                    { 3L, 3L, new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6709), 1L, false, "Istanbul", new DateTime(2026, 8, 8, 11, 13, 58, 148, DateTimeKind.Local).AddTicks(6716), 1L }
+                    { 1L, 1L, new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(80), 1L, false, "AL-Kouds", new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(119), 1L },
+                    { 2L, 2L, new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(134), 1L, false, "Beirut", new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(138), 1L },
+                    { 3L, 3L, new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(150), 1L, false, "Istanbul", new DateTime(2026, 8, 12, 11, 13, 7, 25, DateTimeKind.Local).AddTicks(154), 1L }
                 });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
                 table: "EUser",
-                columns: new[] { "Id", "Created_at", "Created_by", "CustomerId", "EUserId", "FToken", "FirstName_ar", "FirstName_en", "GenderId", "Is_deleted", "LastLoginAt", "LastName_ar", "LastName_en", "Profile", "Updated_at", "Updated_by" },
-                values: new object[] { "842baa14-3c17-49a6-bfef-6c6f2d505ffc", new DateTime(2026, 8, 8, 11, 13, 58, 140, DateTimeKind.Local).AddTicks(8571), 1L, null, 0L, null, null, null, 1L, false, null, null, null, null, new DateTime(2026, 8, 8, 11, 13, 58, 146, DateTimeKind.Local).AddTicks(4041), 1L });
+                columns: new[] { "Id", "Created_at", "Created_by", "CustomerId", "CustomerId1", "EUserId", "FToken", "FullName", "FullName_ar", "GenderId", "Is_deleted", "LastLoginAt", "Profile", "Updated_at", "Updated_by" },
+                values: new object[] { "33f4d0b8-9568-4576-95a6-e1724aa153a2", new DateTime(2026, 8, 12, 11, 13, 7, 1, DateTimeKind.Local).AddTicks(127), 1L, null, null, 0L, null, null, null, 1L, false, null, null, new DateTime(2026, 8, 12, 11, 13, 7, 21, DateTimeKind.Local).AddTicks(727), 1L });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "MenuItems",
+                columns: new[] { "Id", "Created_at", "Created_by", "Icon", "IsActive", "Is_deleted", "Name", "ParentId", "SortOrder", "Title", "Updated_at", "Updated_by", "Url" },
+                values: new object[,]
+                {
+                    { 61, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9865), 0L, "fas fa-file", true, false, "CarDocuments", 60, 1, "Car Documents", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/CarDocuments" },
+                    { 62, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9868), 0L, "fas fa-file-alt", true, false, "DocumentTypes", 60, 2, "Document Types", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/DocumentTypes" },
+                    { 71, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9875), 0L, "fas fa-car-crash", true, false, "Accidents", 70, 1, "Accidents", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Accidents" },
+                    { 72, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9879), 0L, "fas fa-ticket-alt", true, false, "Fines", 70, 2, "Fines", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Fines" },
+                    { 82, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9889), 0L, "fas fa-credit-card", true, false, "PaymentMethods", 80, 2, "Payment Methods", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/PaymentMethods" },
+                    { 83, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9892), 0L, "fas fa-receipt", true, false, "Expenses", 80, 3, "Expenses", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Expenses" },
+                    { 110, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(118), 0L, "fas fa-list-alt", true, false, "SAccountTypes", 80, 4, "Account Types", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/SAccountTypes" },
+                    { 111, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(141), 0L, "fas fa-exchange-alt", true, false, "STransactionTypes", 80, 5, "Transaction Types", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/STransactionTypes" },
+                    { 91, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9902), 0L, "fas fa-file-invoice", true, false, "RentalReport", 90, 1, "Rental Report", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Reports/Rental" },
+                    { 92, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9906), 0L, "fas fa-tools", true, false, "MaintenanceReport", 90, 2, "Maintenance Report", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Reports/Maintenance" },
+                    { 94, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9919), 0L, "fas fa-chart-line", true, false, "FinancialReport", 90, 4, "Financial Report", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Reports/Financial" },
+                    { 55, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9859), 0L, "fas fa-tools", true, false, "Repairs", 50, 5, "Repairs", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Repairs" },
+                    { 95, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9922), 0L, "fas fa-car", true, false, "FleetReport", 90, 5, "Fleet Report", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Reports/Fleet" },
+                    { 101, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(31), 0L, "fas fa-users-cog", true, false, "Users", 100, 1, "Users", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Admin/Users" },
+                    { 102, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(36), 0L, "fas fa-user-shield", true, false, "Roles", 100, 2, "Roles", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Admin/Roles" },
+                    { 103, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(42), 0L, "fas fa-key", true, false, "UserMenuPermissions", 100, 3, "User Menu Permissions", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Admin/UserMenuPermissions" },
+                    { 104, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(50), 0L, "fas fa-list", true, false, "MenuItems", 100, 4, "Menu Items", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Admin/MenuItems" },
+                    { 105, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(57), 0L, "fas fa-bullhorn", true, false, "Announcements", 100, 5, "Announcements", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Admin/Announcements" },
+                    { 106, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(72), 0L, "fas fa-cog", true, false, "SystemSettings", 100, 6, "System Settings", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Admin/Settings" },
+                    { 112, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(144), 0L, "fas fa-check-circle", true, false, "Statuses", 100, 7, "Statuses", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Statuses" },
+                    { 93, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9912), 0L, "fas fa-shield-alt", true, false, "InsuranceReport", 90, 3, "Insurance Report", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Reports/Insurance" },
+                    { 54, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9854), 0L, "fas fa-car-battery", true, false, "BatterySchedule", 50, 4, "Battery Schedule", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/BatterySchedule" },
+                    { 81, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9885), 0L, "fas fa-money-check-alt", true, false, "Payments", 80, 1, "Payments", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Payments" },
+                    { 52, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9845), 0L, "fas fa-oil-can", true, false, "OilChangeSchedule", 50, 2, "Oil Change Schedule", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/OilChangeSchedule" },
+                    { 11, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9674), 0L, "fas fa-car-side", true, false, "Cars", 10, 1, "Cars", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Cars" },
+                    { 12, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9765), 0L, "fas fa-user-tie", true, false, "CarOwners", 10, 2, "Car Owners", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/CarOwners" },
+                    { 13, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9771), 0L, "fas fa-tags", true, false, "Brands", 10, 3, "Brands", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Brands" },
+                    { 53, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9851), 0L, "fas fa-circle", true, false, "TireSchedule", 50, 3, "Tire Schedule", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/TireSchedule" },
+                    { 15, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9780), 0L, "fas fa-gas-pump", true, false, "FuelTypes", 10, 5, "Fuel Types", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/FuelTypes" },
+                    { 16, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9785), 0L, "fas fa-info-circle", true, false, "CarStatuses", 10, 6, "Car Statuses", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/CarStatuses" },
+                    { 107, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(86), 0L, "fas fa-info-circle", true, false, "PlateTypes", 10, 9, "Plate Types", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/PlateTypes" },
+                    { 108, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(89), 0L, "fas fa-map-marker-alt", true, false, "PlateRegions", 10, 10, "Plate Regions", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/PlateRegions" },
+                    { 109, new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(104), 0L, "fas fa-user-tie", true, false, "PlateOwners", 10, 11, "Plate Owners", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/PlateOwners" },
+                    { 21, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9791), 0L, "fas fa-file-signature", true, false, "RentalContracts", 20, 1, "Rental Contracts", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/RentalContracts" },
+                    { 14, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9777), 0L, "fas fa-car", true, false, "CarModels", 10, 4, "Car Models", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/CarModels" },
+                    { 23, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9800), 0L, "fas fa-undo", true, false, "Returns", 20, 3, "Vehicle Returns", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Returns" },
+                    { 22, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9797), 0L, "fas fa-calendar-check", true, false, "Reservations", 20, 2, "Reservations", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Reservations" },
+                    { 51, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9842), 0L, "fas fa-wrench", true, false, "MaintenanceRecords", 50, 1, "Maintenance Records", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Maintenance" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "MenuItems",
+                columns: new[] { "Id", "Created_at", "Created_by", "Icon", "IsActive", "Is_deleted", "Name", "ParentId", "SortOrder", "Title", "Updated_at", "Updated_by", "Url" },
+                values: new object[,]
+                {
+                    { 43, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9832), 0L, "fas fa-shield-alt", true, false, "InsuranceTypes", 40, 3, "Insurance Types", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/InsuranceTypes" },
+                    { 42, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9829), 0L, "fas fa-building", true, false, "InsuranceCompanies", 40, 2, "Insurance Companies", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/InsuranceCompanies" },
+                    { 44, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9836), 0L, "fas fa-check-circle", true, false, "InsuranceStatuses", 40, 4, "Insurance Statuses", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/InsuranceStatuses" },
+                    { 41, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9825), 0L, "fas fa-file-alt", true, false, "InsurancePolicies", 40, 1, "Insurance Policies", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Insurance" },
+                    { 32, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9818), 0L, "fas fa-id-card", true, false, "CustomerDocuments", 30, 2, "Customer Documents", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/CustomerDocuments" },
+                    { 31, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9815), 0L, "fas fa-user", true, false, "CustomerList", 30, 1, "Customers", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/Customers" },
+                    { 24, new DateTime(2026, 8, 12, 8, 13, 7, 28, DateTimeKind.Utc).AddTicks(9806), 0L, "fas fa-money-bill-wave", true, false, "RentalPayments", 20, 4, "Rental Payments", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, "/RentalPayments" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "SAccountTypes",
+                columns: new[] { "Id", "AccountCategoryId", "Code", "Created_at", "Created_by", "IsActive", "Is_deleted", "Name", "Name_ar", "Updated_at", "Updated_by" },
+                values: new object[,]
+                {
+                    { 9L, 3L, "OTHER_REVENUE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4285), 0L, true, false, "Other Revenue", "إيرادات أخرى", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 13L, 4L, "TIRE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4300), 0L, true, false, "Tires", "الإطارات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 12L, 4L, "INSURANCE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4296), 0L, true, false, "Insurance", "التأمين", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 11L, 4L, "FUEL", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4292), 0L, true, false, "Fuel", "الوقود", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 10L, 4L, "MAINTENANCE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4289), 0L, true, false, "Vehicle Maintenance", "صيانة السيارات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 14L, 4L, "BATTERY", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4303), 0L, true, false, "Batteries", "البطاريات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 8L, 3L, "FINE_REVENUE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4283), 0L, true, false, "Fine Revenue", "إيرادات الغرامات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 3L, 1L, "CUSTOMER", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4255), 0L, true, false, "Customer Accounts", "حسابات العملاء", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 6L, 2L, "OTHER_LIABILITY", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4272), 0L, true, false, "Other Liabilities", "التزامات أخرى", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 5L, 2L, "INVESTOR_PAYABLE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4269), 0L, true, false, "Investor Payables", "مستحقات المستثمرين", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 4L, 1L, "VEHICLE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4259), 0L, true, false, "Vehicles", "السيارات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 2L, 1L, "BANK", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4243), 0L, true, false, "Bank", "البنك", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 1L, 1L, "CASH", new DateTime(2026, 8, 12, 8, 13, 7, 29, DateTimeKind.Utc).AddTicks(9586), 0L, true, false, "Cash", "الصندوق", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 15L, 4L, "OTHER_EXPENSE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4305), 0L, true, false, "Other Expenses", "مصاريف أخرى", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 7L, 3L, "RENTAL_REVENUE", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4280), 0L, true, false, "Car Rental Revenue", "إيرادات تأجير السيارات", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L },
+                    { 16L, 5L, "INVESTOR_CAPITAL", new DateTime(2026, 8, 12, 8, 13, 7, 30, DateTimeKind.Utc).AddTicks(4309), 0L, true, false, "Investor Capital", "رأس مال المستثمرين", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accidents_CarId",
@@ -2036,12 +2504,6 @@ namespace RepositoryLayer.Migrations
                 column: "NationalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CarOwners_UserId",
-                schema: "dbo",
-                table: "CarOwners",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Cars_BranchId",
                 schema: "dbo",
                 table: "Cars",
@@ -2058,6 +2520,12 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo",
                 table: "Cars",
                 column: "CarOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_CarStatusId",
+                schema: "dbo",
+                table: "Cars",
+                column: "CarStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_FuelTypeId",
@@ -2102,12 +2570,10 @@ namespace RepositoryLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EUser_CustomerId",
+                name: "IX_EUser_CustomerId1",
                 schema: "dbo",
                 table: "EUser",
-                column: "CustomerId",
-                unique: true,
-                filter: "[CustomerId] IS NOT NULL");
+                column: "CustomerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EUser_GenderId",
@@ -2170,22 +2636,28 @@ namespace RepositoryLayer.Migrations
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Investors_UserId",
-                schema: "dbo",
-                table: "Investors",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_LicensePlateOwnerships_LicensePlateId",
                 schema: "dbo",
                 table: "LicensePlateOwnerships",
                 column: "LicensePlateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LicensePlateOwnerships_PlateOwnerId1",
+                name: "IX_LicensePlateOwnerships_PlateOwnerId",
                 schema: "dbo",
                 table: "LicensePlateOwnerships",
-                column: "PlateOwnerId1");
+                column: "PlateOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LicensePlates_PlateRegionId",
+                schema: "dbo",
+                table: "LicensePlates",
+                column: "PlateRegionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LicensePlates_PlateTypeId",
+                schema: "dbo",
+                table: "LicensePlates",
+                column: "PlateTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LookUpMultiLang_LanguageId",
@@ -2210,6 +2682,12 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo",
                 table: "Media",
                 column: "LookUpId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_ParentId",
+                schema: "dbo",
+                table: "MenuItems",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OilChangeSchedules_CarId",
@@ -2286,6 +2764,12 @@ namespace RepositoryLayer.Migrations
                 column: "AccountTypeId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SAccountTypes_AccountCategoryId",
+                schema: "dbo",
+                table: "SAccountTypes",
+                column: "AccountCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SpareParts_SupplierId",
                 schema: "dbo",
                 table: "SpareParts",
@@ -2342,6 +2826,20 @@ namespace RepositoryLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserMenuPermissions_MenuItemId",
+                schema: "dbo",
+                table: "UserMenuPermissions",
+                column: "MenuItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMenuPermissions_UserId_MenuItemId",
+                schema: "dbo",
+                table: "UserMenuPermissions",
+                columns: new[] { "UserId", "MenuItemId" },
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
                 schema: "dbo",
                 table: "UserRoles",
@@ -2382,10 +2880,75 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo",
                 table: "WorkOrders",
                 column: "StatusId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Cars_CarOwners_CarOwnerId",
+                schema: "dbo",
+                table: "Cars",
+                column: "CarOwnerId",
+                principalSchema: "dbo",
+                principalTable: "CarOwners",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Cars_Investors_InvestorId",
+                schema: "dbo",
+                table: "Cars",
+                column: "InvestorId",
+                principalSchema: "dbo",
+                principalTable: "Investors",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_RentalContracts_Customers_CustomerId",
+                schema: "dbo",
+                table: "RentalContracts",
+                column: "CustomerId",
+                principalSchema: "dbo",
+                principalTable: "Customers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_RentalContracts_Investors_InvestorId",
+                schema: "dbo",
+                table: "RentalContracts",
+                column: "InvestorId",
+                principalSchema: "dbo",
+                principalTable: "Investors",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CarOwners_EUser_Id",
+                schema: "dbo",
+                table: "CarOwners",
+                column: "Id",
+                principalSchema: "dbo",
+                principalTable: "EUser",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_EUser_Customers_CustomerId1",
+                schema: "dbo",
+                table: "EUser",
+                column: "CustomerId1",
+                principalSchema: "dbo",
+                principalTable: "Customers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Customers_EUser_Id",
+                schema: "dbo",
+                table: "Customers");
+
             migrationBuilder.DropTable(
                 name: "Accidents",
                 schema: "dbo");
@@ -2491,6 +3054,10 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "UserMenuPermissions",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "UserRoles",
                 schema: "dbo");
 
@@ -2543,6 +3110,10 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "MenuItems",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "Role",
                 schema: "dbo");
 
@@ -2583,6 +3154,10 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "SAccountCategory",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "Branches",
                 schema: "dbo");
 
@@ -2592,6 +3167,10 @@ namespace RepositoryLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "CarOwners",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "CarStatus",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -2611,15 +3190,23 @@ namespace RepositoryLayer.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "EUser",
-                schema: "dbo");
-
-            migrationBuilder.DropTable(
                 name: "Statuses",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "PlateRegion",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "PlateTypes",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "Countries",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "EUser",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
